@@ -1596,7 +1596,7 @@ export class Renderer {
 
         for (const unit of units) {
 
-            const current = Number(unit?.manpower ?? unit?.strength ?? 0);
+            const current = Number(unit?.manpower ?? unit?.manpower ?? 0);
 
             if (unit?.destroyed === true || !Number.isFinite(current) || current <= 0) continue;
 
@@ -1698,7 +1698,10 @@ export class Renderer {
 
             if (zoom < 1.18) continue;
 
-            const maximum = Math.max(1, Number(unit.maxManpower ?? unit.maxStrength ?? current));
+            const maximum = Math.max(
+    1,
+    Number(unit?.maxStrength ?? unit?.maxManpower ?? current)
+);
 
             ctx.save();
 
