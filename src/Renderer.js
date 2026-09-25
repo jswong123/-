@@ -1696,31 +1696,7 @@ export class Renderer {
 
             }
 
-            if (zoom < 1.18) continue;
-
-            const maximum = Math.max(
-    1,
-    Number(unit?.maxStrength ?? unit?.maxManpower ?? current)
-);
-
-            ctx.save();
-
-            ctx.fillStyle = "#20231f";
-
-            ctx.font = `${Math.max(7, 8 * zoom)}px Consolas, monospace`;
-
-            ctx.textAlign = "center";
-
-            ctx.textBaseline = "bottom";
-
-            ctx.fillText(`${Math.max(0, current)}/${maximum}`, p.x, p.y - height / 2 - 3);
-
-            ctx.restore();
-
-        }
-
-    }
-
+            
     // ========================================================
 
     // 总渲染
