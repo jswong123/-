@@ -1170,15 +1170,17 @@ export class Renderer {
 
         const rawType = String(unit.type ?? unit.unitType ?? unit.branch ?? "infantry").toLowerCase();
 
+        const id = String(unit.id ?? "").toUpperCase();
+
         const name = String(unit.name ?? "");
 
         const echelon = String(unit.echelon ?? unit.level ?? unit.formation ?? "").toLowerCase();
 
         const type = rawType.replace(/[ _-]/g, "");
 
-        const isHQ = ["headquarters", "hq", "command", "commandpost"].includes(type) || /司令部|指挥部|军部|师部|团部/.test(name);
+        const isGuard = id.includes("_GUARD") || type.includes("guard") || /警卫/.test(name);
 
-        const isGuard = !isHQ && (type.includes("guard") || /警卫/.test(name));
+        const isHQ = !isGuard && (["headquarters", "hq", "command", "commandpost"].includes(type) || id.endsWith("_HQ") || /司令部|指挥部|军部|师部|团部/.test(name));
 
         const isEngineer = type.includes("engineer") || type.includes("sapper") || /工兵/.test(name);
 
@@ -1204,7 +1206,29 @@ export class Renderer {
 
         ctx.lineJoin = "round";
 
-        if (isHQ) {
+        if (isGuard) {
+
+            ctx.beginPath();
+
+            ctx.moveTo(x - width * 0.29, y - height * 0.23);
+
+            ctx.lineTo(x + width * 0.20, y + height * 0.24);
+
+            ctx.moveTo(x + width * 0.20, y - height * 0.23);
+
+            ctx.lineTo(x - width * 0.29, y + height * 0.24);
+
+            ctx.stroke();
+
+            ctx.font = `bold ${Math.max(7, height * 0.23)}px Consolas, monospace`;
+
+            ctx.textAlign = "right";
+
+            ctx.textBaseline = "top";
+
+            ctx.fillText("H", x + width * 0.39, y - height * 0.39);
+
+        } else if (isHQ) {
 
             const left = x - width * 0.27;
 
@@ -1241,28 +1265,6 @@ export class Renderer {
             ctx.textBaseline = "middle";
 
             ctx.fillText("★".repeat(stars), x - width * 0.02, y + height * 0.10);
-
-        } else if (isGuard) {
-
-            ctx.beginPath();
-
-            ctx.moveTo(x - width * 0.30, y - height * 0.25);
-
-            ctx.lineTo(x + width * 0.30, y + height * 0.25);
-
-            ctx.moveTo(x + width * 0.30, y - height * 0.25);
-
-            ctx.lineTo(x - width * 0.30, y + height * 0.25);
-
-            ctx.stroke();
-
-            ctx.font = `bold ${Math.max(6, height * 0.24)}px Consolas, monospace`;
-
-            ctx.textAlign = "right";
-
-            ctx.textBaseline = "top";
-
-            ctx.fillText("H", x + width * 0.31, y - height * 0.31);
 
         } else if (isEngineer) {
 
@@ -1666,7 +1668,13 @@ export class Renderer {
 
             const unitType = String(unit.type ?? unit.unitType ?? unit.branch ?? "").toLowerCase().replace(/[ _-]/g, "");
 
-            const isCommandUnit = ["headquarters", "hq", "command", "commandpost"].includes(unitType) || /司令部|指挥部|军部|师部|团部/.test(String(unit.name ?? ""));
+            const unitId = String(unit.id ?? "").toUpperCase();
+
+            const unitName = String(unit.name ?? "");
+
+            const isGuardUnit = unitId.includes("_GUARD") || unitType.includes("guard") || /警卫/.test(unitName);
+
+            const isCommandUnit = !isGuardUnit && (["headquarters", "hq", "command", "commandpost"].includes(unitType) || unitId.endsWith("_HQ") || /司令部|指挥部|军部|师部|团部/.test(unitName));
 
             if (isCommandUnit && commander && zoom >= 1.0) {
 
