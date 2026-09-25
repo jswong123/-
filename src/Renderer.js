@@ -4483,104 +4483,116 @@ export class Renderer {
  
 
     drawFortifications() {
-
-        if (!this.world?.fortifications) return;
-
- 
+        const source = this.world?.fortifications;
+        if (!source) return;
 
         const ctx = this.ctx;
 
- 
-
-        for (const [key, fort] of this.world.fortifications.entries()) {
-
-            const [q, r] = key.split(",").map(Number);
-
-            const p = this.worldToScreen(q, r);
-
-            const size = this.hexSize * this.camera.zoom;
-
-            const level = Math.max(1, Math.min(3, Number(fort?.level ?? 1)));
-
- 
-
-            ctx.save();
-
-            ctx.strokeStyle = fort?.owner === "german" ? "#3e4a42" : "#7b3f36";
-
-            ctx.lineWidth = Math.max(1.2, (1.3 + level * 0.55) * this.camera.zoom);
-
-            ctx.setLineDash([]);
-
- 
-
-            // 用短折线表现战壕/加固阵地，不遮盖基础地形
-
-            const y = p.y + size * 0.28;
-
-            const half = size * 0.48;
-
- 
-
-            ctx.beginPath();
-
-            ctx.moveTo(p.x - half, y);
-
-            ctx.lineTo(p.x - half * 0.55, y - size * 0.12);
-
-            ctx.lineTo(p.x - half * 0.12, y);
-
-            ctx.lineTo(p.x + half * 0.28, y - size * 0.12);
-
-            ctx.lineTo(p.x + half, y);
-
-            ctx.stroke();
-
- 
-
-            if (level >= 2) {
-
-                ctx.beginPath();
-
-                ctx.moveTo(p.x - half * 0.72, y + size * 0.13);
-
-                ctx.lineTo(p.x - half * 0.25, y + size * 0.03);
-
-                ctx.lineTo(p.x + half * 0.20, y + size * 0.13);
-
-                ctx.lineTo(p.x + half * 0.68, y + size * 0.03);
-
-                ctx.stroke();
-
-            }
-
- 
-
-            if (level >= 3) {
-
-                ctx.fillStyle = ctx.strokeStyle;
-
-                ctx.font = `${Math.max(8, 10 * this.camera.zoom)}px Consolas, monospace`;
-
-                ctx.textAlign = "center";
-
-                ctx.textBaseline = "middle";
-
-                ctx.fillText("III", p.x, p.y + size * 0.55);
-
-            }
-
- 
-
-            ctx.restore();
-
+        // 统一转换为 [key, fort]，兼容 Map、Array 和普通 Object。
+        let entries = [];
+        if (source instanceof Map) {
+            entries = Array.from(source.entries());
+        } else if (Array.isArray(source)) {
+            entries = source.map((fort, index) => [index, fort]);
+        } else if (typeof source === "object") {
+            entries = Object.entries(source);
+        } else {
+            return;
         }
 
+        for (const [key, rawFort] of entries) {
+            const fort =
+                rawFort && typeof rawFort === "object"
+                    ? rawFort
+                    : {};
+
+            let q;
+            let r;
+
+            // 新版格式：工事对象自身保存 q / r。
+            if (fort.q !== undefined && fort.r !== undefined) {
+                q = Number(fort.q);
+                r = Number(fort.r);
+            }
+            // 兼容旧版 Map/Object："q,r" -> fort。
+            else if (typeof key === "string" && key.includes(",")) {
+                const parts = key.split(",");
+                q = Number(parts[0]);
+                r = Number(parts[1]);
+            }
+            // 兼容 Map 的对象 key：{ q, r }。
+            else if (
+                key &&
+                typeof key === "object" &&
+                key.q !== undefined &&
+                key.r !== undefined
+            ) {
+                q = Number(key.q);
+                r = Number(key.r);
+            }
+            // 兼容 Map 的数组 key：[q, r]。
+            else if (Array.isArray(key) && key.length >= 2) {
+                q = Number(key[0]);
+                r = Number(key[1]);
+            } else {
+                continue;
+            }
+
+            if (!Number.isFinite(q) || !Number.isFinite(r)) {
+                continue;
+            }
+
+            const p = this.worldToScreen(q, r);
+            const size = this.hexSize * this.camera.zoom;
+            const level = Math.max(1, Math.min(3, Number(fort?.level ?? 1)));
+
+            ctx.save();
+            ctx.strokeStyle =
+                fort?.owner === "german" ||
+                fort?.owner === "GER" ||
+                fort?.owner === "Germany"
+                    ? "#3e4a42"
+                    : "#7b3f36";
+            ctx.lineWidth = Math.max(
+                1.2,
+                (1.3 + level * 0.55) * this.camera.zoom
+            );
+            ctx.setLineDash([]);
+
+            // 用短折线表现战壕/加固阵地，不遮盖基础地形。
+            const y = p.y + size * 0.28;
+            const half = size * 0.48;
+
+            ctx.beginPath();
+            ctx.moveTo(p.x - half, y);
+            ctx.lineTo(p.x - half * 0.55, y - size * 0.12);
+            ctx.lineTo(p.x - half * 0.12, y);
+            ctx.lineTo(p.x + half * 0.28, y - size * 0.12);
+            ctx.lineTo(p.x + half, y);
+            ctx.stroke();
+
+            if (level >= 2) {
+                ctx.beginPath();
+                ctx.moveTo(p.x - half * 0.72, y + size * 0.13);
+                ctx.lineTo(p.x - half * 0.25, y + size * 0.03);
+                ctx.lineTo(p.x + half * 0.20, y + size * 0.13);
+                ctx.lineTo(p.x + half * 0.68, y + size * 0.03);
+                ctx.stroke();
+            }
+
+            if (level >= 3) {
+                ctx.fillStyle = ctx.strokeStyle;
+                ctx.font =
+                    `${Math.max(8, 10 * this.camera.zoom)}px Consolas, monospace`;
+                ctx.textAlign = "center";
+                ctx.textBaseline = "middle";
+                ctx.fillText("III", p.x, p.y + size * 0.55);
+            }
+
+            ctx.restore();
+        }
     }
 
- 
-
- 
 
     // 绘制单位
 
