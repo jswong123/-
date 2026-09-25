@@ -1,166 +1,144 @@
+import { FactionSystem, FACTIONS } from "./systems/FactionSystem.js";
+
+ 
+
 export class GameState {
 
     constructor() {
 
         this.playerFaction = null;
 
+        this.playerSide = null;
+
+        this.selectedFaction = null;
+
+        this.selectedSide = null;
+
         this.mode = null;
 
         this.date = "1941-06-26";
+
         this.hour = 8;
+
         this.minute = 0;
 
         this.turn = 1;
+
         this.turnMinutes = 15;
 
-        this.factions = {
-
-            GER: {
-                id: "GER",
-                name: "德军",
-                fullName: "德国国防军",
-                enemy: "USSR"
-            },
-
-            USSR: {
-                id: "USSR",
-                name: "苏军",
-                fullName: "工农红军",
-                enemy: "GER"
-            }
-
-        };
+        this.factions = { ...FACTIONS };
 
     }
 
+ 
+
+    setAvailableFactions(factionIds = []) {
+
+        FactionSystem.configureGameState(this, factionIds);
+
+    }
+
+ 
 
     setPlayerFaction(faction) {
 
-        if (
-            faction !== "GER" &&
-            faction !== "USSR"
-        ) {
-            throw new Error(
-                `未知阵营：${faction}`
-            );
-        }
+        const id = FactionSystem.normalizeFaction(faction);
 
-        this.playerFaction = faction;
+        if (!id || !this.factions[id]) throw new Error(`未知阵营：${faction}`);
+
+        const side = FactionSystem.getFaction(id)?.side ?? null;
+
+        this.playerFaction = id;
+
+        this.playerSide = side;
+
+        this.selectedFaction = id;
+
+        this.selectedSide = side;
+
         this.mode = "PLAYER";
+
     }
 
+ 
 
     setObserverMode() {
 
         this.playerFaction = null;
+
+        this.playerSide = null;
+
+        this.selectedFaction = null;
+
+        this.selectedSide = null;
+
         this.mode = "OBSERVER";
 
     }
 
+ 
 
-    isObserver() {
+    isObserver() { return String(this.mode).toUpperCase() === "OBSERVER"; }
 
-        return this.mode === "OBSERVER";
+ 
 
-    }
+    getUnitFaction(unit) { return FactionSystem.getUnitFaction(unit); }
 
+    getUnitSide(unit) { return FactionSystem.getUnitSide(unit); }
+
+ 
 
     isPlayerUnit(unit) {
 
-        if (this.isObserver()) {
-            return true;
-        }
+        if (this.isObserver()) return true;
 
-        return (
-            unit.faction === this.playerFaction ||
-            this.convertLegacyFaction(unit.side) ===
-                this.playerFaction
-        );
+        return this.getUnitFaction(unit) === this.playerFaction;
 
     }
 
+ 
 
     isEnemyUnit(unit) {
 
-        if (this.isObserver()) {
-            return false;
-        }
+        if (this.isObserver()) return false;
 
         return !this.isPlayerUnit(unit);
 
     }
 
+ 
 
-    convertLegacyFaction(side) {
+    convertLegacyFaction(side) { return FactionSystem.normalizeFaction(side); }
 
-        if (side === "germany") {
-            return "GER";
-        }
-
-        if (side === "soviet") {
-            return "USSR";
-        }
-
-        return null;
-
-    }
-
-
-    getUnitFaction(unit) {
-
-        if (unit.faction) {
-            return unit.faction;
-        }
-
-        return this.convertLegacyFaction(
-            unit.side
-        );
-
-    }
-
+ 
 
     getEnemyFaction() {
 
-        if (!this.playerFaction) {
-            return null;
-        }
+        if (!this.playerFaction) return null;
 
-        return this.factions[
-            this.playerFaction
-        ].enemy;
+        return this.factions[this.playerFaction]?.enemy ?? null;
 
     }
 
+ 
 
     nextTurn() {
 
         this.turn += 1;
 
-        this.minute +=
-            this.turnMinutes;
+        this.minute += this.turnMinutes;
 
-        while (this.minute >= 60) {
-
-            this.minute -= 60;
-            this.hour += 1;
-
-        }
+        while (this.minute >= 60) { this.minute -= 60; this.hour += 1; }
 
     }
 
+ 
 
     getTimeString() {
 
-        return (
-            String(this.hour)
-                .padStart(2, "0")
-            +
-            ":"
-            +
-            String(this.minute)
-                .padStart(2, "0")
-        );
+        return `${String(this.hour).padStart(2,"0")}:${String(this.minute).padStart(2,"0")}`;
 
     }
 
 }
+
