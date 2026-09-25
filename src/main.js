@@ -250,65 +250,25 @@ let lastMouseY = 0;
 
 function resizeCanvas() {
 
-    const container =
+    const container = mapArea ?? canvas.parentElement;
 
-        mapArea ??
-
-        canvas.parentElement;
+    if (!container) return;
 
  
 
-    if (!container) {
-
-        return;
-
-    }
+    const rect = container.getBoundingClientRect();
 
  
 
-    const rect =
+    // Renderer / Camera / 鼠标命中统一使用 CSS 像素。
 
-        container.getBoundingClientRect();
+    canvas.width = Math.max(1, Math.floor(rect.width));
 
- 
+    canvas.height = Math.max(1, Math.floor(rect.height));
 
-    // 所有地图、Camera、鼠标点击与 Renderer 均统一使用 CSS 像素。
+    canvas.style.width = `${rect.width}px`;
 
-    // 不在这里乘 devicePixelRatio，否则会造成“显示位置 ≠ 点击位置”。
-
-    canvas.width =
-
-        Math.max(
-
-            1,
-
-            Math.floor(rect.width)
-
-        );
-
- 
-
-    canvas.height =
-
-        Math.max(
-
-            1,
-
-            Math.floor(rect.height)
-
-        );
-
- 
-
-    canvas.style.width =
-
-        `${rect.width}px`;
-
- 
-
-    canvas.style.height =
-
-        `${rect.height}px`;
+    canvas.style.height = `${rect.height}px`;
 
 }
 
@@ -1338,265 +1298,117 @@ function initializeUnits() {
 
 function initializeTurnSystem() {
 
-    const config =
-
-        getScenarioConfig();
+    const config = getScenarioConfig();
 
  
 
-    const attacker =
+    const attacker = normalizeSide(
 
-        normalizeSide(
+        config?.roles?.attacker ??
 
-            config?.roles?.attacker ??
+        FactionSystem.getFaction(config?.factions?.[0])?.side ??
 
-            FactionSystem.getFaction(
-
-                config?.factions?.[0]
-
-            )?.side ??
-
-            "german"
-
-        );
-
- 
-
-    const defender =
-
-        normalizeSide(
-
-            config?.roles?.defender ??
-
-            FactionSystem.getFaction(
-
-                config?.factions?.[1]
-
-            )?.side ??
-
-            "soviet"
-
-        );
-
- 
-
-    renderer.setScenarioSides?.(
-
-        attacker,
-
-        defender
+        "german"
 
     );
 
  
 
-    const startingPhase =
+    const defender = normalizeSide(
 
-        normalizeSide(
+        config?.roles?.defender ??
 
-            config?.start?.startingPhase ??
+        FactionSystem.getFaction(config?.factions?.[1])?.side ??
 
-            attacker
+        "soviet"
 
-        );
-
- 
-
-    // 行动顺序从实际开局方开始。
-
-    // 台儿庄：日军 -> 中国军
-
-    // 杜布诺/斯摩棱斯克：德军 -> 苏军
-
-    const phaseOrder =
-
-        startingPhase === defender
-
-            ? [defender, attacker]
-
-            : [attacker, defender];
+    );
 
  
 
-    turnSystem =
+    const startingPhase = normalizeSide(
 
-        new TurnSystem({
+        config?.start?.startingPhase ?? attacker
 
-            units,
-
-            year: config.start.year,
-
-            month: config.start.month,
-
-            day: config.start.day,
-
-            hour: config.start.hour,
-
-            minute: config.start.minute,
-
-            hoursPerTurn:
-
-                config.start.hoursPerTurn,
-
-            startingPhase,
-
-            phaseOrder
-
-        });
+    );
 
  
 
-    turnSystem.onPhaseChanged =
+    // 当前战役颜色规则同步给 Renderer。
 
-        () => {
-
-            clearSelection();
-
-            updateTurnUI();
-
-            render();
-
-        };
+    renderer.setScenarioSides?.(attacker, defender);
 
  
 
-    turnSystem.onTurnChanged =
+    // 行动顺序必须从 startingPhase 开始。
 
-        () => {
+    const phaseOrder = startingPhase === defender
 
-            updateTurnUI();
+        ? [defender, attacker]
 
- 
-
-            if (!gameOver) {
-
-                checkVictory();
-
-            }
+        : [attacker, defender];
 
  
 
-            render();
+    turnSystem = new TurnSystem({
 
-        };
+        units,
+
+        year: config.start.year,
+
+        month: config.start.month,
+
+        day: config.start.day,
+
+        hour: config.start.hour,
+
+        minute: config.start.minute,
+
+        hoursPerTurn: config.start.hoursPerTurn,
+
+        startingPhase,
+
+        phaseOrder
+
+    });
 
  
 
-    turnSystem.onTimeChanged =
+    turnSystem.onPhaseChanged = () => {
 
-        () => {
+        clearSelection();
 
-            updateTurnUI();
+        updateTurnUI();
 
-        };
+        render();
+
+    };
+
+ 
+
+    turnSystem.onTurnChanged = () => {
+
+        updateTurnUI();
+
+        if (!gameOver) checkVictory();
+
+        render();
+
+    };
+
+ 
+
+    turnSystem.onTimeChanged = () => {
+
+        updateTurnUI();
+
+    };
 
  
 
     updateTurnUI();
 
 }
-
-// ============================================================
-
-// 动态图例：颜色只代表攻防角色
-
-// ============================================================
-
-function updateFactionLegend() {
-
-    const config = getScenarioConfig();
-
- 
-
-    const attacker =
-
-        normalizeSide(
-
-            config?.roles?.attacker ??
-
-            FactionSystem.getFaction(
-
-                config?.factions?.[0]
-
-            )?.side
-
-        );
-
- 
-
-    const defender =
-
-        normalizeSide(
-
-            config?.roles?.defender ??
-
-            FactionSystem.getFaction(
-
-                config?.factions?.[1]
-
-            )?.side
-
-        );
-
- 
-
-    const attackerName =
-
-        FactionSystem.getSideName(attacker) ||
-
-        "进攻方";
-
- 
-
-    const defenderName =
-
-        FactionSystem.getSideName(defender) ||
-
-        "防守方";
-
- 
-
-    const redLabel =
-
-        document.getElementById(
-
-            "legendRedLabel"
-
-        );
-
- 
-
-    const blueLabel =
-
-        document.getElementById(
-
-            "legendBlueLabel"
-
-        );
-
- 
-
-    if (redLabel) {
-
-        redLabel.textContent =
-
-            `红方：进攻方（${attackerName}）`;
-
-    }
-
- 
-
-    if (blueLabel) {
-
-        blueLabel.textContent =
-
-            `蓝方：防守方（${defenderName}）`;
-
-    }
-
-}
-
- 
 
 // ============================================================
 
@@ -1688,15 +1500,9 @@ function updateTurnUI() {
 
     if (endPhaseButton) {
 
-        endPhaseButton.textContent =
-
-            `结束${FactionSystem.getSideName(phase)}行动`;
+        endPhaseButton.textContent = "结束回合";
 
     }
-
- 
-
-    updateFactionLegend();
 
 }
 
