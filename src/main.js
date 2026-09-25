@@ -1,2702 +1,5148 @@
 // ============================================================
+
 // main.js
+
 // 东线 1941：杜布诺
+
 // V1.4 — 玩家控制 / 阶段同步 / 目标胜利 / 存档 / 读取 / 撤销
+
 // ============================================================
+
 import { WorldMap } from "./WorldMap.js";
+
 import { Camera } from "./Camera.js";
+
 import { Renderer } from "./Renderer.js";
+
 import { UnitSelection } from "./UnitSelection.js";
+
 import { GameState } from "./GameState.js";
+
 import { FactionSelection } from "./FactionSelection.js";
+
 import { TurnSystem } from "./TurnSystem.js";
+
 import { VictorySystem } from "./systems/VictorySystem.js";
+
 import { MovementSystem } from "./systems/MovementSystem.js";
+
 import { CombatSystem } from "./systems/CombatSystem.js";
+
 import { AISystem } from "./systems/AISystem.js";
+
 import { SaveSystem } from "./systems/SaveSystem.js";
+
 import { UndoSystem } from "./systems/UndoSystem.js";
+
 import { pixelToHex } from "./Hex.js";
+
+import { CampaignSelection } from "./ui/CampaignSelection.js";
+
+import { ScenarioManager } from "./scenarios/ScenarioManager.js";
+
+import { FactionSystem } from "./systems/FactionSystem.js";
+
 // ============================================================
-// 战役选择系统
+
+// 多战场战役系统
+
 // ============================================================
-const SCENARIOS = {
-    dubno: {
-        key: "dubno",
-        name: "杜布诺战役",
-        subtitle: "Battle of Dubno",
-        dateText: "1941年6月26日",
-        scenarioPath: "./data/scenario.json",
-        unitsPath: "./data/units.json",
-        start: {
-            year: 1941,
-            month: 6,
-            day: 26,
-            hour: 8,
-            minute: 0,
-            hoursPerTurn: 2,
-            startingPhase: "german"
-        }
-    },
-    smolensk: {
-        key: "smolensk",
-        name: "斯摩棱斯克战役",
-        subtitle: "Battle of Smolensk",
-        dateText: "1941年7月10日",
-        scenarioPath: "./data/scenario-smolensk.json",
-        unitsPath: "./data/units-smolensk.json",
-        start: {
-            year: 1941,
-            month: 7,
-            day: 10,
-            hour: 8,
-            minute: 0,
-            hoursPerTurn: 2,
-            startingPhase: "german"
-        }
-    }
-};
+
 let currentScenarioKey = null;
+
+let currentScenarioConfig = null;
+
+const campaignSelection = new CampaignSelection();
+
 function getScenarioConfig() {
-    return SCENARIOS[currentScenarioKey] ?? SCENARIOS.dubno;
+
+    return currentScenarioConfig ?? {
+
+        id: currentScenarioKey ?? "dubno",
+
+        name: scenario?.name ?? "战役",
+
+        factions: ["GER", "USSR"],
+
+        start: { year:1941, month:6, day:26, hour:8, minute:0, hoursPerTurn:2, startingPhase:"german" }
+
+    };
+
 }
-function ensureScenarioSelectionStyle() {
-    if (document.getElementById("scenario-selection-style")) return;
-    const style = document.createElement("style");
-    style.id = "scenario-selection-style";
-    style.textContent = `
-        #scenario-selection {
-            position: fixed; inset: 0; z-index: 100000;
-            display: flex; align-items: center; justify-content: center;
-            background: rgba(28,31,26,.88);
-            font-family: FangSong, STFangsong, SimSun, serif;
-        }
-        #scenario-selection .scenario-window {
-            width: min(720px, calc(100vw - 48px));
-            padding: 34px 38px 32px; box-sizing: border-box;
-            border: 2px solid #5a5646; outline: 1px solid #c6b98b;
-            outline-offset: -8px; background: #d6cfb2; color: #24251f;
-            box-shadow: 0 18px 60px rgba(0,0,0,.48);
-        }
-        #scenario-selection h1 { margin: 0; text-align: center; font-size: 34px; letter-spacing: .12em; }
-        #scenario-selection .scenario-caption { margin: 8px 0 28px; text-align: center; color: #666253; }
-        #scenario-selection .scenario-list { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 16px; }
-        #scenario-selection .scenario-card {
-            min-height: 150px; padding: 20px; border: 1px solid #696553;
-            background: #c8c1a4; color: #24251f; cursor: pointer;
-            font: inherit; text-align: left;
-        }
-        #scenario-selection .scenario-card:hover { background: #bbb598; transform: translateY(-1px); }
-        #scenario-selection .scenario-name { display: block; margin-bottom: 8px; font-size: 24px; font-weight: 700; }
-        #scenario-selection .scenario-subtitle { display: block; margin-bottom: 18px; font-family: Georgia,serif; font-size: 13px; }
-        #scenario-selection .scenario-date { display: block; font-size: 16px; }
-        #scenario-selection .scenario-note { display: block; margin-top: 10px; color: #625e50; font-size: 13px; }
-        @media (max-width: 650px) {
-            #scenario-selection .scenario-list { grid-template-columns: 1fr; }
-        }
-    `;
-    document.head.appendChild(style);
-}
+
 function showScenarioSelection() {
-    ensureScenarioSelectionStyle();
-    document.getElementById("scenario-selection")?.remove();
-    const overlay = document.createElement("div");
-    overlay.id = "scenario-selection";
-    overlay.innerHTML = `
-        <div class="scenario-window">
-            <h1>选择战役</h1>
-            <div class="scenario-caption">东线 1941 · EASTERN FRONT 1941</div>
-            <div class="scenario-list">
-                ${Object.values(SCENARIOS).map(item => `
-                    <button class="scenario-card" type="button" data-scenario="${item.key}">
-                        <span class="scenario-name">${item.name}</span>
-                        <span class="scenario-subtitle">${item.subtitle}</span>
-                        <span class="scenario-date">${item.dateText}</span>
-                        <span class="scenario-note">${item.key === "dubno" ? "现有 V1.4 战役" : "新战役 · 城区与防御工事地图"}</span>
-                    </button>
-                `).join("")}
-            </div>
-        </div>
-    `;
-    document.body.appendChild(overlay);
-    overlay.querySelectorAll("[data-scenario]").forEach(button => {
-        button.addEventListener("click", async () => {
-            const key = button.dataset.scenario;
-            overlay.remove();
-            await loadScenario(key);
-        });
-    });
+
+    campaignSelection.show(async scenarioId => { await loadScenario(scenarioId); });
+
 }
-function applyScenarioToWorld(data) {
-    if (!data || !world) return;
-    // 优先调用 WorldMap 新版接口；没有这些接口时继续兼容旧版。
-    if (typeof world.loadScenario === "function") {
-        world.loadScenario(data);
-        return;
-    }
-    if (typeof world.applyScenario === "function") {
-        world.applyScenario(data);
-        return;
-    }
-    if (typeof world.loadMap === "function" && data.map) {
-        world.loadMap(data.map);
-        return;
-    }
-    const map = data.map ?? data.world ?? data;
-    if (Number.isFinite(Number(map.width))) world.width = Number(map.width);
-    if (Number.isFinite(Number(map.height))) world.height = Number(map.height);
-    // 兼容数组式 terrain，以及 scenario 中常见的地图要素字段。
-    if (Array.isArray(map.terrain)) world.terrain = map.terrain;
-    for (const key of ["roads", "railways", "rails", "rivers", "settlements", "cities", "towns", "fortifications"]) {
-        if (Array.isArray(map[key])) world[key] = map[key];
-    }
-    // 若 WorldMap 使用 config/mapConfig 字段，也同步保存完整配置。
-    world.config = map;
-    world.mapConfig = map;
-}
+
 // ============================================================
+
 // DOM
+
 // ============================================================
+
 const canvas =
+
     document.getElementById("game-canvas");
+
 const mapArea =
+
     document.getElementById("mapArea");
+
 const unitInfo =
+
     document.getElementById("unitInfo");
+
 const turnInfo =
+
     document.getElementById("turnInfo");
+
 const turnNumber =
+
     document.getElementById("turnNumber");
+
 const turnTime =
+
     document.getElementById("turnTime");
+
 const turnPhase =
+
     document.getElementById("turnPhase");
+
 const endPhaseButton =
+
     document.getElementById("endPhaseButton");
+
 if (!canvas) {
+
     throw new Error(
+
         "找不到 #game-canvas，请检查 index.html"
+
     );
+
 }
+
 // ============================================================
+
 // 游戏核心对象
+
 // ============================================================
+
 const world =
+
     new WorldMap();
+
 const camera =
+
     new Camera();
+
 const renderer =
+
     new Renderer(
+
         canvas,
+
         world,
+
         camera
+
     );
+
 const gameState =
+
     new GameState();
+
+const scenarioManager = new ScenarioManager({ world, gameState });
+
 const selection =
+
     new UnitSelection(
+
         renderer,
+
         gameState
+
     );
+
 const movementSystem =
+
     new MovementSystem(
+
         world
+
     );
+
 const combatSystem =
+
     new CombatSystem(
+
         world
+
     );
+
 const aiSystem =
+
     new AISystem(
+
         movementSystem,
+
         combatSystem
+
     );
+
 const factionSelection =
+
     new FactionSelection(
+
         gameState
+
     );
+
 const saveSystem = new SaveSystem({ maxSlots: 6 });
+
 const undoSystem = new UndoSystem({ maxHistory: 30 });
+
 renderer.movementSystem =
+
     movementSystem;
+
 // ============================================================
+
 // 游戏状态
+
 // ============================================================
+
 let scenario = null;
+
 let units = [];
+
 let turnSystem = null;
+
 let victorySystem = null;
+
 let selectedUnit = null;
+
 let gameOver = false;
+
 let aiRunning = false;
+
 // ============================================================
+
 // 鼠标状态
+
 // ============================================================
+
 let isDragging = false;
+
 let dragMoved = false;
+
 let lastMouseX = 0;
+
 let lastMouseY = 0;
+
 // ============================================================
+
 // Canvas
+
 // ============================================================
+
 function resizeCanvas() {
+
     const container =
+
         mapArea ??
+
         canvas.parentElement;
+
+ 
+
     if (!container) {
+
         return;
+
     }
+
+ 
+
     const rect =
+
         container.getBoundingClientRect();
-    const dpr =
-        window.devicePixelRatio || 1;
+
+ 
+
+    // 所有地图、Camera、鼠标点击与 Renderer 均统一使用 CSS 像素。
+
+    // 不在这里乘 devicePixelRatio，否则会造成“显示位置 ≠ 点击位置”。
+
     canvas.width =
+
         Math.max(
+
             1,
-            Math.floor(
-                rect.width * dpr
-            )
+
+            Math.floor(rect.width)
+
         );
+
+ 
+
     canvas.height =
+
         Math.max(
+
             1,
-            Math.floor(
-                rect.height * dpr
-            )
+
+            Math.floor(rect.height)
+
         );
+
+ 
+
     canvas.style.width =
+
         `${rect.width}px`;
+
+ 
+
     canvas.style.height =
+
         `${rect.height}px`;
+
 }
+
 // ============================================================
+
 // 渲染
+
 // ============================================================
+
 function render() {
+
     renderer.render(
+
         units
+
     );
+
 }
+
 // ============================================================
+
 // 阵营标准化
+
 // ============================================================
+
 function normalizeSide(side) {
-    const value =
-        String(
-            side ?? ""
-        )
-            .trim()
-            .toLowerCase();
-    if (
-        value === "ger" ||
-        value === "german" ||
-        value === "germany" ||
-        value === "axis" ||
-        value === "德军"
-    ) {
-        return "german";
-    }
-    if (
-        value === "ussr" ||
-        value === "soviet" ||
-        value === "redarmy" ||
-        value === "苏军" ||
-        value === "红军"
-    ) {
-        return "soviet";
-    }
-    return value;
+
+    const faction = FactionSystem.getFaction(side);
+
+    if (faction?.side) return faction.side;
+
+    const value = String(side ?? "").trim().toLowerCase();
+
+    const aliases = { chinese:"chinese", china:"chinese", chn:"chinese", japanese:"japanese", japan:"japanese", jpn:"japanese" };
+
+    return aliases[value] ?? value;
+
 }
+
 // ============================================================
+
 // 获取单位阵营
+
 // ============================================================
+
 function getUnitSide(unit) {
+
     return normalizeSide(
+
         unit?.side ??
+
         unit?.faction ??
+
         unit?.camp
+
     );
+
 }
+
 // ============================================================
+
 // 玩家阵营
+
 // ============================================================
+
 function getPlayerSide() {
+
     // FactionSelection / GameState 不同版本可能使用不同字段。
+
     // 这里统一兼容，避免“界面显示苏军，但控制逻辑仍读取德军”的问题。
+
     const candidates = [
+
         gameState.playerFaction,
+
         gameState.playerSide,
+
         gameState.selectedFaction,
+
         gameState.selectedSide,
+
         gameState.side,
+
         gameState.faction
+
     ];
+
     for (const value of candidates) {
+
         const side = normalizeSide(value);
-        if (side === "german" || side === "soviet") {
+
+        if (["german", "soviet", "chinese", "japanese", "british", "italian", "american"].includes(side)) {
+
             return side;
+
         }
+
     }
+
     return "";
+
 }
+
 // ============================================================
+
 // 单位是否存活
+
 // ============================================================
+
 function isUnitAlive(unit) {
+
     if (!unit) {
+
         return false;
+
     }
+
     if (unit.destroyed === true) {
+
         return false;
+
     }
+
     const strength =
+
         Number(unit.strength);
+
     const manpower =
+
         Number(unit.manpower);
+
     // 任意一个有效兵力字段 <= 0，都视为阵亡
+
     if (
+
         Number.isFinite(strength) &&
+
         strength <= 0
+
     ) {
+
         return false;
+
     }
+
     if (
+
         Number.isFinite(manpower) &&
+
         manpower <= 0
+
     ) {
+
         return false;
+
     }
+
     return true;
+
 }
+
 // ============================================================
+
 // 单位名称
+
 // ============================================================
+
 function unitName(unit) {
+
     return (
+
         unit?.nameZh ??
+
         unit?.name ??
+
         unit?.id ??
+
         "未命名单位"
+
     );
+
 }
+
 // ============================================================
+
 // 当前兵力
+
 // ============================================================
+
 function getUnitStrength(unit) {
+
     // strength 是唯一的实时生命力主字段。
+
     // manpower 仅作为旧数据兼容回退。
+
     const value =
+
         Number(
+
             unit?.strength ??
+
             unit?.manpower ??
+
             100
+
         );
+
     return Number.isFinite(value)
+
         ? value
+
         : 100;
+
 }
+
 // ============================================================
+
 // 最大兵力
+
 // ============================================================
+
 function getUnitMaxStrength(unit) {
+
     // maxStrength 是最大生命力主字段。
+
     // maxManpower 仅作为旧数据兼容回退。
+
     const value =
+
         Number(
+
             unit?.maxStrength ??
+
             unit?.initialStrength ??
+
             unit?.maxManpower ??
+
             100
+
         );
+
     return Number.isFinite(value)
+
         ? value
+
         : 100;
+
 }
+
 // ============================================================
+
 // 兵力显示
+
 // ============================================================
+
 function getStrengthText(unit) {
+
     return (
+
         `${Math.max(0, Math.round(getUnitStrength(unit)))} / ` +
+
         `${Math.max(1, Math.round(getUnitMaxStrength(unit)))}`
+
     );
+
 }
+
 // ============================================================
+
 // units.json 单位标准化
+
 // ============================================================
+
 function normalizeUnit(rawUnit) {
+
  const strength =
+
     Number(
+
         rawUnit.strength ??
+
         rawUnit.manpower ??
+
         100
+
     );
+
 const maxStrength =
+
     Number(
+
         rawUnit.maxStrength ??
+
         rawUnit.maxManpower ??
+
         rawUnit.strength ??
+
         rawUnit.manpower ??
+
         100
+
     );
+
     const movement =
+
         Number(
+
             rawUnit.movement ??
+
             rawUnit.maxMovementPoints ??
+
             rawUnit.movementPoints ??
+
             4
+
         );
+
     const faction =
+
         normalizeSide(
+
             rawUnit.faction ??
+
             rawUnit.side ??
+
             rawUnit.camp
+
         );
+
     return {
+
         ...rawUnit,
+
         id:
+
             String(
+
                 rawUnit.id ?? ""
+
             ),
+
         name:
+
             String(
+
                 rawUnit.name ??
+
                 rawUnit.nameZh ??
+
                 rawUnit.id ??
+
                 "未知单位"
+
             ),
+
         faction,
+
         side:
+
             faction,
+
         type:
+
             rawUnit.type ??
+
             rawUnit.unitType ??
+
             "infantry",
+
         q:
+
             Number(
+
                 rawUnit.q
+
             ),
+
         r:
+
             Number(
+
                 rawUnit.r
+
             ),
+
         strength:
+
             Math.max(
+
                 0,
+
                 strength
+
             ),
+
         maxStrength:
+
             Math.max(
+
                 1,
+
                 maxStrength
+
             ),
+
         manpower:
+
             Math.max(
+
                 0,
+
                 strength
+
             ),
+
         maxManpower:
+
             Math.max(
+
                 1,
+
                 maxStrength
+
             ),
+
         echelon:
+
             rawUnit.echelon ??
+
             "battalion",
+
         minRange:
+
             Number(
+
                 rawUnit.minRange ??
+
                 (rawUnit.type === "artillery" ? 2 : 1)
+
             ),
+
         maxRange:
+
             Number(
+
                 rawUnit.maxRange ??
+
                 rawUnit.range ??
+
                 1
+
             ),
+
         attack:
+
             Number(
+
                 rawUnit.attack ?? 5
+
             ),
+
         defense:
+
             Number(
+
                 rawUnit.defense ?? 5
+
             ),
+
         range:
+
             Number(
+
                 rawUnit.range ?? 1
+
             ),
+
         movement,
+
         maxMovementPoints:
+
             movement,
+
         movementPoints:
+
             movement,
+
         destroyed:
+
             strength <= 0,
+
         hasAttacked:
+
             false,
+
         morale:
+
             Number(
+
                 rawUnit.morale ?? 80
+
             ),
+
         suppression:
+
             Number(
+
                 rawUnit.suppression ?? 0
+
             ),
+
         fatigue:
+
             Number(
+
                 rawUnit.fatigue ?? 0
+
             ),
+
         ammunition:
+
             Number(
+
                 rawUnit.ammunition ??
+
                 rawUnit.ammo ??
+
                 100
+
             ),
+
         ammo:
+
             Number(
+
                 rawUnit.ammo ??
+
                 rawUnit.ammunition ??
+
                 100
+
             )
+
     };
+
 }
+
 // ============================================================
+
 // 加载 units.json
+
 // ============================================================
+
 async function loadUnitsFromJSON(unitsPath = "./data/units.json") {
+
     console.log(
+
         `[单位系统] 正在读取 ${unitsPath}`
+
     );
+
     const response =
+
         await fetch(
+
             unitsPath,
+
             {
+
                 cache: "no-store"
+
             }
+
         );
+
     if (!response.ok) {
+
         throw new Error(
+
             `units.json 加载失败：HTTP ${response.status}`
+
         );
+
     }
+
     const data =
+
         await response.json();
+
     if (
+
         !data ||
+
         !Array.isArray(
+
             data.units
+
         )
+
     ) {
+
         throw new Error(
+
             "units.json 格式错误：找不到 units 数组"
+
         );
+
     }
+
     const loadedUnits =
+
         data.units.map(
+
             normalizeUnit
+
         );
+
     console.log(
+
         `[单位系统] units.json 加载成功：${loadedUnits.length} 个单位`
+
     );
+
     return loadedUnits;
+
 }
+
 // ============================================================
+
 // 单位数据检查
+
 // ============================================================
+
 function validateUnits(
+
     unitList
+
 ) {
+
     const ids =
+
         new Set();
+
     const positions =
+
         new Map();
+
     let errors =
+
         0;
+
     for (
+
         const unit
+
         of unitList
+
     ) {
+
         // ----------------------------------------------------
+
         // ID
+
         // ----------------------------------------------------
+
         if (!unit.id) {
+
             console.error(
+
                 "[单位数据] 存在没有 ID 的单位",
+
                 unit
+
             );
+
             errors++;
+
         }
+
         else if (
+
             ids.has(
+
                 unit.id
+
             )
+
         ) {
+
             console.error(
+
                 `[单位数据] 重复单位 ID：${unit.id}`
+
             );
+
             errors++;
+
         }
+
         else {
+
             ids.add(
+
                 unit.id
+
             );
+
         }
+
         // ----------------------------------------------------
+
         // 阵营
+
         // ----------------------------------------------------
+
         if (
-            getUnitSide(unit) !==
-                "german" &&
-            getUnitSide(unit) !==
-                "soviet"
+
+            !["german", "soviet", "chinese", "japanese", "british", "italian", "american"].includes(getUnitSide(unit))
+
         ) {
+
             console.error(
+
                 `[单位数据] ${unit.id} 阵营错误：${unit.faction}`
+
             );
+
             errors++;
+
         }
+
         // ----------------------------------------------------
+
         // 坐标
+
         // ----------------------------------------------------
+
         if (
+
             !Number.isFinite(
+
                 unit.q
+
             ) ||
+
             !Number.isFinite(
+
                 unit.r
+
             )
+
         ) {
+
             console.error(
+
                 `[单位数据] ${unit.id} 坐标无效`
+
             );
+
             errors++;
+
             continue;
+
         }
+
         // ----------------------------------------------------
+
         // 一格一单位
+
         // ----------------------------------------------------
+
         if (
+
             isUnitAlive(unit)
+
         ) {
+
             const key =
+
                 `${unit.q},${unit.r}`;
+
             if (
+
                 positions.has(
+
                     key
+
                 )
+
             ) {
+
                 const existing =
+
                     positions.get(
+
                         key
+
                     );
+
                 console.error(
+
                     `[部署冲突] ${existing.id} 与 ${unit.id} 同时位于 (${unit.q}, ${unit.r})`
+
                 );
+
                 errors++;
+
             }
+
             else {
+
                 positions.set(
+
                     key,
+
                     unit
+
                 );
+
             }
+
         }
+
     }
+
     if (
+
         errors === 0
+
     ) {
+
         console.log(
+
             `[单位系统] 数据检查通过：${unitList.length} 个单位`
+
         );
+
         return true;
+
     }
+
     console.error(
+
         `[单位系统] 数据检查失败：发现 ${errors} 个问题`
+
     );
+
     return false;
+
 }
+
 // ============================================================
+
 // 初始化单位
+
 // ============================================================
+
 function initializeUnits() {
+
     for (
+
         const unit
+
         of units
+
     ) {
+
         const side =
+
             getUnitSide(
+
                 unit
+
             );
+
         unit.side =
+
             side;
+
         unit.faction =
+
             side;
+
         if (
+
             unit.strength ==
+
             null
+
         ) {
+
             unit.strength =
+
                 100;
+
         }
+
         if (
+
             unit.maxStrength ==
+
             null
+
         ) {
+
             unit.maxStrength =
+
                 unit.strength;
+
         }
+
         if (
+
             unit.strength <= 0
+
         ) {
+
             unit.strength = 0;
+
             unit.destroyed = true;
+
         }
+
         combatSystem.resetUnit(
+
             unit
+
         );
+
         if (
+
             typeof movementSystem.initializeUnit ===
+
             "function"
+
         ) {
+
             movementSystem.initializeUnit(
+
                 unit
+
             );
+
         }
+
         if (
+
             unit.morale ==
+
             null
+
         ) {
+
             unit.morale =
+
                 80;
+
         }
+
         if (
+
             unit.suppression ==
+
             null
+
         ) {
+
             unit.suppression =
+
                 0;
+
         }
+
         if (
+
             unit.fatigue ==
+
             null
+
         ) {
+
             unit.fatigue =
+
                 0;
+
         }
+
         if (
+
             unit.ammunition ==
+
             null
+
         ) {
+
             unit.ammunition =
+
                 unit.ammo ??
+
                 100;
+
         }
+
         if (
+
             unit.ammo ==
+
             null
+
         ) {
+
             unit.ammo =
+
                 unit.ammunition;
+
         }
+
     }
+
 }
+
 // ============================================================
+
 // 回合系统
+
 // ============================================================
+
 function initializeTurnSystem() {
-    turnSystem =
-        new TurnSystem({
-            units,
-            year: getScenarioConfig().start.year,
-            month: getScenarioConfig().start.month,
-            day: getScenarioConfig().start.day,
-            hour: getScenarioConfig().start.hour,
-            minute: getScenarioConfig().start.minute,
-            hoursPerTurn: getScenarioConfig().start.hoursPerTurn,
-            startingPhase: getScenarioConfig().start.startingPhase
-        });
-    turnSystem.onPhaseChanged =
-        () => {
-            clearSelection();
-            updateTurnUI();
-            render();
-        };
-    turnSystem.onTurnChanged =
-        () => {
-            updateTurnUI();
-            if (!gameOver) {
-                checkVictory();
-            }
-            render();
-        };
-    turnSystem.onTimeChanged =
-        () => {
-            updateTurnUI();
-        };
-    updateTurnUI();
-}
-// ============================================================
-// 回合 UI
-// ============================================================
-function updateTurnUI() {
-    if (!turnSystem) {
-        return;
-    }
-    if (
-        turnInfo &&
-        typeof turnSystem.getHeaderText ===
-        "function"
-    ) {
-        turnInfo.textContent =
-            turnSystem.getHeaderText();
-    }
-    const number =
-        typeof turnSystem.getTurnNumber ===
-        "function"
-            ? turnSystem.getTurnNumber()
-            : turnSystem.turn ?? 1;
-    if (turnNumber) {
-        turnNumber.textContent =
-            `第${number}回合`;
-    }
-    if (
-        turnTime &&
-        typeof turnSystem.getTurnTimeRange ===
-        "function"
-    ) {
-        turnTime.textContent =
-            turnSystem.getTurnTimeRange();
-    }
-    const phase =
+
+    const config =
+
+        getScenarioConfig();
+
+ 
+
+    const attacker =
+
         normalizeSide(
-            turnSystem.phase
-        );
-    const phaseName =
-        phase === "soviet"
-            ? "苏军行动"
-            : "德军行动";
-    if (turnPhase) {
-        turnPhase.textContent =
-            typeof turnSystem.getPhaseName ===
-            "function"
-                ? turnSystem.getPhaseName()
-                : phaseName;
-    }
-    if (endPhaseButton) {
-        endPhaseButton.textContent =
-            phase === "soviet"
-                ? "结束苏军行动"
-                : "结束德军行动";
-    }
-}
-// ============================================================
-// 当前行动阶段
-// ============================================================
-function isUnitActive(unit) {
-    if (!unit) {
-        return false;
-    }
-    if (!turnSystem) {
-        return true;
-    }
-    return (
-        getUnitSide(unit) ===
-        normalizeSide(
-            turnSystem.phase
-        )
-    );
-}
-// ============================================================
-// 玩家能否控制单位
-// ============================================================
-function playerCanControlUnit(unit) {
-    if (!unit || !isUnitAlive(unit) || gameOver || aiRunning) {
-        return false;
-    }
-    if (gameState.mode === "observer") {
-        return false;
-    }
-    const unitSide = getUnitSide(unit);
-    const playerSide = getPlayerSide();
-    const phaseSide = normalizeSide(turnSystem?.phase);
-    // 没有明确玩家阵营时，绝不默认允许控制，防止误控 AI 阵营。
-    if (playerSide !== "german" && playerSide !== "soviet") {
-        return false;
-    }
-    // 只能控制玩家自己选择的阵营。
-    if (unitSide !== playerSide) {
-        return false;
-    }
-    // 只能在本方行动阶段操作。
-    if (turnSystem && phaseSide !== playerSide) {
-        return false;
-    }
-    return true;
-}
-// ============================================================
-// 查看单位
-// ============================================================
-function playerCanViewUnit(unit) {
-    return (
-        unit != null &&
-        isUnitAlive(unit)
-    );
-}
-// ============================================================
-// 清除移动范围
-// ============================================================
-function clearReachable() {
-    if (
-        typeof renderer.clearReachable ===
-        "function"
-    ) {
-        renderer.clearReachable();
-    }
-    if (
-        movementSystem.reachable instanceof
-        Map
-    ) {
-        movementSystem.reachable.clear();
-    }
-}
-// ============================================================
-// 清除选择
-// ============================================================
-function clearSelection() {
-    selectedUnit =
-        null;
-    if (
-        typeof selection.clear ===
-        "function"
-    ) {
-        selection.clear();
-    }
-    if (
-        typeof renderer.setSelectedUnit ===
-        "function"
-    ) {
-        renderer.setSelectedUnit(
-            null
-        );
-    }
-    if (
-        typeof movementSystem.clear ===
-        "function"
-    ) {
-        movementSystem.clear();
-    }
-    clearReachable();
-    if (unitInfo) {
-        unitInfo.innerHTML =
-            '<p class="hint">点击地图上的单位查看详情</p>';
-    }
-}
-// ============================================================
-// 单位信息
-// ============================================================
-function showUnitInfo(unit) {
-    if (
-        !unitInfo ||
-        !unit
-    ) {
-        return;
-    }
-    const side =
-        getUnitSide(
-            unit
-        );
-    const sideName =
-        side === "german"
-            ? "德军"
-            : side === "soviet"
-                ? "苏军"
-                : "未知";
-    const name =
-        unitName(
-            unit
-        );
-    const type =
-        unit.typeZh ??
-        unit.type ??
-        unit.unitType ??
-        "未知";
-    const ap =
-        unit.movementPoints ??
-        unit.actionPoints ??
-        unit.ap ??
-        "—";
-    const maxAP =
-        unit.maxMovementPoints ??
-        unit.maxActionPoints ??
-        unit.maxAP ??
-        "—";
-    const attackValue =
-        combatSystem.getAttack(
-            unit
-        );
-    const defenseValue =
-        combatSystem.getDefense(
-            unit
-        );
-    const rangeValue =
-        combatSystem.getRange(
-            unit
-        );
-    const active =
-        playerCanControlUnit(
-            unit
-        );
-    unitInfo.innerHTML = `
-        <div class="unit-title">
-            ${name}
-        </div>
-        <div class="unit-row">
-            <span>ID</span>
-            <strong>${unit.id}</strong>
-        </div>
-        <div class="unit-row">
-            <span>阵营</span>
-            <strong>${sideName}</strong>
-        </div>
-        <div class="unit-row">
-            <span>兵种</span>
-            <strong>${type}</strong>
-        </div>
-        <div class="unit-row">
-            <span>编制</span>
-            <strong>${unit.echelon ?? "—"}</strong>
-        </div>
-        <div class="unit-row">
-            <span>行动点</span>
-            <strong>${ap} / ${maxAP}</strong>
-        </div>
-        <div class="unit-row">
-            <span>兵力</span>
-            <strong>${getStrengthText(unit)}</strong>
-        </div>
-        <div class="unit-row">
-            <span>攻击</span>
-            <strong>${attackValue}</strong>
-        </div>
-        <div class="unit-row">
-            <span>防御</span>
-            <strong>${defenseValue}</strong>
-        </div>
-        <div class="unit-row">
-            <span>射程</span>
-            <strong>${rangeValue}</strong>
-        </div>
-        <div class="unit-row">
-            <span>攻击状态</span>
-            <strong>
-                ${
-                    unit.hasAttacked
-                        ? "本阶段已攻击"
-                        : "可攻击"
-                }
-            </strong>
-        </div>
-        <div class="unit-row">
-            <span>士气</span>
-            <strong>${unit.morale ?? "—"}</strong>
-        </div>
-        <div class="unit-row">
-            <span>压制</span>
-            <strong>${unit.suppression ?? "—"}</strong>
-        </div>
-        <div class="unit-row">
-            <span>疲劳</span>
-            <strong>${unit.fatigue ?? "—"}</strong>
-        </div>
-        <div class="unit-row">
-            <span>弹药</span>
-            <strong>${unit.ammunition ?? "—"}</strong>
-        </div>
-        <div class="unit-row">
-            <span>位置</span>
-            <strong>${unit.q}, ${unit.r}</strong>
-        </div>
-        <div class="unit-row">
-            <span>状态</span>
-            <strong>
-                ${
-                    active
-                        ? "可行动"
-                        : "不可行动"
-                }
-            </strong>
-        </div>
-    `;
-}
-// ============================================================
-// 计算移动范围
-// ============================================================
-function calculateReachable(unit) {
-    clearReachable();
-    if (
-        !unit ||
-        !isUnitAlive(unit)
-    ) {
-        return;
-    }
-    movementSystem.selectUnit(
-        unit,
-        units
-    );
-    if (
-        typeof renderer.setReachable ===
-        "function"
-    ) {
-        renderer.setReachable(
-            movementSystem.reachable
-        );
-    }
-}
-// ============================================================
-// 选择单位
-// ============================================================
-function selectUnit(unit) {
-    if (
-        !unit ||
-        !isUnitAlive(unit)
-    ) {
-        return;
-    }
-    selectedUnit =
-        unit;
-    if (
-        typeof selection.select ===
-        "function"
-    ) {
-        selection.select(
-            unit
-        );
-    }
-    if (
-        typeof renderer.setSelectedUnit ===
-        "function"
-    ) {
-        renderer.setSelectedUnit(
-            unit
-        );
-    }
-    showUnitInfo(
-        unit
-    );
-    if (
-        playerCanControlUnit(
-            unit
-        )
-    ) {
-        calculateReachable(
-            unit
-        );
-    }
-    else {
-        clearReachable();
-    }
-    render();
-}
-// ============================================================
-// 查找 Hex 上的存活单位
-// ============================================================
-function unitAtHex(
-    q,
-    r
-) {
-    return (
-        units.find(
-            unit =>
-                isUnitAlive(unit) &&
-                Number(unit.q) ===
-                Number(q) &&
-                Number(unit.r) ===
-                Number(r)
-        ) ?? null
-    );
-}
-// ============================================================
-// 屏幕 -> 世界坐标
-// ============================================================
-function screenToWorld(
-    screenX,
-    screenY
-) {
-    const zoom =
-        camera.zoom ?? 1;
-    const offsetX =
-        camera.x ??
-        camera.offsetX ??
-        0;
-    const offsetY =
-        camera.y ??
-        camera.offsetY ??
-        0;
-    return {
-        x:
-            (
-                screenX -
-                offsetX
-            ) / zoom,
-        y:
-            (
-                screenY -
-                offsetY
-            ) / zoom
-    };
-}
-// ============================================================
-// 鼠标 -> Hex
-// ============================================================
-function mouseToHex(event) {
-    const rect =
-        canvas.getBoundingClientRect();
-    const mouseX =
-        event.clientX -
-        rect.left;
-    const mouseY =
-        event.clientY -
-        rect.top;
-    const worldPosition =
-        screenToWorld(
-            mouseX,
-            mouseY
-        );
-    const hexSize =
-        renderer.hexSize ??
-        renderer.size ??
-        18;
-    return pixelToHex(
-        worldPosition.x,
-        worldPosition.y,
-        hexSize
-    );
-}
-// ============================================================
-// 点击单位检测
-// ============================================================
-function findUnitAtMouse(event) {
-    const hex =
-        mouseToHex(
-            event
-        );
-    if (!hex) {
-        return null;
-    }
-    const direct =
-        unitAtHex(
-            hex.q,
-            hex.r
-        );
-    if (direct) {
-        return direct;
-    }
-    if (
-        typeof selection.findUnitAt ===
-        "function"
-    ) {
-        const rect =
-            canvas.getBoundingClientRect();
-        const x =
-            event.clientX -
-            rect.left;
-        const y =
-            event.clientY -
-            rect.top;
-        const found =
-            selection.findUnitAt(
-                x,
-                y,
-                units,
-                camera,
-                renderer
-            );
-        if (
-            found &&
-            isUnitAlive(found)
-        ) {
-            return found;
-        }
-    }
-    return null;
-}
-// ============================================================
-// 玩家移动
-// ============================================================
-function tryMoveSelectedUnit(
-    q,
-    r
-) {
-    if (
-        !selectedUnit ||
-        !playerCanControlUnit(
-            selectedUnit
-        )
-    ) {
-        return false;
-    }
-    // ========================================================
-    // 一格一单位
-    // ========================================================
-    const occupyingUnit =
-        unitAtHex(
-            q,
-            r
-        );
-    if (
-        occupyingUnit &&
-        occupyingUnit !==
-        selectedUnit
-    ) {
-        console.log(
-            `[移动] Hex (${q}, ${r}) 已被 ${unitName(occupyingUnit)} 占据`
-        );
-        return false;
-    }
-    if (
-        !movementSystem.canMoveTo(
-            q,
-            r,
-            units
-        )
-    ) {
-        return false;
-    }
-    undoSystem.push({ units, turnSystem, gameOver }, `移动：${unitName(selectedUnit)}`);
-    const moveResult =
-        movementSystem.moveTo(
-            q,
-            r,
-            units
-        );
-    if (
-        !moveResult ||
-        moveResult.success === false
-    ) {
-        undoSystem.discardLast();
-        return false;
-    }
-    selectedUnit =
-        moveResult.unit ??
-        selectedUnit;
-    if (
-        typeof selection.select ===
-        "function"
-    ) {
-        selection.select(
-            selectedUnit
-        );
-    }
-    if (
-        typeof renderer.setSelectedUnit ===
-        "function"
-    ) {
-        renderer.setSelectedUnit(
-            selectedUnit
-        );
-    }
-    if (
-        typeof renderer.setReachable ===
-        "function"
-    ) {
-        renderer.setReachable(
-            movementSystem.reachable
-        );
-    }
-    showUnitInfo(
-        selectedUnit
-    );
-    render();
-    updateSaveControls();
-    return true;
-}
-// ============================================================
-// 战斗消息
-// ============================================================
-function writeBattleMessage(
-    message
-) {
-    console.log(
-        "[战斗]",
-        message
-    );
-    if (unitInfo) {
-        const old =
-            unitInfo.innerHTML;
-        unitInfo.innerHTML =
-            `${old}<hr><div class="battle-message">${message}</div>`;
-    }
-}
-// ============================================================
-// 死亡单位处理
-// ============================================================
-function removeDestroyedUnits() {
-    for (const unit of units) {
-        if (!unit) {
-            continue;
-        }
-        // --------------------------------------------------------
-        // 同时读取 strength / manpower
-        //
-        // CombatSystem 的不同版本可能修改其中任意一个字段，
-        // 因此不能再只依赖 manpower ?? strength。
-        // --------------------------------------------------------
-        const strengthValue =
-            Number(unit.strength);
-        const manpowerValue =
-            Number(unit.manpower);
-        const strengthDead =
-            Number.isFinite(strengthValue) &&
-            strengthValue <= 0;
-        const manpowerDead =
-            Number.isFinite(manpowerValue) &&
-            manpowerValue <= 0;
-        // --------------------------------------------------------
-        // 任意一套兵力系统确认单位死亡，就统一判定阵亡
-        // --------------------------------------------------------
-        const dead =
-            unit.destroyed === true ||
-            strengthDead ||
-            manpowerDead;
-        if (!dead) {
-            continue;
-        }
-        // --------------------------------------------------------
-        // 统一死亡状态
-        // --------------------------------------------------------
-        unit.strength = 0;
-        unit.manpower = 0;
-        unit.destroyed = true;
-        unit.movementPoints = 0;
-        unit.actionPoints = 0;
-        unit.hasAttacked = true;
-        console.log(
-            `[单位系统] ${unit.id} 已被消灭，停止显示与行动`
-        );
-        // --------------------------------------------------------
-        // 如果当前选中的正好是阵亡单位
-        // --------------------------------------------------------
-        if (
-            selectedUnit === unit ||
-            (
-                selectedUnit?.id &&
-                unit.id &&
-                selectedUnit.id === unit.id
-            )
-        ) {
-            selectedUnit = null;
-        }
-    }
-    // ------------------------------------------------------------
-    // 清除死亡单位选择状态
-    // ------------------------------------------------------------
-    if (
-        selectedUnit &&
-        !isUnitAlive(selectedUnit)
-    ) {
-        clearSelection();
-    }
-    // ------------------------------------------------------------
-    // 阵亡单位继续保留在 units 中。
-    // VictorySystem 的 HQ 全灭判定仍然需要这些数据。
-    // ------------------------------------------------------------
-    gameState.units = units;
-}
-// ============================================================
-// 胜负检查
-// ============================================================
-// ============================================================
-// 战役结束弹窗
-// ============================================================
-function showVictoryModal(result) {
-    // 弹窗样式由 main.js 自行注入，避免依赖额外 CSS 文件。
-    if (!document.getElementById("victory-modal-style")) {
-        const style = document.createElement("style");
-        style.id = "victory-modal-style";
-        style.textContent = `
-            #victory-modal { position: fixed; inset: 0; z-index: 100000; font-family: FangSong, STFangsong, SimSun, serif; }
-            #victory-modal .victory-overlay { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; padding: 24px; box-sizing: border-box; background: rgba(18,20,17,.72); backdrop-filter: blur(2px); }
-            #victory-modal .victory-window { width: min(560px, calc(100vw - 48px)); box-sizing: border-box; padding: 34px 38px 30px; border: 2px solid #5a5646; outline: 1px solid #c6b98b; outline-offset: -8px; background: #d6cfb2; color: #24251f; box-shadow: 0 18px 60px rgba(0,0,0,.48); text-align: center; }
-            #victory-modal .victory-decoration { margin-bottom: 18px; font-size: 14px; letter-spacing: .18em; color: #5b584b; }
-            #victory-modal .victory-title { font-size: clamp(34px,5vw,52px); font-weight: 700; letter-spacing: .12em; line-height: 1.15; }
-            #victory-modal .victory-subtitle { margin-top: 8px; font-family: Georgia, 'Times New Roman', serif; font-size: 16px; letter-spacing: .16em; color: #555246; }
-            #victory-modal .victory-line { width: 72%; height: 1px; margin: 22px auto; background: #77715d; }
-            #victory-modal .victory-reason { min-height: 28px; margin-bottom: 22px; font-size: 18px; line-height: 1.65; }
-            #victory-modal .victory-details { width: min(390px,100%); margin: 0 auto 24px; border-top: 1px solid rgba(70,68,57,.35); border-bottom: 1px solid rgba(70,68,57,.35); padding: 10px 0; }
-            #victory-modal .victory-detail-row { display: flex; justify-content: space-between; gap: 20px; padding: 6px 4px; font-size: 15px; text-align: left; }
-            #victory-modal .victory-detail-row strong { text-align: right; }
-            #victory-modal .victory-button { min-width: 150px; padding: 10px 24px; border: 1px solid #4d4b40; background: #666754; color: #f0ecd9; font: inherit; font-size: 16px; cursor: pointer; }
-            #victory-modal .victory-button:hover { background: #555746; }
-            #victory-modal .victory-button:focus-visible { outline: 2px solid #262820; outline-offset: 3px; }
-        `;
-        document.head.appendChild(style);
-    }
-    // --------------------------------------------------------
-    // 防止重复生成弹窗
-    // --------------------------------------------------------
-    const oldModal =
-        document.getElementById(
-            "victory-modal"
-        );
-    if (oldModal) {
-        oldModal.remove();
-    }
-    // --------------------------------------------------------
-    // 胜利阵营
-    // --------------------------------------------------------
-    const winner =
-        normalizeSide(
-            result?.winner
-        );
-    const isGermanVictory =
-        winner === "german";
-    const isSovietVictory =
-        winner === "soviet";
-    // --------------------------------------------------------
-    // 中文标题
-    // --------------------------------------------------------
-    const title =
-        isGermanVictory
-            ? "德军胜利"
-            : isSovietVictory
-                ? "苏军胜利"
-                : "战斗结束";
-    // --------------------------------------------------------
-    // 外文副标题
-    // --------------------------------------------------------
-    const subtitle =
-        isGermanVictory
-            ? "DEUTSCHER SIEG"
-            : isSovietVictory
-                ? "СОВЕТСКАЯ ПОБЕДА"
-                : "BATTLE ENDED";
-    // --------------------------------------------------------
-    // 胜负原因
-    // --------------------------------------------------------
-    const reason =
-        result?.reason ??
-        "战役已经结束";
-    // --------------------------------------------------------
-    // 当前战役日期
-    // --------------------------------------------------------
-    let dateText =
-        "1941年6月";
-    if (turnSystem) {
-        const year =
-            turnSystem.year ??
-            1941;
-        const month =
-            turnSystem.month ??
-            6;
-        const day =
-            turnSystem.day ??
-            26;
-        const hour =
-            turnSystem.hour ??
-            8;
-        const minute =
-            turnSystem.minute ??
-            0;
-        const hourText =
-            String(hour).padStart(
-                2,
-                "0"
-            );
-        const minuteText =
-            String(minute).padStart(
-                2,
-                "0"
-            );
-        dateText =
-            `${year}年${month}月${day}日　${hourText}:${minuteText}`;
-    }
-    // --------------------------------------------------------
-    // 当前回合
-    // --------------------------------------------------------
-    const currentTurn =
-        turnSystem?.turn ??
-        (
-            typeof turnSystem?.getTurnNumber ===
-            "function"
-                ? turnSystem.getTurnNumber()
-                : 1
-        );
-    // --------------------------------------------------------
-    // 创建弹窗
-    // --------------------------------------------------------
-    const modal =
-        document.createElement(
-            "div"
-        );
-    modal.id =
-        "victory-modal";
-    modal.innerHTML = `
-        <div class="victory-overlay">
-            <div class="victory-window">
-                <div class="victory-decoration">
-                    东线 1941 · ${getScenarioConfig().name}
-                </div>
-                <div class="victory-title">
-                    ${title}
-                </div>
-                <div class="victory-subtitle">
-                    ${subtitle}
-                </div>
-                <div class="victory-line"></div>
-                <div class="victory-reason">
-                    ${reason}
-                </div>
-                <div class="victory-details">
-                    <div class="victory-detail-row">
-                        <span>
-                            战役时间
-                        </span>
-                        <strong>
-                            ${dateText}
-                        </strong>
-                    </div>
-                    <div class="victory-detail-row">
-                        <span>
-                            战役回合
-                        </span>
-                        <strong>
-                            第${currentTurn}回合
-                        </strong>
-                    </div>
-                </div>
-                <button
-                    class="victory-button"
-                    id="victory-close-button"
-                    type="button"
-                >
-                    查看战场
-                </button>
-            </div>
-        </div>
-    `;
-    document.body.appendChild(
-        modal
-    );
-    // --------------------------------------------------------
-    // 查看战场
-    // --------------------------------------------------------
-    const closeButton =
-        document.getElementById(
-            "victory-close-button"
-        );
-    if (closeButton) {
-        closeButton.addEventListener(
-            "click",
-            () => {
-                modal.remove();
-            }
-        );
-    }
-}
-function checkVictory() {
-    if (
-        gameOver ||
-        !victorySystem
-    ) {
-        return gameOver;
-    }
-    // 清除兵力为 0 / 已摧毁的单位，确保地图和判定同步
-  // ============================================================
-// 胜负检查时必须保留阵亡单位
-// HQ 全灭判定需要知道哪些指挥单位已经被摧毁
-// ============================================================
-gameState.units =
-    units;
-    const result =
-        victorySystem.check(
-            units,
-            {
-                turn: turnSystem?.turn ?? 1,
-                phase: normalizeSide(turnSystem?.phase ?? "german"),
-                playerSide: getPlayerSide(),
-                scenario,
-                year: turnSystem?.year ?? 1941,
-                month: turnSystem?.month ?? 6,
-                day: turnSystem?.day ?? 26,
-                hour: turnSystem?.hour ?? 8,
-                minute: turnSystem?.minute ?? 0
-            }
-        );
-    if (!result.gameOver) {
-        return false;
-    }
-    gameOver = true;
-    clearSelection();
-    const winnerText =
-        result.winner === "german"
-            ? "德军胜利"
-            : result.winner === "soviet"
-                ? "苏军胜利"
-                : "战斗结束";
-    if (unitInfo) {
-        unitInfo.innerHTML = `
-            <div class="unit-title">
-                战斗结束
-            </div>
-            <div class="unit-row">
-                <strong>
-                    ${winnerText}
-                </strong>
-            </div>
-            <div class="unit-row">
-                <span>
-                    ${result.reason ?? ""}
-                </span>
-            </div>
-        `;
-    }
-    if (turnInfo) {
-        turnInfo.textContent =
-            winnerText;
-    }
-    if (endPhaseButton) {
-        endPhaseButton.disabled =
-            true;
-    }
-    console.log(
-        "========================================"
-    );
-    console.log(
-        `[胜负系统] ${winnerText}`
-    );
-    console.log(
-        `[胜负系统] ${result.reason ?? ""}`
-    );
-    console.log(
-        "========================================"
-    );
-    render();
-    // 胜负确认后显示中央弹窗。
-    // units 不删除阵亡单位，因此 HQ 全灭判定仍保留完整历史状态。
-    showVictoryModal(result);
-    return true;
-}
-// ============================================================
-// 玩家攻击
-// ============================================================
-function performAttack(
-    attacker,
-    defender,
-    {
-        ai = false
-    } = {}
-) {
-    if (
-        gameOver ||
-        !attacker ||
-        !defender ||
-        !isUnitAlive(attacker) ||
-        !isUnitAlive(defender)
-    ) {
-        return false;
-    }
-    if (
-        !combatSystem.canAttack(
-            attacker,
-            defender
-        )
-    ) {
-        return false;
-    }
-    if (!ai) {
-        undoSystem.push({ units, turnSystem, gameOver }, `攻击：${unitName(attacker)}`);
-    }
-    const result =
-        combatSystem.attack(
-            attacker,
-            defender
-        );
-    if (
-        !result?.success
-    ) {
-        if (!ai) undoSystem.discardLast();
-        writeBattleMessage(
-            result?.reason ??
-            "攻击失败"
-        );
-        return false;
-    }
-    const sideLabel =
-        getUnitSide(attacker) ===
-        "german"
-            ? "德军"
-            : "苏军";
-    const prefix =
-        ai
-            ? `${sideLabel} AI：`
-            : "";
-    const destroyedText =
-        result.destroyed
-            ? "，目标被消灭"
-            : "";
-    writeBattleMessage(
-        `${prefix}${unitName(attacker)} 攻击 ${unitName(defender)}，` +
-        `造成 ${result.damage} 点损失 ` +
-        `（${result.beforeStrength}/${getUnitMaxStrength(defender)} → ` +
-        `${result.afterStrength}/${getUnitMaxStrength(defender)}）` +
-        destroyedText
-    );
-    removeDestroyedUnits();
-    // 攻击后立即同步当前被查看单位的数据与右侧信息栏。
-    if (selectedUnit) {
-        const refreshedSelected = units.find(
-            (u) => u === selectedUnit || (u.id && u.id === selectedUnit.id)
-        );
-        if (refreshedSelected && isUnitAlive(refreshedSelected)) {
-            selectedUnit = refreshedSelected;
-            showUnitInfo(refreshedSelected);
-        } else if (!isUnitAlive(selectedUnit)) {
-            clearSelection();
-        }
-    }
-    // 强制重绘，确保地图兵力标签立即反映战损。
-    render();
-    if (
-        !checkVictory()
-    ) {
-        if (
-            selectedUnit &&
-            isUnitAlive(
-                selectedUnit
-            )
-        ) {
-            showUnitInfo(
-                selectedUnit
-            );
-            calculateReachable(
-                selectedUnit
-            );
-        }
-        render();
-    }
-    updateSaveControls();
-    return true;
-}
-// ============================================================
-// 阵营阶段重置
-// ============================================================
-function resetFactionForPhase(
-    faction
-) {
-    movementSystem.resetFaction?.(
-        units,
-        faction
-    );
-    combatSystem.resetFaction?.(
-        units,
-        faction
-    );
-}
-// ============================================================
-// 延时
-// ============================================================
-function sleep(ms) {
-    return new Promise(
-        resolve =>
-            setTimeout(
-                resolve,
-                ms
-            )
-    );
-}
-// ============================================================
-// AI 阶段
-// ============================================================
-async function runAIPhase() {
-    if (
-        aiRunning ||
-        gameOver ||
-        !turnSystem
-    ) {
-        return;
-    }
-    const currentSide =
-        normalizeSide(
-            turnSystem.phase
-        );
-    const playerSide =
-        getPlayerSide();
-    if (
-        !currentSide ||
-        currentSide ===
-        playerSide
-    ) {
-        return;
-    }
-    undoSystem.clear();
-    aiRunning =
-        true;
-    if (endPhaseButton) {
-        endPhaseButton.disabled =
-            true;
-    }
-    try {
-        resetFactionForPhase(
-            currentSide
-        );
-        const aiUnits =
-            units.filter(
-                unit =>
-                    getUnitSide(unit) ===
-                        currentSide &&
-                    isUnitAlive(unit)
-            );
-        const sideLabel =
-            currentSide ===
+
+            config?.roles?.attacker ??
+
+            FactionSystem.getFaction(
+
+                config?.factions?.[0]
+
+            )?.side ??
+
             "german"
-                ? "德军 AI"
-                : "苏军 AI";
-        for (
-            const unit
-            of aiUnits
-        ) {
-            if (gameOver) {
-                break;
-            }
-            if (
-                !isUnitAlive(
-                    unit
-                )
-            ) {
-                continue;
-            }
-            const result =
-                aiSystem.actUnit(
-                    unit,
-                    units
-                );
-            if (
-                result?.type ===
-                    "attack" &&
-                result.result?.success
-            ) {
-                const combat =
-                    result.result;
-                writeBattleMessage(
-                    `${sideLabel}：${unitName(combat.attacker)} 攻击 ${unitName(combat.defender)}，` +
-                    `造成 ${combat.damage} 点损失 ` +
-                    `（${combat.beforeStrength}/${getUnitMaxStrength(combat.defender)} → ` +
-                    `${combat.afterStrength}/${getUnitMaxStrength(combat.defender)}）` +
-                    `${combat.destroyed ? "，目标被消灭" : ""}`
-                );
-            }
-            if (
-                result?.type ===
-                    "move-and-attack" &&
-                result.combat?.success
-            ) {
-                const combat =
-                    result.combat;
-                writeBattleMessage(
-                    `${sideLabel}：${unitName(combat.attacker)} 移动后攻击 ${unitName(combat.defender)}，` +
-                    `造成 ${combat.damage} 点损失 ` +
-                    `（${combat.beforeStrength}/${getUnitMaxStrength(combat.defender)} → ` +
-                    `${combat.afterStrength}/${getUnitMaxStrength(combat.defender)}）` +
-                    `${combat.destroyed ? "，目标被消灭" : ""}`
-                );
-            }
-            removeDestroyedUnits();
-            render();
-            if (
-                checkVictory()
-            ) {
-                break;
-            }
-            await sleep(
-                220
-            );
-        }
-        if (
-            !gameOver &&
-            normalizeSide(
-                turnSystem.phase
-            ) ===
-                currentSide
-        ) {
+
+        );
+
+ 
+
+    const defender =
+
+        normalizeSide(
+
+            config?.roles?.defender ??
+
+            FactionSystem.getFaction(
+
+                config?.factions?.[1]
+
+            )?.side ??
+
+            "soviet"
+
+        );
+
+ 
+
+    renderer.setScenarioSides?.(
+
+        attacker,
+
+        defender
+
+    );
+
+ 
+
+    const startingPhase =
+
+        normalizeSide(
+
+            config?.start?.startingPhase ??
+
+            attacker
+
+        );
+
+ 
+
+    // 行动顺序从实际开局方开始。
+
+    // 台儿庄：日军 -> 中国军
+
+    // 杜布诺/斯摩棱斯克：德军 -> 苏军
+
+    const phaseOrder =
+
+        startingPhase === defender
+
+            ? [defender, attacker]
+
+            : [attacker, defender];
+
+ 
+
+    turnSystem =
+
+        new TurnSystem({
+
+            units,
+
+            year: config.start.year,
+
+            month: config.start.month,
+
+            day: config.start.day,
+
+            hour: config.start.hour,
+
+            minute: config.start.minute,
+
+            hoursPerTurn:
+
+                config.start.hoursPerTurn,
+
+            startingPhase,
+
+            phaseOrder
+
+        });
+
+ 
+
+    turnSystem.onPhaseChanged =
+
+        () => {
+
             clearSelection();
-            turnSystem.endPhase?.();
-            const nextSide =
-                normalizeSide(
-                    turnSystem.phase
-                );
-            resetFactionForPhase(
-                nextSide
-            );
+
             updateTurnUI();
+
             render();
-            if (
-                !gameOver &&
-                nextSide &&
-                nextSide !==
-                    getPlayerSide()
-            ) {
-                setTimeout(
-                    () => {
-                        runAIPhase();
-                    },
-                    250
-                );
+
+        };
+
+ 
+
+    turnSystem.onTurnChanged =
+
+        () => {
+
+            updateTurnUI();
+
+ 
+
+            if (!gameOver) {
+
+                checkVictory();
+
             }
-        }
-    }
-    catch (error) {
-        console.error(
-            "AI 行动失败：",
-            error
-        );
-        if (unitInfo) {
-            unitInfo.innerHTML = `
-                <div class="unit-title">
-                    AI 行动失败
-                </div>
-                <div>
-                    ${error?.message ?? error}
-                </div>
-            `;
-        }
-    }
-    finally {
-        aiRunning =
-            false;
-        if (
-            endPhaseButton &&
-            !gameOver
-        ) {
-            endPhaseButton.disabled =
-                false;
-        }
-    }
+
+ 
+
+            render();
+
+        };
+
+ 
+
+    turnSystem.onTimeChanged =
+
+        () => {
+
+            updateTurnUI();
+
+        };
+
+ 
+
+    updateTurnUI();
+
 }
+
 // ============================================================
-// 鼠标按下
+
+// 动态图例：颜色只代表攻防角色
+
 // ============================================================
-canvas.addEventListener(
-    "mousedown",
-    event => {
-        if (
-            event.button !==
-            0
-        ) {
-            return;
-        }
-        isDragging =
-            true;
-        dragMoved =
-            false;
-        lastMouseX =
-            event.clientX;
-        lastMouseY =
-            event.clientY;
+
+function updateFactionLegend() {
+
+    const config = getScenarioConfig();
+
+ 
+
+    const attacker =
+
+        normalizeSide(
+
+            config?.roles?.attacker ??
+
+            FactionSystem.getFaction(
+
+                config?.factions?.[0]
+
+            )?.side
+
+        );
+
+ 
+
+    const defender =
+
+        normalizeSide(
+
+            config?.roles?.defender ??
+
+            FactionSystem.getFaction(
+
+                config?.factions?.[1]
+
+            )?.side
+
+        );
+
+ 
+
+    const attackerName =
+
+        FactionSystem.getSideName(attacker) ||
+
+        "进攻方";
+
+ 
+
+    const defenderName =
+
+        FactionSystem.getSideName(defender) ||
+
+        "防守方";
+
+ 
+
+    const redLabel =
+
+        document.getElementById(
+
+            "legendRedLabel"
+
+        );
+
+ 
+
+    const blueLabel =
+
+        document.getElementById(
+
+            "legendBlueLabel"
+
+        );
+
+ 
+
+    if (redLabel) {
+
+        redLabel.textContent =
+
+            `红方：进攻方（${attackerName}）`;
+
     }
-);
+
+ 
+
+    if (blueLabel) {
+
+        blueLabel.textContent =
+
+            `蓝方：防守方（${defenderName}）`;
+
+    }
+
+}
+
+ 
+
 // ============================================================
-// 拖动地图
+
+// 回合 UI
+
 // ============================================================
-window.addEventListener(
-    "mousemove",
-    event => {
-        if (!isDragging) {
-            return;
-        }
-        const dx =
-            event.clientX -
-            lastMouseX;
-        const dy =
-            event.clientY -
-            lastMouseY;
-        if (
-            Math.abs(dx) > 2 ||
-            Math.abs(dy) > 2
-        ) {
-            dragMoved =
-                true;
-        }
-        if (
-            typeof camera.pan ===
+
+function updateTurnUI() {
+
+    if (!turnSystem) {
+
+        return;
+
+    }
+
+    if (
+
+        turnInfo &&
+
+        typeof turnSystem.getHeaderText ===
+
+        "function"
+
+    ) {
+
+        turnInfo.textContent =
+
+            turnSystem.getHeaderText();
+
+    }
+
+    const number =
+
+        typeof turnSystem.getTurnNumber ===
+
+        "function"
+
+            ? turnSystem.getTurnNumber()
+
+            : turnSystem.turn ?? 1;
+
+    if (turnNumber) {
+
+        turnNumber.textContent =
+
+            `第${number}回合`;
+
+    }
+
+    if (
+
+        turnTime &&
+
+        typeof turnSystem.getTurnTimeRange ===
+
+        "function"
+
+    ) {
+
+        turnTime.textContent =
+
+            turnSystem.getTurnTimeRange();
+
+    }
+
+    const phase =
+
+        normalizeSide(
+
+            turnSystem.phase
+
+        );
+
+    const phaseName = `${FactionSystem.getSideName(phase)}行动`;
+
+    if (turnPhase) {
+
+        turnPhase.textContent =
+
+            typeof turnSystem.getPhaseName ===
+
             "function"
-        ) {
-            camera.pan(
-                dx,
-                dy
-            );
-        }
-        else {
-            if (
-                Number.isFinite(
-                    camera.x
-                )
-            ) {
-                camera.x +=
-                    dx;
-            }
-            if (
-                Number.isFinite(
-                    camera.y
-                )
-            ) {
-                camera.y +=
-                    dy;
-            }
-            if (
-                Number.isFinite(
-                    camera.offsetX
-                )
-            ) {
-                camera.offsetX +=
-                    dx;
-            }
-            if (
-                Number.isFinite(
-                    camera.offsetY
-                )
-            ) {
-                camera.offsetY +=
-                    dy;
-            }
-        }
-        lastMouseX =
-            event.clientX;
-        lastMouseY =
-            event.clientY;
-        render();
+
+                ? turnSystem.getPhaseName()
+
+                : phaseName;
+
     }
-);
-// ============================================================
-// 鼠标释放
-// ============================================================
-window.addEventListener(
-    "mouseup",
-    () => {
-        isDragging =
-            false;
+
+    if (endPhaseButton) {
+
+        endPhaseButton.textContent =
+
+            `结束${FactionSystem.getSideName(phase)}行动`;
+
     }
-);
+
+ 
+
+    updateFactionLegend();
+
+}
+
 // ============================================================
-// 点击地图
+
+// 当前行动阶段
+
 // ============================================================
-canvas.addEventListener(
-    "click",
-    event => {
-        if (
-            gameOver ||
-            aiRunning
-        ) {
-            return;
-        }
-        if (dragMoved) {
-            dragMoved =
-                false;
-            return;
-        }
-        const clickedUnit =
-            findUnitAtMouse(
-                event
-            );
-        // ====================================================
-        // 点击了单位
-        // ====================================================
-        if (clickedUnit) {
-            // ------------------------------------------------
-            // 已选择玩家单位 + 点击敌军
-            // = 尝试攻击
-            // ------------------------------------------------
-            if (
-                selectedUnit &&
-                playerCanControlUnit(
-                    selectedUnit
-                ) &&
-                getUnitSide(
-                    clickedUnit
-                ) !==
-                getUnitSide(
-                    selectedUnit
-                )
-            ) {
-                if (
-                    performAttack(
-                        selectedUnit,
-                        clickedUnit
-                    )
-                ) {
-                    return;
+
+function isUnitActive(unit) {
+
+    if (!unit) {
+
+        return false;
+
+    }
+
+    if (!turnSystem) {
+
+        return true;
+
+    }
+
+    return (
+
+        getUnitSide(unit) ===
+
+        normalizeSide(
+
+            turnSystem.phase
+
+        )
+
+    );
+
+}
+
+// ============================================================
+
+// 玩家能否控制单位
+
+// ============================================================
+
+function playerCanControlUnit(unit) {
+
+    if (!unit || !isUnitAlive(unit) || gameOver || aiRunning) {
+
+        return false;
+
+    }
+
+    if (gameState.mode === "observer") {
+
+        return false;
+
+    }
+
+    const unitSide = getUnitSide(unit);
+
+    const playerSide = getPlayerSide();
+
+    const phaseSide = normalizeSide(turnSystem?.phase);
+
+    // 没有明确玩家阵营时，绝不默认允许控制，防止误控 AI 阵营。
+
+    if (!["german", "soviet", "chinese", "japanese", "british", "italian", "american"].includes(playerSide)) {
+
+        return false;
+
+    }
+
+    // 只能控制玩家自己选择的阵营。
+
+    if (unitSide !== playerSide) {
+
+        return false;
+
+    }
+
+    // 只能在本方行动阶段操作。
+
+    if (turnSystem && phaseSide !== playerSide) {
+
+        return false;
+
+    }
+
+    return true;
+
+}
+
+// ============================================================
+
+// 查看单位
+
+// ============================================================
+
+function playerCanViewUnit(unit) {
+
+    return (
+
+        unit != null &&
+
+        isUnitAlive(unit)
+
+    );
+
+}
+
+// ============================================================
+
+// 清除移动范围
+
+// ============================================================
+
+function clearReachable() {
+
+    if (
+
+        typeof renderer.clearReachable ===
+
+        "function"
+
+    ) {
+
+        renderer.clearReachable();
+
+    }
+
+    if (
+
+        movementSystem.reachable instanceof
+
+        Map
+
+    ) {
+
+        movementSystem.reachable.clear();
+
+    }
+
+}
+
+// ============================================================
+
+// 清除选择
+
+// ============================================================
+
+function clearSelection() {
+
+    selectedUnit =
+
+        null;
+
+    if (
+
+        typeof selection.clear ===
+
+        "function"
+
+    ) {
+
+        selection.clear();
+
+    }
+
+    if (
+
+        typeof renderer.setSelectedUnit ===
+
+        "function"
+
+    ) {
+
+        renderer.setSelectedUnit(
+
+            null
+
+        );
+
+    }
+
+    if (
+
+        typeof movementSystem.clear ===
+
+        "function"
+
+    ) {
+
+        movementSystem.clear();
+
+    }
+
+    clearReachable();
+
+    if (unitInfo) {
+
+        unitInfo.innerHTML =
+
+            '<p class="hint">点击地图上的单位查看详情</p>';
+
+    }
+
+}
+
+// ============================================================
+
+// 单位信息
+
+// ============================================================
+
+function showUnitInfo(unit) {
+
+    if (
+
+        !unitInfo ||
+
+        !unit
+
+    ) {
+
+        return;
+
+    }
+
+    const side =
+
+        getUnitSide(
+
+            unit
+
+        );
+
+    const sideName = FactionSystem.getSideName(side) || "未知";
+
+    const name =
+
+        unitName(
+
+            unit
+
+        );
+
+    const type =
+
+        unit.typeZh ??
+
+        unit.type ??
+
+        unit.unitType ??
+
+        "未知";
+
+    const ap =
+
+        unit.movementPoints ??
+
+        unit.actionPoints ??
+
+        unit.ap ??
+
+        "—";
+
+    const maxAP =
+
+        unit.maxMovementPoints ??
+
+        unit.maxActionPoints ??
+
+        unit.maxAP ??
+
+        "—";
+
+    const attackValue =
+
+        combatSystem.getAttack(
+
+            unit
+
+        );
+
+    const defenseValue =
+
+        combatSystem.getDefense(
+
+            unit
+
+        );
+
+    const rangeValue =
+
+        combatSystem.getRange(
+
+            unit
+
+        );
+
+    const active =
+
+        playerCanControlUnit(
+
+            unit
+
+        );
+
+    unitInfo.innerHTML = `
+
+        <div class="unit-title">
+
+            ${name}
+
+        </div>
+
+        <div class="unit-row">
+
+            <span>ID</span>
+
+            <strong>${unit.id}</strong>
+
+        </div>
+
+        <div class="unit-row">
+
+            <span>阵营</span>
+
+            <strong>${sideName}</strong>
+
+        </div>
+
+        <div class="unit-row">
+
+            <span>兵种</span>
+
+            <strong>${type}</strong>
+
+        </div>
+
+        <div class="unit-row">
+
+            <span>编制</span>
+
+            <strong>${unit.echelon ?? "—"}</strong>
+
+        </div>
+
+        <div class="unit-row">
+
+            <span>行动点</span>
+
+            <strong>${ap} / ${maxAP}</strong>
+
+        </div>
+
+        <div class="unit-row">
+
+            <span>兵力</span>
+
+            <strong>${getStrengthText(unit)}</strong>
+
+        </div>
+
+        <div class="unit-row">
+
+            <span>攻击</span>
+
+            <strong>${attackValue}</strong>
+
+        </div>
+
+        <div class="unit-row">
+
+            <span>防御</span>
+
+            <strong>${defenseValue}</strong>
+
+        </div>
+
+        <div class="unit-row">
+
+            <span>射程</span>
+
+            <strong>${rangeValue}</strong>
+
+        </div>
+
+        <div class="unit-row">
+
+            <span>攻击状态</span>
+
+            <strong>
+
+                ${
+
+                    unit.hasAttacked
+
+                        ? "本阶段已攻击"
+
+                        : "可攻击"
+
                 }
-                writeBattleMessage(
-                    `无法攻击 ${unitName(clickedUnit)}：` +
-                    `请检查射程或该单位是否已经攻击`
-                );
-                render();
-                return;
-            }
-            if (
-                playerCanViewUnit(
-                    clickedUnit
-                )
-            ) {
-                selectUnit(
-                    clickedUnit
-                );
-            }
-            return;
-        }
-        // ====================================================
-        // 点击空格 = 尝试移动
-        // ====================================================
-        if (selectedUnit) {
-            const hex =
-                mouseToHex(
-                    event
-                );
-            if (
-                hex &&
-                tryMoveSelectedUnit(
-                    hex.q,
-                    hex.r
-                )
-            ) {
-                return;
-            }
-        }
-        clearSelection();
-        render();
+
+            </strong>
+
+        </div>
+
+        <div class="unit-row">
+
+            <span>士气</span>
+
+            <strong>${unit.morale ?? "—"}</strong>
+
+        </div>
+
+        <div class="unit-row">
+
+            <span>压制</span>
+
+            <strong>${unit.suppression ?? "—"}</strong>
+
+        </div>
+
+        <div class="unit-row">
+
+            <span>疲劳</span>
+
+            <strong>${unit.fatigue ?? "—"}</strong>
+
+        </div>
+
+        <div class="unit-row">
+
+            <span>弹药</span>
+
+            <strong>${unit.ammunition ?? "—"}</strong>
+
+        </div>
+
+        <div class="unit-row">
+
+            <span>位置</span>
+
+            <strong>${unit.q}, ${unit.r}</strong>
+
+        </div>
+
+        <div class="unit-row">
+
+            <span>状态</span>
+
+            <strong>
+
+                ${
+
+                    active
+
+                        ? "可行动"
+
+                        : "不可行动"
+
+                }
+
+            </strong>
+
+        </div>
+
+    `;
+
+}
+
+// ============================================================
+
+// 计算移动范围
+
+// ============================================================
+
+function calculateReachable(unit) {
+
+    clearReachable();
+
+    if (
+
+        !unit ||
+
+        !isUnitAlive(unit)
+
+    ) {
+
+        return;
+
     }
-);
+
+    movementSystem.selectUnit(
+
+        unit,
+
+        units
+
+    );
+
+    if (
+
+        typeof renderer.setReachable ===
+
+        "function"
+
+    ) {
+
+        renderer.setReachable(
+
+            movementSystem.reachable
+
+        );
+
+    }
+
+}
+
 // ============================================================
-// 滚轮缩放
+
+// 选择单位
+
 // ============================================================
-canvas.addEventListener(
-    "wheel",
-    event => {
-        event.preventDefault();
+
+function selectUnit(unit) {
+
+    if (
+
+        !unit ||
+
+        !isUnitAlive(unit)
+
+    ) {
+
+        return;
+
+    }
+
+    selectedUnit =
+
+        unit;
+
+    if (
+
+        typeof selection.select ===
+
+        "function"
+
+    ) {
+
+        selection.select(
+
+            unit
+
+        );
+
+    }
+
+    if (
+
+        typeof renderer.setSelectedUnit ===
+
+        "function"
+
+    ) {
+
+        renderer.setSelectedUnit(
+
+            unit
+
+        );
+
+    }
+
+    showUnitInfo(
+
+        unit
+
+    );
+
+    if (
+
+        playerCanControlUnit(
+
+            unit
+
+        )
+
+    ) {
+
+        calculateReachable(
+
+            unit
+
+        );
+
+    }
+
+    else {
+
+        clearReachable();
+
+    }
+
+    render();
+
+}
+
+// ============================================================
+
+// 查找 Hex 上的存活单位
+
+// ============================================================
+
+function unitAtHex(
+
+    q,
+
+    r
+
+) {
+
+    return (
+
+        units.find(
+
+            unit =>
+
+                isUnitAlive(unit) &&
+
+                Number(unit.q) ===
+
+                Number(q) &&
+
+                Number(unit.r) ===
+
+                Number(r)
+
+        ) ?? null
+
+    );
+
+}
+
+// ============================================================
+
+// 屏幕 -> 世界坐标
+
+// ============================================================
+
+function screenToWorld(
+
+    screenX,
+
+    screenY
+
+) {
+
+    const zoom =
+
+        camera.zoom ?? 1;
+
+    const offsetX =
+
+        camera.x ??
+
+        camera.offsetX ??
+
+        0;
+
+    const offsetY =
+
+        camera.y ??
+
+        camera.offsetY ??
+
+        0;
+
+    return {
+
+        x:
+
+            (
+
+                screenX -
+
+                offsetX
+
+            ) / zoom,
+
+        y:
+
+            (
+
+                screenY -
+
+                offsetY
+
+            ) / zoom
+
+    };
+
+}
+
+// ============================================================
+
+// 鼠标 -> Hex
+
+// ============================================================
+
+function mouseToHex(event) {
+
+    const rect =
+
+        canvas.getBoundingClientRect();
+
+    const mouseX =
+
+        event.clientX -
+
+        rect.left;
+
+    const mouseY =
+
+        event.clientY -
+
+        rect.top;
+
+    const worldPosition =
+
+        screenToWorld(
+
+            mouseX,
+
+            mouseY
+
+        );
+
+    const hexSize =
+
+        renderer.hexSize ??
+
+        renderer.size ??
+
+        18;
+
+    return pixelToHex(
+
+        worldPosition.x,
+
+        worldPosition.y,
+
+        hexSize
+
+    );
+
+}
+
+// ============================================================
+
+// 点击单位检测
+
+// ============================================================
+
+function findUnitAtMouse(event) {
+
+    const hex =
+
+        mouseToHex(
+
+            event
+
+        );
+
+    if (!hex) {
+
+        return null;
+
+    }
+
+    const direct =
+
+        unitAtHex(
+
+            hex.q,
+
+            hex.r
+
+        );
+
+    if (direct) {
+
+        return direct;
+
+    }
+
+    if (
+
+        typeof selection.findUnitAt ===
+
+        "function"
+
+    ) {
+
         const rect =
+
             canvas.getBoundingClientRect();
-        const mouseX =
+
+        const x =
+
             event.clientX -
+
             rect.left;
-        const mouseY =
+
+        const y =
+
             event.clientY -
+
             rect.top;
-        const oldZoom =
-            camera.zoom ?? 1;
-        const factor =
-            event.deltaY < 0
-                ? 1.1
-                : 0.9;
-        const minZoom =
-            camera.minZoom ??
-            0.35;
-        const maxZoom =
-            camera.maxZoom ??
-            3;
-        const newZoom =
-            Math.max(
-                minZoom,
-                Math.min(
-                    maxZoom,
-                    oldZoom *
-                    factor
-                )
+
+        const found =
+
+            selection.findUnitAt(
+
+                x,
+
+                y,
+
+                units,
+
+                camera,
+
+                renderer
+
             );
+
         if (
-            typeof camera.zoomAt ===
-            "function"
+
+            found &&
+
+            isUnitAlive(found)
+
         ) {
-            camera.zoomAt(
-                mouseX,
-                mouseY,
-                newZoom
-            );
-            render();
-            return;
+
+            return found;
+
         }
-        const oldX =
-            camera.x ??
-            camera.offsetX ??
-            0;
-        const oldY =
-            camera.y ??
-            camera.offsetY ??
-            0;
-        const worldX =
-            (
-                mouseX -
-                oldX
-            ) /
-            oldZoom;
-        const worldY =
-            (
-                mouseY -
-                oldY
-            ) /
-            oldZoom;
-        const newX =
-            mouseX -
-            worldX *
-            newZoom;
-        const newY =
-            mouseY -
-            worldY *
-            newZoom;
-        camera.zoom =
-            newZoom;
-        if (
-            "x" in camera
-        ) {
-            camera.x =
-                newX;
-        }
-        if (
-            "y" in camera
-        ) {
-            camera.y =
-                newY;
-        }
-        if (
-            "offsetX" in camera
-        ) {
-            camera.offsetX =
-                newX;
-        }
-        if (
-            "offsetY" in camera
-        ) {
-            camera.offsetY =
-                newY;
-        }
-        render();
-    },
-    {
-        passive: false
+
     }
-);
+
+    return null;
+
+}
+
 // ============================================================
-// 结束当前阶段
+
+// 玩家移动
+
 // ============================================================
-function endCurrentPhase() {
+
+function tryMoveSelectedUnit(
+
+    q,
+
+    r
+
+) {
+
     if (
-        gameOver ||
-        aiRunning ||
-        !turnSystem
+
+        !selectedUnit ||
+
+        !playerCanControlUnit(
+
+            selectedUnit
+
+        )
+
     ) {
-        return;
+
+        return false;
+
     }
-    const currentSide =
-        normalizeSide(
-            turnSystem.phase
-        );
-    const playerSide =
-        getPlayerSide();
-    if (
-        playerSide &&
-        currentSide !==
-            playerSide
-    ) {
-        runAIPhase();
-        return;
-    }
-    saveSystem.autoSave({ units, turnSystem, gameState, gameOver, scenario });
-    undoSystem.clear();
-    clearSelection();
-    turnSystem.endPhase?.();
-    const nextSide =
-        normalizeSide(
-            turnSystem.phase
-        );
-    resetFactionForPhase(
-        nextSide
-    );
-    if (nextSide === getPlayerSide()) {
-        saveSystem.autoSave({ units, turnSystem, gameState, gameOver, scenario });
-    }
-    updateTurnUI();
-    render();
-    if (
-        !gameOver &&
-        nextSide &&
-        nextSide !==
-            getPlayerSide()
-    ) {
-        setTimeout(
-            () => {
-                runAIPhase();
-            },
-            250
-        );
-    }
-}
-// ============================================================
-// 存档 / 读取 / 撤销
-// ============================================================
-function applySnapshot(snapshot) {
-    if (!snapshot || !Array.isArray(snapshot.units)) return false;
-    units = JSON.parse(JSON.stringify(snapshot.units));
-    gameState.units = units;
-    gameOver = snapshot.gameOver === true;
-    if (snapshot.playerFaction) {
-        gameState.playerFaction = snapshot.playerFaction;
-        gameState.playerSide = snapshot.playerFaction;
-        gameState.selectedFaction = snapshot.playerFaction;
-        gameState.selectedSide = snapshot.playerFaction;
-    }
-    if (snapshot.mode) gameState.mode = snapshot.mode;
-    const t = snapshot.turn ?? {};
-    if (turnSystem) {
-        for (const key of ["turn", "phase", "year", "month", "day", "hour", "minute"]) {
-            if (t[key] != null) turnSystem[key] = t[key];
-        }
-        if (Array.isArray(t.units)) turnSystem.units = units;
-    }
-    clearSelection();
-    removeDestroyedUnits();
-    updateTurnUI();
-    render();
-    return true;
-}
-function saveGame(slot = 1) {
-    if (aiRunning) return false;
-    saveSystem.save(slot, { units, turnSystem, gameState, gameOver, scenario });
-    updateSaveControls();
-    console.log(`[存档] 槽位 ${slot} 保存成功`);
-    return true;
-}
-function loadGame(slot = 1) {
-    if (aiRunning) return false;
-    const snapshot = saveSystem.load(slot);
-    if (!snapshot) return false;
-    undoSystem.clear();
-    applySnapshot(snapshot);
-    updateSaveControls();
-    console.log(`[存档] 槽位 ${slot} 读取成功`);
-    return true;
-}
-function undoLastAction() {
-    if (aiRunning || gameOver) return false;
-    const entry = undoSystem.undo();
-    if (!entry) return false;
-    applySnapshot(entry.snapshot);
-    updateSaveControls();
-    console.log(`[撤销] ${entry.label}`);
-    return true;
-}
-function ensureSaveControls() {
-    const slotSelect = document.getElementById("save-slot-select");
-    const saveButton = document.getElementById("save-game-button");
-    const loadButton = document.getElementById("load-game-button");
-    const undoButton = document.getElementById("undo-game-button");
-    if (!slotSelect || !saveButton || !loadButton || !undoButton) {
-        console.error("[存档系统] index.html 缺少存档/读取/撤销控件");
-        return;
-    }
-    const selectedSlot = () => Number(slotSelect.value ?? 1);
-    saveButton.addEventListener("click", () => {
-        saveGame(selectedSlot());
-    });
-    loadButton.addEventListener("click", () => {
-        if (!loadGame(selectedSlot())) {
-            alert("该槽位没有可读取的存档。");
-        }
-    });
-    undoButton.addEventListener("click", () => {
-        undoLastAction();
-    });
-    slotSelect.addEventListener("change", updateSaveControls);
-    updateSaveControls();
-}
-function updateSaveControls() {
-    const slot = Number(document.getElementById("save-slot-select")?.value ?? 1);
-    const loadButton = document.getElementById("load-game-button");
-    const undoButton = document.getElementById("undo-game-button");
-    if (loadButton) loadButton.disabled = aiRunning || !saveSystem.has(slot);
-    if (undoButton) undoButton.disabled = aiRunning || gameOver || !undoSystem.canUndo();
-}
-// ============================================================
-// 结束行动按钮
-// ============================================================
-endPhaseButton?.addEventListener(
-    "click",
-    () => {
-        endCurrentPhase();
-    }
-);
-// ============================================================
-// 键盘
-// ============================================================
-window.addEventListener(
-    "keydown",
-    event => {
-        if (event.ctrlKey && event.key.toLowerCase() === "s") { event.preventDefault(); saveGame(Number(document.getElementById("save-slot-select")?.value ?? 1)); return; }
-        if (event.ctrlKey && event.key.toLowerCase() === "z") { event.preventDefault(); undoLastAction(); return; }
-        if (
-            event.key ===
-            "Escape"
-        ) {
-            clearSelection();
-            render();
-            return;
-        }
-        if (
-            event.key.toLowerCase() ===
-            "e"
-        ) {
-            endCurrentPhase();
-        }
-    }
-);
-// ============================================================
-// 玩家选择阵营之后
-// ============================================================
-function startGame() {
-    ensureSaveControls();
-    saveSystem.autoSave({ units, turnSystem, gameState, gameOver, scenario });
-    updateSaveControls();
-    console.log(
-        "玩家阵营：",
-        getPlayerSide()
-    );
-    console.log(
-        "游戏模式：",
-        gameState.mode
-    );
-    clearSelection();
-    updateTurnUI();
-    resizeCanvas();
-    render();
-    const currentSide =
-        normalizeSide(
-            turnSystem?.phase
-        );
-    const playerSide =
-        getPlayerSide();
-    // 把最终选择结果同步回所有常见字段，确保其它系统读取到同一阵营。
-    if (playerSide === "german" || playerSide === "soviet") {
-        gameState.playerFaction = playerSide;
-        gameState.playerSide = playerSide;
-        gameState.selectedFaction = playerSide;
-        gameState.selectedSide = playerSide;
-    }
-    console.log("[控制系统] 玩家阵营已统一为：", playerSide);
-    console.log("[控制系统] 当前行动方：", currentSide);
+
     // ========================================================
-    // 如果开局行动方不是玩家
-    // AI 自动行动
+
+    // 一格一单位
+
     // ========================================================
-    if (
-        gameState.mode !==
-            "observer" &&
-        currentSide &&
-        playerSide &&
-        currentSide !==
-            playerSide
-    ) {
-        setTimeout(
-            () => {
-                runAIPhase();
-            },
-            250
+
+    const occupyingUnit =
+
+        unitAtHex(
+
+            q,
+
+            r
+
         );
+
+    if (
+
+        occupyingUnit &&
+
+        occupyingUnit !==
+
+        selectedUnit
+
+    ) {
+
+        console.log(
+
+            `[移动] Hex (${q}, ${r}) 已被 ${unitName(occupyingUnit)} 占据`
+
+        );
+
+        return false;
+
     }
+
+    if (
+
+        !movementSystem.canMoveTo(
+
+            q,
+
+            r,
+
+            units
+
+        )
+
+    ) {
+
+        return false;
+
+    }
+
+    undoSystem.push({ units, turnSystem, gameOver }, `移动：${unitName(selectedUnit)}`);
+
+    const moveResult =
+
+        movementSystem.moveTo(
+
+            q,
+
+            r,
+
+            units
+
+        );
+
+    if (
+
+        !moveResult ||
+
+        moveResult.success === false
+
+    ) {
+
+        undoSystem.discardLast();
+
+        return false;
+
+    }
+
+    selectedUnit =
+
+        moveResult.unit ??
+
+        selectedUnit;
+
+    if (
+
+        typeof selection.select ===
+
+        "function"
+
+    ) {
+
+        selection.select(
+
+            selectedUnit
+
+        );
+
+    }
+
+    if (
+
+        typeof renderer.setSelectedUnit ===
+
+        "function"
+
+    ) {
+
+        renderer.setSelectedUnit(
+
+            selectedUnit
+
+        );
+
+    }
+
+    if (
+
+        typeof renderer.setReachable ===
+
+        "function"
+
+    ) {
+
+        renderer.setReachable(
+
+            movementSystem.reachable
+
+        );
+
+    }
+
+    showUnitInfo(
+
+        selectedUnit
+
+    );
+
+    render();
+
+    updateSaveControls();
+
+    return true;
+
 }
+
 // ============================================================
-// 加载游戏数据
+
+// 战斗消息
+
 // ============================================================
-async function loadScenario(scenarioKey = "dubno") {
-    try {
-        const config = SCENARIOS[scenarioKey];
-        if (!config) {
-            throw new Error(`未知战役：${scenarioKey}`);
+
+function writeBattleMessage(
+
+    message
+
+) {
+
+    console.log(
+
+        "[战斗]",
+
+        message
+
+    );
+
+    if (unitInfo) {
+
+        const old =
+
+            unitInfo.innerHTML;
+
+        unitInfo.innerHTML =
+
+            `${old}<hr><div class="battle-message">${message}</div>`;
+
+    }
+
+}
+
+// ============================================================
+
+// 死亡单位处理
+
+// ============================================================
+
+function removeDestroyedUnits() {
+
+    for (const unit of units) {
+
+        if (!unit) {
+
+            continue;
+
         }
-        currentScenarioKey = scenarioKey;
-        gameOver = false;
-        aiRunning = false;
+
+        // --------------------------------------------------------
+
+        // 同时读取 strength / manpower
+
+        //
+
+        // CombatSystem 的不同版本可能修改其中任意一个字段，
+
+        // 因此不能再只依赖 manpower ?? strength。
+
+        // --------------------------------------------------------
+
+        const strengthValue =
+
+            Number(unit.strength);
+
+        const manpowerValue =
+
+            Number(unit.manpower);
+
+        const strengthDead =
+
+            Number.isFinite(strengthValue) &&
+
+            strengthValue <= 0;
+
+        const manpowerDead =
+
+            Number.isFinite(manpowerValue) &&
+
+            manpowerValue <= 0;
+
+        // --------------------------------------------------------
+
+        // 任意一套兵力系统确认单位死亡，就统一判定阵亡
+
+        // --------------------------------------------------------
+
+        const dead =
+
+            unit.destroyed === true ||
+
+            strengthDead ||
+
+            manpowerDead;
+
+        if (!dead) {
+
+            continue;
+
+        }
+
+        // --------------------------------------------------------
+
+        // 统一死亡状态
+
+        // --------------------------------------------------------
+
+        unit.strength = 0;
+
+        unit.manpower = 0;
+
+        unit.destroyed = true;
+
+        unit.movementPoints = 0;
+
+        unit.actionPoints = 0;
+
+        unit.hasAttacked = true;
+
+        console.log(
+
+            `[单位系统] ${unit.id} 已被消灭，停止显示与行动`
+
+        );
+
+        // --------------------------------------------------------
+
+        // 如果当前选中的正好是阵亡单位
+
+        // --------------------------------------------------------
+
+        if (
+
+            selectedUnit === unit ||
+
+            (
+
+                selectedUnit?.id &&
+
+                unit.id &&
+
+                selectedUnit.id === unit.id
+
+            )
+
+        ) {
+
+            selectedUnit = null;
+
+        }
+
+    }
+
+    // ------------------------------------------------------------
+
+    // 清除死亡单位选择状态
+
+    // ------------------------------------------------------------
+
+    if (
+
+        selectedUnit &&
+
+        !isUnitAlive(selectedUnit)
+
+    ) {
+
         clearSelection();
-        undoSystem.clear?.();
-        console.log("========================================");
-        console.log(`[战役系统] 选择战役：${config.name}`);
-        console.log(`[战役系统] 场景：${config.scenarioPath}`);
-        console.log(`[战役系统] 单位：${config.unitsPath}`);
-        console.log("========================================");
-        // 1. 加载所选战役的 scenario JSON。
-        const scenarioResponse = await fetch(config.scenarioPath, { cache: "no-store" });
-        if (!scenarioResponse.ok) {
-            throw new Error(`${config.name} 场景加载失败：HTTP ${scenarioResponse.status}；请确认 ${config.scenarioPath} 已存在`);
-        }
-        scenario = await scenarioResponse.json();
-        scenario.key = scenario.key ?? config.key;
-        scenario.name = scenario.name ?? config.name;
-        // 2. 将地图配置交给 WorldMap。新版 WorldMap 可实现 loadScenario/applyScenario/loadMap；
-        //    旧版则由兼容逻辑同步 width/height/terrain/道路/铁路/河流/城镇/工事等字段。
-        applyScenarioToWorld(scenario);
-        // 3. 加载本战役单位。
-        units = await loadUnitsFromJSON(config.unitsPath);
-        if (!Array.isArray(units) || units.length === 0) {
-            throw new Error(`${config.unitsPath} 中没有可用单位`);
-        }
-        // 4. 初始化、清理和验证。
-        initializeUnits();
-        units = units.filter(unit => isUnitAlive(unit));
-        if (!validateUnits(units)) {
-            throw new Error(`${config.unitsPath} 单位数据检查失败，请查看浏览器控制台`);
-        }
-        const germanCount = units.filter(unit => getUnitSide(unit) === "german").length;
-        const sovietCount = units.filter(unit => getUnitSide(unit) === "soviet").length;
-        console.log(`[单位系统] ${config.name} 战斗序列加载完成`);
-        console.log(`[单位系统] 总单位：${units.length}；德军：${germanCount}；苏军：${sovietCount}`);
-        // 5. 同步 GameState。
-        gameState.units = units;
-        gameState.scenarioKey = config.key;
-        gameState.scenarioName = config.name;
-        // 6. 按战役配置初始化时间/回合与胜负系统。
-        initializeTurnSystem();
-        victorySystem = new VictorySystem({ scenario });
-        // 7. 重新布置镜头。不同版本 Camera 的接口不一致，因此只调用存在的接口。
-        if (typeof camera.reset === "function") camera.reset();
-        if (typeof camera.centerOnMap === "function") camera.centerOnMap(world, canvas, renderer);
-        resizeCanvas();
-        render();
-        // 8. 关卡选择完成后，才进入阵营选择。
-        if (typeof factionSelection.show === "function") {
-            factionSelection.show(startGame);
-        } else {
-            startGame();
-        }
-        console.log(`东线 1941 V1.5 已启动：${config.name}`);
-        if (turnSystem && typeof turnSystem.getState === "function") {
-            console.log("回合状态：", turnSystem.getState());
-        }
-    } catch (error) {
-        console.error("游戏初始化失败：", error);
-        if (unitInfo) {
-            unitInfo.innerHTML = `
-                <strong>游戏数据加载失败</strong>
-                <br><br>
-                ${error.message}
-                <br><br>
-                <button id="return-scenario-selection" type="button">返回战役选择</button>
-            `;
-            document.getElementById("return-scenario-selection")?.addEventListener("click", showScenarioSelection);
-        } else {
-            showScenarioSelection();
-        }
+
     }
+
+    // ------------------------------------------------------------
+
+    // 阵亡单位继续保留在 units 中。
+
+    // VictorySystem 的 HQ 全灭判定仍然需要这些数据。
+
+    // ------------------------------------------------------------
+
+    gameState.units = units;
+
 }
+
 // ============================================================
-// 窗口变化
+
+// 胜负检查
+
 // ============================================================
-window.addEventListener(
-    "resize",
-    () => {
-        resizeCanvas();
-        render();
+
+// ============================================================
+
+// 战役结束弹窗
+
+// ============================================================
+
+function showVictoryModal(result) {
+
+    // 弹窗样式由 main.js 自行注入，避免依赖额外 CSS 文件。
+
+    if (!document.getElementById("victory-modal-style")) {
+
+        const style = document.createElement("style");
+
+        style.id = "victory-modal-style";
+
+        style.textContent = `
+
+            #victory-modal { position: fixed; inset: 0; z-index: 100000; font-family: FangSong, STFangsong, SimSun, serif; }
+
+            #victory-modal .victory-overlay { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; padding: 24px; box-sizing: border-box; background: rgba(18,20,17,.72); backdrop-filter: blur(2px); }
+
+            #victory-modal .victory-window { width: min(560px, calc(100vw - 48px)); box-sizing: border-box; padding: 34px 38px 30px; border: 2px solid #5a5646; outline: 1px solid #c6b98b; outline-offset: -8px; background: #d6cfb2; color: #24251f; box-shadow: 0 18px 60px rgba(0,0,0,.48); text-align: center; }
+
+            #victory-modal .victory-decoration { margin-bottom: 18px; font-size: 14px; letter-spacing: .18em; color: #5b584b; }
+
+            #victory-modal .victory-title { font-size: clamp(34px,5vw,52px); font-weight: 700; letter-spacing: .12em; line-height: 1.15; }
+
+            #victory-modal .victory-subtitle { margin-top: 8px; font-family: Georgia, 'Times New Roman', serif; font-size: 16px; letter-spacing: .16em; color: #555246; }
+
+            #victory-modal .victory-line { width: 72%; height: 1px; margin: 22px auto; background: #77715d; }
+
+            #victory-modal .victory-reason { min-height: 28px; margin-bottom: 22px; font-size: 18px; line-height: 1.65; }
+
+            #victory-modal .victory-details { width: min(390px,100%); margin: 0 auto 24px; border-top: 1px solid rgba(70,68,57,.35); border-bottom: 1px solid rgba(70,68,57,.35); padding: 10px 0; }
+
+            #victory-modal .victory-detail-row { display: flex; justify-content: space-between; gap: 20px; padding: 6px 4px; font-size: 15px; text-align: left; }
+
+            #victory-modal .victory-detail-row strong { text-align: right; }
+
+            #victory-modal .victory-button { min-width: 150px; padding: 10px 24px; border: 1px solid #4d4b40; background: #666754; color: #f0ecd9; font: inherit; font-size: 16px; cursor: pointer; }
+
+            #victory-modal .victory-button:hover { background: #555746; }
+
+            #victory-modal .victory-button:focus-visible { outline: 2px solid #262820; outline-offset: 3px; }
+
+        `;
+
+        document.head.appendChild(style);
+
     }
+
+    // --------------------------------------------------------
+
+    // 防止重复生成弹窗
+
+    // --------------------------------------------------------
+
+    const oldModal =
+
+        document.getElementById(
+
+            "victory-modal"
+
+        );
+
+    if (oldModal) {
+
+        oldModal.remove();
+
+    }
+
+    // --------------------------------------------------------
+
+    // 胜利阵营
+
+    // --------------------------------------------------------
+
+    const winner =
+
+        normalizeSide(
+
+            result?.winner
+
+        );
+
+    const winnerName = FactionSystem.getSideName(winner);
+
+    // --------------------------------------------------------
+
+    // 中文标题
+
+    // --------------------------------------------------------
+
+    const title = winnerName ? `${winnerName}胜利` : "战斗结束";
+
+    // --------------------------------------------------------
+
+    // 外文副标题
+
+    // --------------------------------------------------------
+
+    const subtitle = winnerName ? "VICTORY" : "BATTLE ENDED";
+
+    // --------------------------------------------------------
+
+    // 胜负原因
+
+    // --------------------------------------------------------
+
+    const reason =
+
+        result?.reason ??
+
+        "战役已经结束";
+
+    // --------------------------------------------------------
+
+    // 当前战役日期
+
+    // --------------------------------------------------------
+
+    let dateText =
+
+        "1941年6月";
+
+    if (turnSystem) {
+
+        const year =
+
+            turnSystem.year ??
+
+            1941;
+
+        const month =
+
+            turnSystem.month ??
+
+            6;
+
+        const day =
+
+            turnSystem.day ??
+
+            26;
+
+        const hour =
+
+            turnSystem.hour ??
+
+            8;
+
+        const minute =
+
+            turnSystem.minute ??
+
+            0;
+
+        const hourText =
+
+            String(hour).padStart(
+
+                2,
+
+                "0"
+
+            );
+
+        const minuteText =
+
+            String(minute).padStart(
+
+                2,
+
+                "0"
+
+            );
+
+        dateText =
+
+            `${year}年${month}月${day}日　${hourText}:${minuteText}`;
+
+    }
+
+    // --------------------------------------------------------
+
+    // 当前回合
+
+    // --------------------------------------------------------
+
+    const currentTurn =
+
+        turnSystem?.turn ??
+
+        (
+
+            typeof turnSystem?.getTurnNumber ===
+
+            "function"
+
+                ? turnSystem.getTurnNumber()
+
+                : 1
+
+        );
+
+    // --------------------------------------------------------
+
+    // 创建弹窗
+
+    // --------------------------------------------------------
+
+    const modal =
+
+        document.createElement(
+
+            "div"
+
+        );
+
+    modal.id =
+
+        "victory-modal";
+
+    modal.innerHTML = `
+
+        <div class="victory-overlay">
+
+            <div class="victory-window">
+
+                <div class="victory-decoration">
+
+                    东线 1941 · ${getScenarioConfig().name}
+
+                </div>
+
+                <div class="victory-title">
+
+                    ${title}
+
+                </div>
+
+                <div class="victory-subtitle">
+
+                    ${subtitle}
+
+                </div>
+
+                <div class="victory-line"></div>
+
+                <div class="victory-reason">
+
+                    ${reason}
+
+                </div>
+
+                <div class="victory-details">
+
+                    <div class="victory-detail-row">
+
+                        <span>
+
+                            战役时间
+
+                        </span>
+
+                        <strong>
+
+                            ${dateText}
+
+                        </strong>
+
+                    </div>
+
+                    <div class="victory-detail-row">
+
+                        <span>
+
+                            战役回合
+
+                        </span>
+
+                        <strong>
+
+                            第${currentTurn}回合
+
+                        </strong>
+
+                    </div>
+
+                </div>
+
+                <button
+
+                    class="victory-button"
+
+                    id="victory-close-button"
+
+                    type="button"
+
+                >
+
+                    查看战场
+
+                </button>
+
+            </div>
+
+        </div>
+
+    `;
+
+    document.body.appendChild(
+
+        modal
+
+    );
+
+    // --------------------------------------------------------
+
+    // 查看战场
+
+    // --------------------------------------------------------
+
+    const closeButton =
+
+        document.getElementById(
+
+            "victory-close-button"
+
+        );
+
+    if (closeButton) {
+
+        closeButton.addEventListener(
+
+            "click",
+
+            () => {
+
+                modal.remove();
+
+            }
+
+        );
+
+    }
+
+}
+
+function checkVictory() {
+
+    if (
+
+        gameOver ||
+
+        !victorySystem
+
+    ) {
+
+        return gameOver;
+
+    }
+
+    // 清除兵力为 0 / 已摧毁的单位，确保地图和判定同步
+
+  // ============================================================
+
+// 胜负检查时必须保留阵亡单位
+
+// HQ 全灭判定需要知道哪些指挥单位已经被摧毁
+
+// ============================================================
+
+gameState.units =
+
+    units;
+
+    const result =
+
+        victorySystem.check(
+
+            units,
+
+            {
+
+                turn: turnSystem?.turn ?? 1,
+
+                phase: normalizeSide(turnSystem?.phase ?? getScenarioConfig().start.startingPhase),
+
+                playerSide: getPlayerSide(),
+
+                scenario,
+
+                year: turnSystem?.year ?? 1941,
+
+                month: turnSystem?.month ?? 6,
+
+                day: turnSystem?.day ?? 26,
+
+                hour: turnSystem?.hour ?? 8,
+
+                minute: turnSystem?.minute ?? 0
+
+            }
+
+        );
+
+    if (!result.gameOver) {
+
+        return false;
+
+    }
+
+    gameOver = true;
+
+    clearSelection();
+
+    const winnerText = result.winner ? `${FactionSystem.getSideName(result.winner)}胜利` : "战斗结束";
+
+    if (unitInfo) {
+
+        unitInfo.innerHTML = `
+
+            <div class="unit-title">
+
+                战斗结束
+
+            </div>
+
+            <div class="unit-row">
+
+                <strong>
+
+                    ${winnerText}
+
+                </strong>
+
+            </div>
+
+            <div class="unit-row">
+
+                <span>
+
+                    ${result.reason ?? ""}
+
+                </span>
+
+            </div>
+
+        `;
+
+    }
+
+    if (turnInfo) {
+
+        turnInfo.textContent =
+
+            winnerText;
+
+    }
+
+    if (endPhaseButton) {
+
+        endPhaseButton.disabled =
+
+            true;
+
+    }
+
+    console.log(
+
+        "========================================"
+
+    );
+
+    console.log(
+
+        `[胜负系统] ${winnerText}`
+
+    );
+
+    console.log(
+
+        `[胜负系统] ${result.reason ?? ""}`
+
+    );
+
+    console.log(
+
+        "========================================"
+
+    );
+
+    render();
+
+    // 胜负确认后显示中央弹窗。
+
+    // units 不删除阵亡单位，因此 HQ 全灭判定仍保留完整历史状态。
+
+    showVictoryModal(result);
+
+    return true;
+
+}
+
+// ============================================================
+
+// 玩家攻击
+
+// ============================================================
+
+function performAttack(
+
+    attacker,
+
+    defender,
+
+    {
+
+        ai = false
+
+    } = {}
+
+) {
+
+    if (
+
+        gameOver ||
+
+        !attacker ||
+
+        !defender ||
+
+        !isUnitAlive(attacker) ||
+
+        !isUnitAlive(defender)
+
+    ) {
+
+        return false;
+
+    }
+
+    if (
+
+        !combatSystem.canAttack(
+
+            attacker,
+
+            defender
+
+        )
+
+    ) {
+
+        return false;
+
+    }
+
+    if (!ai) {
+
+        undoSystem.push({ units, turnSystem, gameOver }, `攻击：${unitName(attacker)}`);
+
+    }
+
+    const result =
+
+        combatSystem.attack(
+
+            attacker,
+
+            defender
+
+        );
+
+    if (
+
+        !result?.success
+
+    ) {
+
+        if (!ai) undoSystem.discardLast();
+
+        writeBattleMessage(
+
+            result?.reason ??
+
+            "攻击失败"
+
+        );
+
+        return false;
+
+    }
+
+    const sideLabel = FactionSystem.getSideName(getUnitSide(attacker));
+
+    const prefix =
+
+        ai
+
+            ? `${sideLabel} AI：`
+
+            : "";
+
+    const destroyedText =
+
+        result.destroyed
+
+            ? "，目标被消灭"
+
+            : "";
+
+    writeBattleMessage(
+
+        `${prefix}${unitName(attacker)} 攻击 ${unitName(defender)}，` +
+
+        `造成 ${result.damage} 点损失 ` +
+
+        `（${result.beforeStrength}/${getUnitMaxStrength(defender)} → ` +
+
+        `${result.afterStrength}/${getUnitMaxStrength(defender)}）` +
+
+        destroyedText
+
+    );
+
+    removeDestroyedUnits();
+
+    // 攻击后立即同步当前被查看单位的数据与右侧信息栏。
+
+    if (selectedUnit) {
+
+        const refreshedSelected = units.find(
+
+            (u) => u === selectedUnit || (u.id && u.id === selectedUnit.id)
+
+        );
+
+        if (refreshedSelected && isUnitAlive(refreshedSelected)) {
+
+            selectedUnit = refreshedSelected;
+
+            showUnitInfo(refreshedSelected);
+
+        } else if (!isUnitAlive(selectedUnit)) {
+
+            clearSelection();
+
+        }
+
+    }
+
+    // 强制重绘，确保地图兵力标签立即反映战损。
+
+    render();
+
+    if (
+
+        !checkVictory()
+
+    ) {
+
+        if (
+
+            selectedUnit &&
+
+            isUnitAlive(
+
+                selectedUnit
+
+            )
+
+        ) {
+
+            showUnitInfo(
+
+                selectedUnit
+
+            );
+
+            calculateReachable(
+
+                selectedUnit
+
+            );
+
+        }
+
+        render();
+
+    }
+
+    updateSaveControls();
+
+    return true;
+
+}
+
+// ============================================================
+
+// 阵营阶段重置
+
+// ============================================================
+
+function resetFactionForPhase(
+
+    faction
+
+) {
+
+    movementSystem.resetFaction?.(
+
+        units,
+
+        faction
+
+    );
+
+    combatSystem.resetFaction?.(
+
+        units,
+
+        faction
+
+    );
+
+}
+
+// ============================================================
+
+// 延时
+
+// ============================================================
+
+function sleep(ms) {
+
+    return new Promise(
+
+        resolve =>
+
+            setTimeout(
+
+                resolve,
+
+                ms
+
+            )
+
+    );
+
+}
+
+// ============================================================
+
+// AI 阶段
+
+// ============================================================
+
+async function runAIPhase() {
+
+    if (
+
+        aiRunning ||
+
+        gameOver ||
+
+        !turnSystem
+
+    ) {
+
+        return;
+
+    }
+
+    const currentSide =
+
+        normalizeSide(
+
+            turnSystem.phase
+
+        );
+
+    const playerSide =
+
+        getPlayerSide();
+
+    if (
+
+        !currentSide ||
+
+        currentSide ===
+
+        playerSide
+
+    ) {
+
+        return;
+
+    }
+
+    undoSystem.clear();
+
+    aiRunning =
+
+        true;
+
+    if (endPhaseButton) {
+
+        endPhaseButton.disabled =
+
+            true;
+
+    }
+
+    try {
+
+        resetFactionForPhase(
+
+            currentSide
+
+        );
+
+        const aiUnits =
+
+            units.filter(
+
+                unit =>
+
+                    getUnitSide(unit) ===
+
+                        currentSide &&
+
+                    isUnitAlive(unit)
+
+            );
+
+        const sideLabel = `${FactionSystem.getSideName(currentSide)} AI`;
+
+        for (
+
+            const unit
+
+            of aiUnits
+
+        ) {
+
+            if (gameOver) {
+
+                break;
+
+            }
+
+            if (
+
+                !isUnitAlive(
+
+                    unit
+
+                )
+
+            ) {
+
+                continue;
+
+            }
+
+            const result =
+
+                aiSystem.actUnit(
+
+                    unit,
+
+                    units
+
+                );
+
+            if (
+
+                result?.type ===
+
+                    "attack" &&
+
+                result.result?.success
+
+            ) {
+
+                const combat =
+
+                    result.result;
+
+                writeBattleMessage(
+
+                    `${sideLabel}：${unitName(combat.attacker)} 攻击 ${unitName(combat.defender)}，` +
+
+                    `造成 ${combat.damage} 点损失 ` +
+
+                    `（${combat.beforeStrength}/${getUnitMaxStrength(combat.defender)} → ` +
+
+                    `${combat.afterStrength}/${getUnitMaxStrength(combat.defender)}）` +
+
+                    `${combat.destroyed ? "，目标被消灭" : ""}`
+
+                );
+
+            }
+
+            if (
+
+                result?.type ===
+
+                    "move-and-attack" &&
+
+                result.combat?.success
+
+            ) {
+
+                const combat =
+
+                    result.combat;
+
+                writeBattleMessage(
+
+                    `${sideLabel}：${unitName(combat.attacker)} 移动后攻击 ${unitName(combat.defender)}，` +
+
+                    `造成 ${combat.damage} 点损失 ` +
+
+                    `（${combat.beforeStrength}/${getUnitMaxStrength(combat.defender)} → ` +
+
+                    `${combat.afterStrength}/${getUnitMaxStrength(combat.defender)}）` +
+
+                    `${combat.destroyed ? "，目标被消灭" : ""}`
+
+                );
+
+            }
+
+            removeDestroyedUnits();
+
+            render();
+
+            if (
+
+                checkVictory()
+
+            ) {
+
+                break;
+
+            }
+
+            await sleep(
+
+                220
+
+            );
+
+        }
+
+        if (
+
+            !gameOver &&
+
+            normalizeSide(
+
+                turnSystem.phase
+
+            ) ===
+
+                currentSide
+
+        ) {
+
+            clearSelection();
+
+            turnSystem.endPhase?.();
+
+            const nextSide =
+
+                normalizeSide(
+
+                    turnSystem.phase
+
+                );
+
+            resetFactionForPhase(
+
+                nextSide
+
+            );
+
+            updateTurnUI();
+
+            render();
+
+            if (
+
+                !gameOver &&
+
+                nextSide &&
+
+                nextSide !==
+
+                    getPlayerSide()
+
+            ) {
+
+                setTimeout(
+
+                    () => {
+
+                        runAIPhase();
+
+                    },
+
+                    250
+
+                );
+
+            }
+
+        }
+
+    }
+
+    catch (error) {
+
+        console.error(
+
+            "AI 行动失败：",
+
+            error
+
+        );
+
+        if (unitInfo) {
+
+            unitInfo.innerHTML = `
+
+                <div class="unit-title">
+
+                    AI 行动失败
+
+                </div>
+
+                <div>
+
+                    ${error?.message ?? error}
+
+                </div>
+
+            `;
+
+        }
+
+    }
+
+    finally {
+
+        aiRunning =
+
+            false;
+
+        if (
+
+            endPhaseButton &&
+
+            !gameOver
+
+        ) {
+
+            endPhaseButton.disabled =
+
+                false;
+
+        }
+
+    }
+
+}
+
+// ============================================================
+
+// 鼠标按下
+
+// ============================================================
+
+canvas.addEventListener(
+
+    "mousedown",
+
+    event => {
+
+        if (
+
+            event.button !==
+
+            0
+
+        ) {
+
+            return;
+
+        }
+
+        isDragging =
+
+            true;
+
+        dragMoved =
+
+            false;
+
+        lastMouseX =
+
+            event.clientX;
+
+        lastMouseY =
+
+            event.clientY;
+
+    }
+
 );
+
 // ============================================================
+
+// 拖动地图
+
+// ============================================================
+
+window.addEventListener(
+
+    "mousemove",
+
+    event => {
+
+        if (!isDragging) {
+
+            return;
+
+        }
+
+        const dx =
+
+            event.clientX -
+
+            lastMouseX;
+
+        const dy =
+
+            event.clientY -
+
+            lastMouseY;
+
+        if (
+
+            Math.abs(dx) > 2 ||
+
+            Math.abs(dy) > 2
+
+        ) {
+
+            dragMoved =
+
+                true;
+
+        }
+
+        if (
+
+            typeof camera.pan ===
+
+            "function"
+
+        ) {
+
+            camera.pan(
+
+                dx,
+
+                dy
+
+            );
+
+        }
+
+        else {
+
+            if (
+
+                Number.isFinite(
+
+                    camera.x
+
+                )
+
+            ) {
+
+                camera.x +=
+
+                    dx;
+
+            }
+
+            if (
+
+                Number.isFinite(
+
+                    camera.y
+
+                )
+
+            ) {
+
+                camera.y +=
+
+                    dy;
+
+            }
+
+            if (
+
+                Number.isFinite(
+
+                    camera.offsetX
+
+                )
+
+            ) {
+
+                camera.offsetX +=
+
+                    dx;
+
+            }
+
+            if (
+
+                Number.isFinite(
+
+                    camera.offsetY
+
+                )
+
+            ) {
+
+                camera.offsetY +=
+
+                    dy;
+
+            }
+
+        }
+
+        lastMouseX =
+
+            event.clientX;
+
+        lastMouseY =
+
+            event.clientY;
+
+        render();
+
+    }
+
+);
+
+// ============================================================
+
+// 鼠标释放
+
+// ============================================================
+
+window.addEventListener(
+
+    "mouseup",
+
+    () => {
+
+        isDragging =
+
+            false;
+
+    }
+
+);
+
+// ============================================================
+
+// 点击地图
+
+// ============================================================
+
+canvas.addEventListener(
+
+    "click",
+
+    event => {
+
+        if (
+
+            gameOver ||
+
+            aiRunning
+
+        ) {
+
+            return;
+
+        }
+
+        if (dragMoved) {
+
+            dragMoved =
+
+                false;
+
+            return;
+
+        }
+
+        const clickedUnit =
+
+            findUnitAtMouse(
+
+                event
+
+            );
+
+        // ====================================================
+
+        // 点击了单位
+
+        // ====================================================
+
+        if (clickedUnit) {
+
+            // ------------------------------------------------
+
+            // 已选择玩家单位 + 点击敌军
+
+            // = 尝试攻击
+
+            // ------------------------------------------------
+
+            if (
+
+                selectedUnit &&
+
+                playerCanControlUnit(
+
+                    selectedUnit
+
+                ) &&
+
+                getUnitSide(
+
+                    clickedUnit
+
+                ) !==
+
+                getUnitSide(
+
+                    selectedUnit
+
+                )
+
+            ) {
+
+                if (
+
+                    performAttack(
+
+                        selectedUnit,
+
+                        clickedUnit
+
+                    )
+
+                ) {
+
+                    return;
+
+                }
+
+                writeBattleMessage(
+
+                    `无法攻击 ${unitName(clickedUnit)}：` +
+
+                    `请检查射程或该单位是否已经攻击`
+
+                );
+
+                render();
+
+                return;
+
+            }
+
+            if (
+
+                playerCanViewUnit(
+
+                    clickedUnit
+
+                )
+
+            ) {
+
+                selectUnit(
+
+                    clickedUnit
+
+                );
+
+            }
+
+            return;
+
+        }
+
+        // ====================================================
+
+        // 点击空格 = 尝试移动
+
+        // ====================================================
+
+        if (selectedUnit) {
+
+            const hex =
+
+                mouseToHex(
+
+                    event
+
+                );
+
+            if (
+
+                hex &&
+
+                tryMoveSelectedUnit(
+
+                    hex.q,
+
+                    hex.r
+
+                )
+
+            ) {
+
+                return;
+
+            }
+
+        }
+
+        clearSelection();
+
+        render();
+
+    }
+
+);
+
+// ============================================================
+
+// 滚轮缩放
+
+// ============================================================
+
+canvas.addEventListener(
+
+    "wheel",
+
+    event => {
+
+        event.preventDefault();
+
+        const rect =
+
+            canvas.getBoundingClientRect();
+
+        const mouseX =
+
+            event.clientX -
+
+            rect.left;
+
+        const mouseY =
+
+            event.clientY -
+
+            rect.top;
+
+        const oldZoom =
+
+            camera.zoom ?? 1;
+
+        const factor =
+
+            event.deltaY < 0
+
+                ? 1.1
+
+                : 0.9;
+
+        const minZoom =
+
+            camera.minZoom ??
+
+            0.35;
+
+        const maxZoom =
+
+            camera.maxZoom ??
+
+            3;
+
+        const newZoom =
+
+            Math.max(
+
+                minZoom,
+
+                Math.min(
+
+                    maxZoom,
+
+                    oldZoom *
+
+                    factor
+
+                )
+
+            );
+
+        if (
+
+            typeof camera.zoomAt ===
+
+            "function"
+
+        ) {
+
+            camera.zoomAt(
+
+                mouseX,
+
+                mouseY,
+
+                newZoom
+
+            );
+
+            render();
+
+            return;
+
+        }
+
+        const oldX =
+
+            camera.x ??
+
+            camera.offsetX ??
+
+            0;
+
+        const oldY =
+
+            camera.y ??
+
+            camera.offsetY ??
+
+            0;
+
+        const worldX =
+
+            (
+
+                mouseX -
+
+                oldX
+
+            ) /
+
+            oldZoom;
+
+        const worldY =
+
+            (
+
+                mouseY -
+
+                oldY
+
+            ) /
+
+            oldZoom;
+
+        const newX =
+
+            mouseX -
+
+            worldX *
+
+            newZoom;
+
+        const newY =
+
+            mouseY -
+
+            worldY *
+
+            newZoom;
+
+        camera.zoom =
+
+            newZoom;
+
+        if (
+
+            "x" in camera
+
+        ) {
+
+            camera.x =
+
+                newX;
+
+        }
+
+        if (
+
+            "y" in camera
+
+        ) {
+
+            camera.y =
+
+                newY;
+
+        }
+
+        if (
+
+            "offsetX" in camera
+
+        ) {
+
+            camera.offsetX =
+
+                newX;
+
+        }
+
+        if (
+
+            "offsetY" in camera
+
+        ) {
+
+            camera.offsetY =
+
+                newY;
+
+        }
+
+        render();
+
+    },
+
+    {
+
+        passive: false
+
+    }
+
+);
+
+// ============================================================
+
+// 结束当前阶段
+
+// ============================================================
+
+function endCurrentPhase() {
+
+    if (
+
+        gameOver ||
+
+        aiRunning ||
+
+        !turnSystem
+
+    ) {
+
+        return;
+
+    }
+
+    const currentSide =
+
+        normalizeSide(
+
+            turnSystem.phase
+
+        );
+
+    const playerSide =
+
+        getPlayerSide();
+
+    if (
+
+        playerSide &&
+
+        currentSide !==
+
+            playerSide
+
+    ) {
+
+        runAIPhase();
+
+        return;
+
+    }
+
+    saveSystem.autoSave({ units, turnSystem, gameState, gameOver, scenario });
+
+    undoSystem.clear();
+
+    clearSelection();
+
+    turnSystem.endPhase?.();
+
+    const nextSide =
+
+        normalizeSide(
+
+            turnSystem.phase
+
+        );
+
+    resetFactionForPhase(
+
+        nextSide
+
+    );
+
+    if (nextSide === getPlayerSide()) {
+
+        saveSystem.autoSave({ units, turnSystem, gameState, gameOver, scenario });
+
+    }
+
+    updateTurnUI();
+
+    render();
+
+    if (
+
+        !gameOver &&
+
+        nextSide &&
+
+        nextSide !==
+
+            getPlayerSide()
+
+    ) {
+
+        setTimeout(
+
+            () => {
+
+                runAIPhase();
+
+            },
+
+            250
+
+        );
+
+    }
+
+}
+
+// ============================================================
+
+// 存档 / 读取 / 撤销
+
+// ============================================================
+
+function applySnapshot(snapshot) {
+
+    if (!snapshot || !Array.isArray(snapshot.units)) return false;
+
+    units = JSON.parse(JSON.stringify(snapshot.units));
+
+    gameState.units = units;
+
+    gameOver = snapshot.gameOver === true;
+
+    if (snapshot.playerFaction) {
+
+        gameState.playerFaction = snapshot.playerFaction;
+
+        gameState.playerSide = snapshot.playerFaction;
+
+        gameState.selectedFaction = snapshot.playerFaction;
+
+        gameState.selectedSide = snapshot.playerFaction;
+
+    }
+
+    if (snapshot.mode) gameState.mode = snapshot.mode;
+
+    const t = snapshot.turn ?? {};
+
+    if (turnSystem) {
+
+        for (const key of ["turn", "phase", "year", "month", "day", "hour", "minute"]) {
+
+            if (t[key] != null) turnSystem[key] = t[key];
+
+        }
+
+        if (Array.isArray(t.units)) turnSystem.units = units;
+
+    }
+
+    clearSelection();
+
+    removeDestroyedUnits();
+
+    updateTurnUI();
+
+    render();
+
+    return true;
+
+}
+
+function saveGame(slot = 1) {
+
+    if (aiRunning) return false;
+
+    saveSystem.save(slot, { units, turnSystem, gameState, gameOver, scenario });
+
+    updateSaveControls();
+
+    console.log(`[存档] 槽位 ${slot} 保存成功`);
+
+    return true;
+
+}
+
+function loadGame(slot = 1) {
+
+    if (aiRunning) return false;
+
+    const snapshot = saveSystem.load(slot);
+
+    if (!snapshot) return false;
+
+    undoSystem.clear();
+
+    applySnapshot(snapshot);
+
+    updateSaveControls();
+
+    console.log(`[存档] 槽位 ${slot} 读取成功`);
+
+    return true;
+
+}
+
+function undoLastAction() {
+
+    if (aiRunning || gameOver) return false;
+
+    const entry = undoSystem.undo();
+
+    if (!entry) return false;
+
+    applySnapshot(entry.snapshot);
+
+    updateSaveControls();
+
+    console.log(`[撤销] ${entry.label}`);
+
+    return true;
+
+}
+
+function ensureSaveControls() {
+
+    const slotSelect = document.getElementById("save-slot-select");
+
+    const saveButton = document.getElementById("save-game-button");
+
+    const loadButton = document.getElementById("load-game-button");
+
+    const undoButton = document.getElementById("undo-game-button");
+
+    if (!slotSelect || !saveButton || !loadButton || !undoButton) {
+
+        console.error("[存档系统] index.html 缺少存档/读取/撤销控件");
+
+        return;
+
+    }
+
+    const selectedSlot = () => Number(slotSelect.value ?? 1);
+
+    saveButton.addEventListener("click", () => {
+
+        saveGame(selectedSlot());
+
+    });
+
+    loadButton.addEventListener("click", () => {
+
+        if (!loadGame(selectedSlot())) {
+
+            alert("该槽位没有可读取的存档。");
+
+        }
+
+    });
+
+    undoButton.addEventListener("click", () => {
+
+        undoLastAction();
+
+    });
+
+    slotSelect.addEventListener("change", updateSaveControls);
+
+    updateSaveControls();
+
+}
+
+function updateSaveControls() {
+
+    const slot = Number(document.getElementById("save-slot-select")?.value ?? 1);
+
+    const loadButton = document.getElementById("load-game-button");
+
+    const undoButton = document.getElementById("undo-game-button");
+
+    if (loadButton) loadButton.disabled = aiRunning || !saveSystem.has(slot);
+
+    if (undoButton) undoButton.disabled = aiRunning || gameOver || !undoSystem.canUndo();
+
+}
+
+// ============================================================
+
+// 结束行动按钮
+
+// ============================================================
+
+endPhaseButton?.addEventListener(
+
+    "click",
+
+    () => {
+
+        endCurrentPhase();
+
+    }
+
+);
+
+// ============================================================
+
+// 键盘
+
+// ============================================================
+
+window.addEventListener(
+
+    "keydown",
+
+    event => {
+
+        if (event.ctrlKey && event.key.toLowerCase() === "s") { event.preventDefault(); saveGame(Number(document.getElementById("save-slot-select")?.value ?? 1)); return; }
+
+        if (event.ctrlKey && event.key.toLowerCase() === "z") { event.preventDefault(); undoLastAction(); return; }
+
+        if (
+
+            event.key ===
+
+            "Escape"
+
+        ) {
+
+            clearSelection();
+
+            render();
+
+            return;
+
+        }
+
+        if (
+
+            event.key.toLowerCase() ===
+
+            "e"
+
+        ) {
+
+            endCurrentPhase();
+
+        }
+
+    }
+
+);
+
+// ============================================================
+
+// 玩家选择阵营之后
+
+// ============================================================
+
+function startGame() {
+
+    ensureSaveControls();
+
+    saveSystem.autoSave({ units, turnSystem, gameState, gameOver, scenario });
+
+    updateSaveControls();
+
+    console.log(
+
+        "玩家阵营：",
+
+        getPlayerSide()
+
+    );
+
+    console.log(
+
+        "游戏模式：",
+
+        gameState.mode
+
+    );
+
+    clearSelection();
+
+    updateTurnUI();
+
+    resizeCanvas();
+
+    render();
+
+    const currentSide =
+
+        normalizeSide(
+
+            turnSystem?.phase
+
+        );
+
+    const playerSide =
+
+        getPlayerSide();
+
+    // 把最终选择结果同步回所有常见字段，确保其它系统读取到同一阵营。
+
+    if (playerSide) {
+
+        const id = FactionSystem.normalizeFaction(playerSide);
+
+        gameState.playerFaction = id ?? gameState.playerFaction;
+
+        gameState.playerSide = playerSide;
+
+        gameState.selectedFaction = id ?? gameState.selectedFaction;
+
+        gameState.selectedSide = playerSide;
+
+    }
+
+    console.log("[控制系统] 玩家阵营已统一为：", playerSide);
+
+    console.log("[控制系统] 当前行动方：", currentSide);
+
+    // ========================================================
+
+    // 如果开局行动方不是玩家
+
+    // AI 自动行动
+
+    // ========================================================
+
+    if (
+
+        gameState.mode !==
+
+            "observer" &&
+
+        currentSide &&
+
+        playerSide &&
+
+        currentSide !==
+
+            playerSide
+
+    ) {
+
+        setTimeout(
+
+            () => {
+
+                runAIPhase();
+
+            },
+
+            250
+
+        );
+
+    }
+
+}
+
+// ============================================================
+
+// 加载游戏数据
+
+// ============================================================
+
+async function loadScenario(scenarioKey = "dubno") {
+
+    try {
+
+        currentScenarioKey = scenarioKey; gameOver=false; aiRunning=false; clearSelection(); undoSystem.clear?.();
+
+        const loaded = await scenarioManager.load(scenarioKey);
+
+        currentScenarioConfig = loaded.config; scenario = loaded.scenario; units = loaded.units;
+
+        console.log(`[战役系统] ${loaded.theater.name} / ${loaded.phase.name} / ${loaded.config.name}`);
+
+        initializeUnits(); units = units.filter(unit=>isUnitAlive(unit));
+
+        if(!validateUnits(units)) throw new Error(`${loaded.config.unitsPath} 单位数据检查失败，请查看浏览器控制台`);
+
+        const counts={}; for(const unit of units){const side=getUnitSide(unit);counts[side]=(counts[side]??0)+1;}
+
+        console.log("[单位系统] 战斗序列加载完成", counts);
+
+        gameState.units=units; gameState.scenarioKey=loaded.config.id; gameState.scenarioName=loaded.config.name;
+
+        gameState.setAvailableFactions?.(loaded.config.factions ?? []);
+
+        initializeTurnSystem(); victorySystem=new VictorySystem({scenario});
+
+        if(typeof camera.reset==="function") camera.reset();
+
+        if(typeof camera.centerOnMap==="function") camera.centerOnMap(world,canvas,renderer);
+
+        resizeCanvas(); render();
+
+        factionSelection.show(startGame,{scenario,config:loaded.config});
+
+        console.log(`战役已启动：${loaded.config.name}`);
+
+    } catch(error) {
+
+        console.error("游戏初始化失败：",error);
+
+        if(unitInfo){unitInfo.innerHTML=`<strong>游戏数据加载失败</strong><br><br>${error.message}<br><br><button id="return-scenario-selection" type="button">返回战役选择</button>`;document.getElementById("return-scenario-selection")?.addEventListener("click",showScenarioSelection);} else showScenarioSelection();
+
+    }
+
+}
+
+// ============================================================
+
+// 窗口变化
+
+// ============================================================
+
+window.addEventListener(
+
+    "resize",
+
+    () => {
+
+        resizeCanvas();
+
+        render();
+
+    }
+
+);
+
+// ============================================================
+
 // 启动：先选择战役，再选择阵营
+
 // ============================================================
+
 resizeCanvas();
+
 render();
+
 showScenarioSelection();
+
