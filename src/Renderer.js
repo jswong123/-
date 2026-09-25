@@ -1246,7 +1246,7 @@ export class Renderer {
 
             const rankText = `${echelon} ${name}`.toLowerCase();
 
-            let stars = 1;
+            let stars = 0;
 
             if (/front|armygroup|方面军|集团军群/.test(rankText)) stars = 4;
 
