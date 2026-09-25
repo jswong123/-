@@ -1,0 +1,790 @@
+/* ============================================================
+   东线 1941
+   style.css
+   V0.4
+   ============================================================ */
+
+
+/* ============================================================
+   全局
+   ============================================================ */
+
+* {
+    box-sizing: border-box;
+}
+
+
+html,
+body {
+    margin: 0;
+
+    width: 100%;
+    height: 100%;
+
+    overflow: hidden;
+
+    font-family:
+        "FangSong",
+        "仿宋",
+        "SimSun",
+        serif;
+
+    background: #20231f;
+}
+
+
+/* ============================================================
+   游戏整体
+   ============================================================ */
+
+#game {
+    display: flex;
+    flex-direction: column;
+
+    width: 100vw;
+    height: 100vh;
+
+    overflow: hidden;
+}
+
+
+/* ============================================================
+   顶部状态栏
+   ============================================================ */
+
+#topbar {
+    height: 52px;
+
+    flex: 0 0 52px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    padding: 0 18px;
+
+    background: #252a25;
+    color: #e8e3d5;
+
+    border-bottom: 1px solid #555;
+
+    user-select: none;
+}
+
+
+#topbar strong {
+    font-size: 20px;
+    font-weight: bold;
+}
+
+
+.subtitle {
+    margin-left: 14px;
+
+    font-size: 14px;
+
+    opacity: 0.7;
+}
+
+
+#turnInfo {
+    font-size: 14px;
+
+    white-space: nowrap;
+}
+
+
+/* ============================================================
+   游戏主体
+   ============================================================ */
+
+#main {
+    flex: 1 1 auto;
+
+    min-width: 0;
+    min-height: 0;
+
+    display: flex;
+
+    overflow: hidden;
+}
+
+
+/* ============================================================
+   地图区域
+   ============================================================ */
+
+#mapArea {
+    position: relative;
+
+    flex: 1 1 auto;
+
+    min-width: 0;
+    min-height: 0;
+
+    overflow: hidden;
+
+    background: #87866e;
+}
+
+
+/* ============================================================
+   Canvas
+
+   注意：
+   HTML / CSS / JavaScript 统一使用 game-canvas
+   ============================================================ */
+
+#game-canvas {
+    display: block;
+
+    width: 100%;
+    height: 100%;
+
+    margin: 0;
+    padding: 0;
+
+    background: #87866e;
+
+    cursor: default;
+
+    user-select: none;
+    touch-action: none;
+}
+
+
+/* 拖动地图时可以由 JS 添加该 class */
+
+#game-canvas.dragging {
+    cursor: grabbing;
+}
+
+
+/* ============================================================
+   右侧信息栏
+   ============================================================ */
+
+#sidebar {
+    width: 300px;
+
+    flex: 0 0 300px;
+
+    min-width: 300px;
+
+    padding: 18px;
+
+    overflow-x: hidden;
+    overflow-y: auto;
+
+    background: #e3ddc9;
+    color: #25251f;
+
+    border-left: 2px solid #4c4b40;
+}
+
+
+/* ============================================================
+   信息面板
+   ============================================================ */
+
+#info-panel {
+    width: 100%;
+}
+
+
+#sidebar h2 {
+    margin-top: 0;
+    margin-bottom: 16px;
+
+    font-size: 24px;
+}
+
+
+#sidebar h3 {
+    margin-top: 0;
+    margin-bottom: 12px;
+
+    font-size: 18px;
+}
+
+
+#sidebar p {
+    margin: 10px 0;
+
+    line-height: 1.5;
+}
+
+
+#sidebar hr {
+    margin: 20px 0;
+
+    border: none;
+
+    border-top: 1px solid #aaa58f;
+}
+
+
+/* ============================================================
+   提示文字
+   ============================================================ */
+
+.hint {
+    opacity: 0.75;
+
+    line-height: 1.6;
+}
+
+
+/* ============================================================
+   单位信息
+   ============================================================ */
+
+.unit-title {
+    margin-bottom: 10px;
+
+    font-size: 18px;
+    font-weight: bold;
+}
+
+
+.unit-row {
+    display: flex;
+
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 16px;
+
+    margin: 7px 0;
+
+    line-height: 1.4;
+}
+
+
+.unit-row span {
+    opacity: 0.75;
+}
+
+
+.unit-row strong {
+    text-align: right;
+
+    font-weight: bold;
+}
+
+
+/* ============================================================
+   滚动条
+   ============================================================ */
+
+#sidebar::-webkit-scrollbar {
+    width: 8px;
+}
+
+
+#sidebar::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0.05);
+}
+
+
+#sidebar::-webkit-scrollbar-thumb {
+    background: rgba(70, 70, 60, 0.35);
+
+    border-radius: 4px;
+}
+
+
+#sidebar::-webkit-scrollbar-thumb:hover {
+    background: rgba(70, 70, 60, 0.55);
+}
+
+
+/* ============================================================
+   小屏幕
+   ============================================================ */
+
+@media (max-width: 900px) {
+
+    #sidebar {
+        width: 250px;
+
+        flex-basis: 250px;
+
+        min-width: 250px;
+
+        padding: 14px;
+    }
+
+
+    #topbar {
+        padding: 0 12px;
+    }
+
+
+    #topbar strong {
+        font-size: 18px;
+    }
+
+
+    .subtitle {
+        margin-left: 8px;
+
+        font-size: 12px;
+    }
+
+}
+/* =========================================================
+   回合系统
+   ========================================================= */
+
+#turnPanel {
+    margin-top: 18px;
+}
+
+#turnPanel h3 {
+    margin-bottom: 14px;
+}
+
+.turn-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    margin: 8px 0;
+
+    font-size: 15px;
+}
+
+.turn-row span {
+    opacity: 0.75;
+}
+
+.turn-row strong {
+    font-weight: bold;
+}
+
+
+#endPhaseButton {
+    width: 100%;
+
+    margin-top: 16px;
+    padding: 11px 12px;
+
+    font-family:
+        "FangSong",
+        "仿宋",
+        "SimSun",
+        serif;
+
+    font-size: 16px;
+
+    color: #eee8d8;
+    background: #343a34;
+
+    border: 1px solid #676b5d;
+
+    cursor: pointer;
+}
+
+#endPhaseButton:hover {
+    background: #454c43;
+}
+
+#endPhaseButton:active {
+    transform: translateY(1px);
+}
+/* ============================================================
+   战役结束弹窗
+   ============================================================ */
+
+#victory-modal {
+
+    position: fixed;
+
+    inset: 0;
+
+    z-index: 99999;
+
+}
+
+
+/* ============================================================
+   半透明战场遮罩
+   ============================================================ */
+
+.victory-overlay {
+
+    position: absolute;
+
+    inset: 0;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    padding: 30px;
+
+    background:
+        rgba(
+            20,
+            24,
+            20,
+            0.72
+        );
+
+    backdrop-filter:
+        blur(2px);
+
+}
+
+
+/* ============================================================
+   结算窗口
+   ============================================================ */
+
+.victory-window {
+
+    width: 520px;
+
+    max-width:
+        calc(
+            100vw - 60px
+        );
+
+    padding:
+        34px
+        42px
+        32px;
+
+    background:
+        #e3ddc9;
+
+    color:
+        #25251f;
+
+    border:
+        3px solid
+        #252a25;
+
+    box-shadow:
+        0
+        14px
+        45px
+        rgba(
+            0,
+            0,
+            0,
+            0.48
+        );
+
+    text-align: center;
+
+    font-family:
+        "FangSong",
+        "仿宋",
+        "SimSun",
+        serif;
+
+}
+
+
+/* ============================================================
+   顶部小标题
+   ============================================================ */
+
+.victory-decoration {
+
+    margin-bottom:
+        18px;
+
+    font-size:
+        14px;
+
+    letter-spacing:
+        5px;
+
+    color:
+        #686552;
+
+}
+
+
+/* ============================================================
+   胜利标题
+   ============================================================ */
+
+.victory-title {
+
+    margin-bottom:
+        8px;
+
+    font-size:
+        38px;
+
+    font-weight:
+        bold;
+
+    letter-spacing:
+        8px;
+
+    color:
+        #20251f;
+
+}
+
+
+/* ============================================================
+   外文标题
+   ============================================================ */
+
+.victory-subtitle {
+
+    font-size:
+        13px;
+
+    letter-spacing:
+        4px;
+
+    color:
+        #77725f;
+
+}
+
+
+/* ============================================================
+   分隔线
+   ============================================================ */
+
+.victory-line {
+
+    width:
+        72%;
+
+    height:
+        1px;
+
+    margin:
+        24px
+        auto;
+
+    background:
+        #8a846d;
+
+}
+
+
+/* ============================================================
+   胜负原因
+   ============================================================ */
+
+.victory-reason {
+
+    min-height:
+        48px;
+
+    margin-bottom:
+        22px;
+
+    font-size:
+        18px;
+
+    line-height:
+        1.8;
+
+    color:
+        #282b25;
+
+}
+
+
+/* ============================================================
+   战役信息
+   ============================================================ */
+
+.victory-details {
+
+    width:
+        82%;
+
+    margin:
+        0 auto 26px;
+
+    padding:
+        14px 0;
+
+    border-top:
+        1px solid
+        #aaa58f;
+
+    border-bottom:
+        1px solid
+        #aaa58f;
+
+}
+
+
+/* ============================================================
+   战役信息行
+   ============================================================ */
+
+.victory-detail-row {
+
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    justify-content:
+        space-between;
+
+    gap:
+        20px;
+
+    margin:
+        7px 0;
+
+    font-size:
+        14px;
+
+}
+
+
+.victory-detail-row span {
+
+    color:
+        #77725f;
+
+}
+
+
+.victory-detail-row strong {
+
+    color:
+        #25251f;
+
+    font-weight:
+        bold;
+
+}
+
+
+/* ============================================================
+   查看战场按钮
+   ============================================================ */
+
+.victory-button {
+
+    width:
+        190px;
+
+    padding:
+        11px
+        20px;
+
+    border:
+        1px solid
+        #20251f;
+
+    background:
+        #293029;
+
+    color:
+        #eee8d2;
+
+    font-family:
+        "FangSong",
+        "仿宋",
+        "SimSun",
+        serif;
+
+    font-size:
+        16px;
+
+    letter-spacing:
+        3px;
+
+    cursor:
+        pointer;
+
+    transition:
+        background
+        0.15s ease;
+
+}
+
+
+.victory-button:hover {
+
+    background:
+        #3a4339;
+
+}
+
+
+.victory-button:active {
+
+    transform:
+        translateY(
+            1px
+        );
+
+}
+
+
+/* ============================================================
+   战役结束后禁用按钮
+   ============================================================ */
+
+#endPhaseButton:disabled {
+
+    opacity:
+        0.45;
+
+    cursor:
+        not-allowed;
+
+}
+
+
+/* ============================================================
+   小屏幕适配
+   ============================================================ */
+
+@media (
+    max-width: 700px
+) {
+
+    .victory-window {
+
+        width:
+            100%;
+
+        padding:
+            28px
+            24px;
+
+    }
+
+
+    .victory-title {
+
+        font-size:
+            30px;
+
+        letter-spacing:
+            5px;
+
+    }
+
+
+    .victory-details {
+
+        width:
+            100%;
+
+    }
+
+}

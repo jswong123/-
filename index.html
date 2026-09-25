@@ -1,0 +1,586 @@
+<!DOCTYPE html>
+
+<html lang="zh-CN">
+
+ 
+
+<head>
+
+    <meta charset="UTF-8">
+
+ 
+
+    <meta
+
+        name="viewport"
+
+        content="width=device-width, initial-scale=1.0"
+
+    >
+
+ 
+
+    <title>东线 1941：杜布诺</title>
+
+ 
+
+    <link
+
+        rel="stylesheet"
+
+        href="./style.css"
+
+    >
+
+ 
+
+    <style>
+
+        #topbar-right {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 14px;
+
+            margin-left: auto;
+
+        }
+
+        #save-system-controls {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 5px;
+
+        }
+
+        #save-system-controls button,
+
+        #save-system-controls select {
+
+            border: 1px solid #77715d;
+
+            background: #ded7bb;
+
+            color: #25271f;
+
+            padding: 4px 7px;
+
+            font: inherit;
+
+            font-size: 12px;
+
+        }
+
+        #save-system-controls button {
+
+            cursor: pointer;
+
+        }
+
+        #save-system-controls button:disabled {
+
+            opacity: .45;
+
+            cursor: default;
+
+        }
+
+    </style>
+
+ 
+
+</head>
+
+ 
+
+ 
+
+<body>
+
+ 
+
+<div id="game">
+
+ 
+
+    <!-- ====================================== -->
+
+    <!-- 顶部状态栏 -->
+
+    <!-- ====================================== -->
+
+ 
+
+    <header id="topbar">
+
+ 
+
+        <div>
+
+            <strong>
+
+                东线 1941
+
+            </strong>
+
+ 
+
+            <span class="subtitle">
+
+                杜布诺战役 · V1.4
+
+            </span>
+
+        </div>
+
+ 
+
+ 
+
+        <div id="topbar-right">
+
+            <div id="turnInfo">
+
+                1941年6月26日 · 08:00
+
+            </div>
+
+ 
+
+            <div id="save-system-controls" aria-label="存档与撤销">
+
+                <select id="save-slot-select" aria-label="存档槽位">
+
+                    <option value="1">存档 1</option>
+
+                    <option value="2">存档 2</option>
+
+                    <option value="3">存档 3</option>
+
+                    <option value="4">存档 4</option>
+
+                    <option value="5">存档 5</option>
+
+                    <option value="6">存档 6</option>
+
+                </select>
+
+                <button id="save-game-button" type="button">保存</button>
+
+                <button id="load-game-button" type="button">读取</button>
+
+                <button id="undo-game-button" type="button">撤销</button>
+
+            </div>
+
+        </div>
+
+ 
+
+    </header>
+
+ 
+
+ 
+
+    <!-- ====================================== -->
+
+    <!-- 游戏主体 -->
+
+    <!-- ====================================== -->
+
+ 
+
+    <main id="main">
+
+ 
+
+ 
+
+        <!-- ================================== -->
+
+        <!-- 地图区域 -->
+
+        <!-- ================================== -->
+
+ 
+
+        <section id="mapArea">
+
+ 
+
+            <canvas id="game-canvas"></canvas>
+
+ 
+
+        </section>
+
+ 
+
+ 
+
+        <!-- ================================== -->
+
+        <!-- 右侧信息栏 -->
+
+        <!-- ================================== -->
+
+ 
+
+        <aside id="sidebar">
+
+ 
+
+            <div id="info-panel">
+
+ 
+
+ 
+
+                <!-- ========================== -->
+
+                <!-- 作战信息 -->
+
+                <!-- ========================== -->
+
+ 
+
+                <h2>
+
+                    作战信息
+
+                </h2>
+
+ 
+
+ 
+
+                <!-- ========================== -->
+
+                <!-- 回合系统 -->
+
+                <!-- ========================== -->
+
+ 
+
+                <div id="turnPanel">
+
+ 
+
+                    <h3>
+
+                        当前回合
+
+                    </h3>
+
+ 
+
+ 
+
+                    <div class="turn-row">
+
+ 
+
+                        <span>
+
+                            回合
+
+                        </span>
+
+ 
+
+                        <strong id="turnNumber">
+
+                            第1回合
+
+                        </strong>
+
+ 
+
+                    </div>
+
+ 
+
+ 
+
+                    <div class="turn-row">
+
+ 
+
+                        <span>
+
+                            时间
+
+                        </span>
+
+ 
+
+                        <strong id="turnTime">
+
+                            08:00—10:00
+
+                        </strong>
+
+ 
+
+                    </div>
+
+ 
+
+ 
+
+                    <div class="turn-row">
+
+ 
+
+                        <span>
+
+                            行动方
+
+                        </span>
+
+ 
+
+                        <strong id="turnPhase">
+
+                            德军行动
+
+                        </strong>
+
+ 
+
+                    </div>
+
+ 
+
+ 
+
+                    <button
+
+                        id="endPhaseButton"
+
+                        type="button"
+
+                    >
+
+                        结束德军行动
+
+                    </button>
+
+ 
+
+                </div>
+
+ 
+
+ 
+
+                <hr>
+
+ 
+
+ 
+
+                <!-- ========================== -->
+
+                <!-- 单位信息 -->
+
+                <!-- ========================== -->
+
+ 
+
+                <h3>
+
+                    单位信息
+
+                </h3>
+
+ 
+
+ 
+
+                <div id="unitInfo">
+
+ 
+
+                    <p class="hint">
+
+                        点击地图上的单位查看详情
+
+                    </p>
+
+ 
+
+                </div>
+
+ 
+
+ 
+
+                <hr>
+
+ 
+
+ 
+
+                <!-- ========================== -->
+
+                <!-- 地图操作 -->
+
+                <!-- ========================== -->
+
+ 
+
+                <h3>
+
+                    地图操作
+
+                </h3>
+
+ 
+
+ 
+
+                <p>
+
+                    鼠标拖动：移动地图
+
+                </p>
+
+ 
+
+                <p>
+
+                    滚轮：缩放
+
+                </p>
+
+ 
+
+                <p>
+
+                    点击单位：选择
+
+                </p>
+
+ 
+
+                <p>
+
+                    点击高亮格：移动
+
+                </p>
+
+ 
+
+                <p>
+
+                    ESC：取消选择
+
+                </p>
+
+ 
+
+                <p>
+
+                    E：结束当前行动阶段
+
+                </p>
+
+ 
+
+ 
+
+                <hr>
+
+ 
+
+ 
+
+                <!-- ========================== -->
+
+                <!-- 图例 -->
+
+                <!-- ========================== -->
+
+ 
+
+                <h3>
+
+                    图例
+
+                </h3>
+
+ 
+
+ 
+
+                <p>
+
+                    德军：蓝灰色
+
+                </p>
+
+ 
+
+                <p>
+
+                    苏军：红色
+
+                </p>
+
+ 
+
+ 
+
+            </div>
+
+ 
+
+        </aside>
+
+ 
+
+ 
+
+    </main>
+
+ 
+
+</div>
+
+ 
+
+ 
+
+<!-- ====================================== -->
+
+<!-- 游戏入口 -->
+
+<!-- ====================================== -->
+
+ 
+
+<script
+
+    type="module"
+
+    src="./src/main.js">
+
+</script>
+
+ 
+
+ 
+
+</body>
+
+ 
+
+</html>
+
