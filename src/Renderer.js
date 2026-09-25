@@ -1246,7 +1246,7 @@ export class Renderer {
 
             const rankText = `${echelon} ${name}`.toLowerCase();
 
-            let stars = 0;
+            let stars = 1;
 
             if (/front|armygroup|方面军|集团军群/.test(rankText)) stars = 4;
 
@@ -1257,6 +1257,8 @@ export class Renderer {
             else if (/corps|军部|军司令部/.test(rankText)) stars = 2;
 
             else if (/division|师部|师司令部/.test(rankText)) stars = 1;
+
+            else if (/regiment|regimental|团部|团司令部/.test(rankText)) stars = 0;
 
             ctx.font = `${Math.max(7, height * 0.30)}px FangSong, STKaiti, serif`;
 
