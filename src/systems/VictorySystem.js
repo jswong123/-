@@ -666,32 +666,6 @@ export class VictorySystem {
             germanRule.captureObjectives;
 
 
-        /*
-         * 德军只要在截止时间之前满足目标，
-         * 就立即获胜。
-         */
-
-        if (
-            captureRule &&
-            this.checkObjectiveGroup(
-                units,
-                "german",
-                captureRule
-            )
-        ) {
-
-            return this.setVictory(
-
-                "german",
-
-                captureRule.successText ??
-                "德军已占领指定战略目标"
-
-            );
-
-        }
-
-
         // ====================================================
         // 7. 截止时间
         // ====================================================
