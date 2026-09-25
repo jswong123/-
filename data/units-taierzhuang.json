@@ -1,1 +1,13281 @@
+{
 
+  "version": "1.1-taierzhuang-map-aligned",
+
+  "scenario": "taierzhuang_1938",
+
+  "date": "1938-03-24T08:00:00",
+
+  "notes": [
+
+    "按96×60台儿庄地图重新部署；台儿庄坐标48,35，峄县46,5，韩庄76,51。",
+
+    "保持既有战术符号type体系不变：infantry、machinegun、artillery、armor、engineer、headquarters。",
+
+    "保持HQ与警卫单位设计不变：HQ本体100兵力、攻击2；警卫单位继续使用isHQ=true与hqRole=guard。",
+
+    "中国军以营级为主要基础作战单位；日军以中队/连级为主要基础作战单位。",
+
+    "炮兵：92式步兵炮攻击4射程2；81毫米迫击炮5/3；75毫米山炮6/4；75毫米野炮7/5；105毫米级重炮9/6；150毫米重榴弹炮12/7。",
+
+    "中国军资料未完整提供所有历史营团番号，部分第1团/第2团为游戏化组织标识。",
+
+    "地图可见地名应由scenario-taierzhuang.json的nameZh字段显示中文。"
+
+  ],
+
+  "units": [
+
+    {
+
+      "id": "CHI_2AG_HQ",
+
+      "name": "第二集团军司令部",
+
+      "fullName": "第二集团军司令部",
+
+      "faction": "chinese",
+
+      "type": "headquarters",
+
+      "echelon": "company",
+
+      "q": 30,
+
+      "r": 48,
+
+      "strength": 100,
+
+      "maxStrength": 100,
+
+      "attack": 2,
+
+      "defense": 3,
+
+      "movement": 5,
+
+      "range": 1,
+
+      "morale": 88,
+
+      "suppression": 0,
+
+      "fatigue": 0,
+
+      "ammo": 100,
+
+      "isHQ": true,
+
+      "hqLevel": "army_group",
+
+      "hqRole": "command",
+
+      "commander": "孙连仲",
+
+      "parentArmyGroup": "第二集团军",
+
+      "deploymentRole": "rear_command"
+
+    },
+
+    {
+
+      "id": "CHI_2AG_GUARD_1",
+
+      "name": "第二集团军警卫第1营",
+
+      "fullName": "第二集团军警卫第1营",
+
+      "faction": "chinese",
+
+      "type": "infantry",
+
+      "echelon": "battalion",
+
+      "q": 29,
+
+      "r": 49,
+
+      "strength": 650,
+
+      "maxStrength": 650,
+
+      "attack": 6,
+
+      "defense": 7,
+
+      "movement": 4,
+
+      "range": 1,
+
+      "morale": 84,
+
+      "suppression": 0,
+
+      "fatigue": 0,
+
+      "ammo": 100,
+
+      "isHQ": true,
+
+      "hqLevel": "army_group",
+
+      "hqRole": "guard",
+
+      "parentArmyGroup": "第二集团军",
+
+      "deploymentRole": "rear_command"
+
+    },
+
+    {
+
+      "id": "CHI_2AG_GUARD_2",
+
+      "name": "第二集团军警卫第2营",
+
+      "fullName": "第二集团军警卫第2营",
+
+      "faction": "chinese",
+
+      "type": "infantry",
+
+      "echelon": "battalion",
+
+      "q": 30,
+
+      "r": 49,
+
+      "strength": 650,
+
+      "maxStrength": 650,
+
+      "attack": 6,
+
+      "defense": 7,
+
+      "movement": 4,
+
+      "range": 1,
+
+      "morale": 84,
+
+      "suppression": 0,
+
+      "fatigue": 0,
+
+      "ammo": 100,
+
+      "isHQ": true,
+
+      "hqLevel": "army_group",
+
+      "hqRole": "guard",
+
+      "parentArmyGroup": "第二集团军",
+
+      "deploymentRole": "rear_command"
+
+    },
+
+    {
+
+      "id": "CHI_2AG_GUARD_3",
+
+      "name": "第二集团军警卫第3营",
+
+      "fullName": "第二集团军警卫第3营",
+
+      "faction": "chinese",
+
+      "type": "infantry",
+
+      "echelon": "battalion",
+
+      "q": 31,
+
+      "r": 49,
+
+      "strength": 650,
+
+      "maxStrength": 650,
+
+      "attack": 6,
+
+      "defense": 7,
+
+      "movement": 4,
+
+      "range": 1,
+
+      "morale": 84,
+
+      "suppression": 0,
+
+      "fatigue": 0,
+
+      "ammo": 100,
+
+      "isHQ": true,
+
+      "hqLevel": "army_group",
+
+      "hqRole": "guard",
+
+      "parentArmyGroup": "第二集团军",
+
+      "deploymentRole": "rear_command"
+
+    },
+
+    {
+
+      "id": "CHI_30C_HQ",
+
+      "name": "第30军司令部",
+
+      "fullName": "第30军司令部",
+
+      "faction": "chinese",
+
+      "type": "headquarters",
+
+      "echelon": "company",
+
+      "q": 39,
+
+      "r": 40,
+
+      "strength": 100,
+
+      "maxStrength": 100,
+
+      "attack": 2,
+
+      "defense": 3,
+
+      "movement": 5,
+
+      "range": 1,
+
+      "morale": 86,
+
+      "suppression": 0,
+
+      "fatigue": 0,
+
+      "ammo": 100,
+
+      "isHQ": true,
+
+      "hqLevel": "corps",
+
+      "hqRole": "command",
+
+      "commander": "田镇南",
+
+      "parentArmyGroup": "第二集团军",
+
+      "parentCorps": "第30军",
+
+      "deploymentRole": "rear_command"
+
+    },
+
+    {
+
+      "id": "CHI_30C_GUARD_1",
+
+      "name": "第30军警卫第1营",
+
+      "fullName": "第30军警卫第1营",
+
+      "faction": "chinese",
+
+      "type": "infantry",
+
+      "echelon": "battalion",
+
+      "q": 40,
+
+      "r": 40,
+
+      "strength": 650,
+
+      "maxStrength": 650,
+
+      "attack": 6,
+
+      "defense": 7,
+
+      "movement": 4,
+
+      "range": 1,
+
+      "morale": 82,
+
+      "suppression": 0,
+
+      "fatigue": 0,
+
+      "ammo": 100,
+
+      "isHQ": true,
+
+      "hqLevel": "corps",
+
+      "hqRole": "guard",
+
+      "parentArmyGroup": "第二集团军",
+
+      "parentCorps": "第30军",
+
+      "deploymentRole": "rear_command"
+
+    },
+
+    {
+
+      "id": "CHI_31D_HQ",
+
+      "name": "第31师部",
+
+      "fullName": "第31师部",
+
+      "faction": "chinese",
+
+      "type": "headquarters",
+
+      "echelon": "company",
+
+      "q": 48,
+
+      "r": 38,
+
+      "strength": 100,
+
+      "maxStrength": 100,
+
+      "attack": 2,
+
+      "defense": 3,
+
+      "movement": 5,
+
+      "range": 1,
+
+      "morale": 86,
+
+      "suppression": 0,
+
+      "fatigue": 0,
+
+      "ammo": 100,
+
+      "isHQ": true,
+
+      "hqLevel": "division",
+
+      "hqRole": "command",
+
+      "commander": "池峰城",
+
+      "parentArmyGroup": "第二集团军",
+
+      "parentCorps": "第30军",
+
+      "parentDivision": "第31师",
+
+      "deploymentRole": "rear_command"
+
+    },
+
+    {
+
+      "id": "CHI_31D_GUARD_1",
+
+      "name": "第31师师部第1警卫连",
+
+      "fullName": "第31师师部第1警卫连",
+
+      "faction": "chinese",
+
+      "type": "infantry",
+
+      "echelon": "company",
+
+      "q": 47,
+
+      "r": 38,
+
+      "strength": 180,
+
+      "maxStrength": 180,
+
+      "attack": 5,
+
+      "defense": 6,
+
+      "movement": 4,
+
+      "range": 1,
+
+      "morale": 82,
+
+      "suppression": 0,
+
+      "fatigue": 0,
+
+      "ammo": 100,
+
+      "isHQ": true,
+
+      "hqLevel": "division",
+
+      "hqRole": "guard",
+
+      "parentArmyGroup": "第二集团军",
+
+      "parentCorps": "第30军",
+
+      "parentDivision": "第31师",
+
+      "deploymentRole": "division_command"
+
+    },
+
+    {
+
+      "id": "CHI_31D_GUARD_2",
+
+      "name": "第31师师部第2警卫连",
+
+      "fullName": "第31师师部第2警卫连",
+
+      "faction": "chinese",
+
+      "type": "infantry",
+
+      "echelon": "company",
+
+      "q": 49,
+
+      "r": 38,
+
+      "strength": 180,
+
+      "maxStrength": 180,
+
+      "attack": 5,
+
+      "defense": 6,
+
+      "movement": 4,
+
+      "range": 1,
+
+      "morale": 82,
+
+      "suppression": 0,
+
+      "fatigue": 0,
+
+      "ammo": 100,
+
+      "isHQ": true,
+
+      "hqLevel": "division",
+
+      "hqRole": "guard",
+
+      "parentArmyGroup": "第二集团军",
+
+      "parentCorps": "第30军",
+
+      "parentDivision": "第31师",
+
+      "deploymentRole": "division_command"
+
+    },
+
+    {
+
+      "id": "CHI_31D_R1_HQ",
+
+      "name": "第31师第1团部",
+
+      "fullName": "第31师第1团部",
+
+      "faction": "chinese",
+
+      "type": "headquarters",
+
+      "echelon": "company",
+
+      "q": 48,
+
+      "r": 37,
+
+      "strength": 100,
+
+      "maxStrength": 100,
+
+      "attack": 2,
+
+      "defense": 3,
+
+      "movement": 5,
+
+      "range": 1,
+
+      "morale": 80,
+
+      "suppression": 0,
+
+      "fatigue": 0,
+
+      "ammo": 100,
+
+      "isHQ": true,
+
+      "hqLevel": "regiment",
+
+      "hqRole": "command",
+
+      "parentArmyGroup": "第二集团军",
+
+      "parentCorps": "第30军",
+
+      "parentDivision": "第31师",
+
+      "parentRegiment": "第31师第1团",
+
+      "deploymentRole": "rear_command"
+
+    },
+
+    {
+
+      "id": "CHI_31D_R1_GUARD_1",
+
+      "name": "第31师第1团警卫连",
+
+      "fullName": "第31师第1团警卫连",
+
+      "faction": "chinese",
+
+      "type": "infantry",
+
+      "echelon": "company",
+
+      "q": 50,
+
+      "r": 38,
+
+      "strength": 180,
+
+      "maxStrength": 180,
+
+      "attack": 5,
+
+      "defense": 6,
+
+      "movement": 4,
+
+      "range": 1,
+
+      "morale": 78,
+
+      "suppression": 0,
+
+      "fatigue": 0,
+
+      "ammo": 100,
+
+      "isHQ": true,
+
+      "hqLevel": "regiment",
+
+      "hqRole": "guard",
+
+      "parentArmyGroup": "第二集团军",
+
+      "parentCorps": "第30军",
+
+      "parentDivision": "第31师",
+
+      "parentRegiment": "第31师第1团",
+
+      "deploymentRole": "regiment_command"
+
+    },
+
+    {
+
+      "id": "CHI_31D_R1_B1",
+
+      "name": "第31师第1团第1营",
+
+      "fullName": "第31师第1团第1营",
+
+      "faction": "chinese",
+
+      "type": "infantry",
+
+      "echelon": "battalion",
+
+      "q": 45,
+
+      "r": 34,
+
+      "strength": 420,
+
+      "maxStrength": 450,
+
+      "attack": 6,
+
+      "defense": 10,
+
+      "movement": 4,
+
+      "range": 1,
+
+      "morale": 85,
+
+      "suppression": 0,
+
+      "fatigue": 0,
+
+      "ammo": 100,
+
+      "isHQ": false,
+
+      "parentArmyGroup": "第二集团军",
+
+      "parentCorps": "第30军",
+
+      "parentDivision": "第31师",
+
+      "parentRegiment": "第31师第1团",
+
+      "deploymentRole": "frontline"
+
+    },
+
+    {
+
+      "id": "CHI_31D_R1_B2",
+
+      "name": "第31师第1团第2营",
+
+      "fullName": "第31师第1团第2营",
+
+      "faction": "chinese",
+
+      "type": "infantry",
+
+      "echelon": "battalion",
+
+      "q": 47,
+
+      "r": 34,
+
+      "strength": 405,
+
+      "maxStrength": 450,
+
+      "attack": 6,
+
+      "defense": 10,
+
+      "movement": 4,
+
+      "range": 1,
+
+      "morale": 85,
+
+      "suppression": 0,
+
+      "fatigue": 0,
+
+      "ammo": 100,
+
+      "isHQ": false,
+
+      "parentArmyGroup": "第二集团军",
+
+      "parentCorps": "第30军",
+
+      "parentDivision": "第31师",
+
+      "parentRegiment": "第31师第1团",
+
+      "deploymentRole": "frontline"
+
+    },
+
+    {
+
+      "id": "CHI_31D_R1_B3",
+
+      "name": "第31师第1团第3营",
+
+      "fullName": "第31师第1团第3营",
+
+      "faction": "chinese",
+
+      "type": "infantry",
+
+      "echelon": "battalion",
+
+      "q": 49,
+
+      "r": 34,
+
+      "strength": 390,
+
+      "maxStrength": 450,
+
+      "attack": 6,
+
+      "defense": 10,
+
+      "movement": 4,
+
+      "range": 1,
+
+      "morale": 85,
+
+      "suppression": 0,
+
+      "fatigue": 0,
+
+      "ammo": 100,
+
+      "isHQ": false,
+
+      "parentArmyGroup": "第二集团军",
+
+      "parentCorps": "第30军",
+
+      "parentDivision": "第31师",
+
+      "parentRegiment": "第31师第1团",
+
+      "deploymentRole": "frontline"
+
+    },
+
+    {
+
+      "id": "CHI_31D_R2_HQ",
+
+      "name": "第31师第2团部",
+
+      "fullName": "第31师第2团部",
+
+      "faction": "chinese",
+
+      "type": "headquarters",
+
+      "echelon": "company",
+
+      "q": 50,
+
+      "r": 37,
+
+      "strength": 100,
+
+      "maxStrength": 100,
+
+      "attack": 2,
+
+      "defense": 3,
+
+      "movement": 5,
+
+      "range": 1,
+
+      "morale": 80,
+
+      "suppression": 0,
+
+      "fatigue": 0,
+
+      "ammo": 100,
+
+      "isHQ": true,
+
+      "hqLevel": "regiment",
+
+      "hqRole": "command",
+
+      "parentArmyGroup": "第二集团军",
+
+      "parentCorps": "第30军",
+
+      "parentDivision": "第31师",
+
+      "parentRegiment": "第31师第2团",
+
+      "deploymentRole": "rear_command"
+
+    },
+
+    {
+
+      "id": "CHI_31D_R2_GUARD_1",
+
+      "name": "第31师第2团警卫连",
+
+      "fullName": "第31师第2团警卫连",
+
+      "faction": "chinese",
+
+      "type": "infantry",
+
+      "echelon": "company",
+
+      "q": 51,
+
+      "r": 38,
+
+      "strength": 180,
+
+      "maxStrength": 180,
+
+      "attack": 5,
+
+      "defense": 6,
+
+      "movement": 4,
+
+      "range": 1,
+
+      "morale": 78,
+
+      "suppression": 0,
+
+      "fatigue": 0,
+
+      "ammo": 100,
+
+      "isHQ": true,
+
+      "hqLevel": "regiment",
+
+      "hqRole": "guard",
+
+      "parentArmyGroup": "第二集团军",
+
+      "parentCorps": "第30军",
+
+      "parentDivision": "第31师",
+
+      "parentRegiment": "第31师第2团",
+
+      "deploymentRole": "regiment_command"
+
+    },
+
+    {
+
+      "id": "CHI_31D_R2_B1",
+
+      "name": "第31师第2团第1营",
+
+      "fullName": "第31师第2团第1营",
+
+      "faction": "chinese",
+
+      "type": "infantry",
+
+      "echelon": "battalion",
+
+      "q": 44,
+
+      "r": 35,
+
+      "strength": 410,
+
+      "maxStrength": 450,
+
+      "attack": 6,
+
+      "defense": 10,
+
+      "movement": 4,
+
+      "range": 1,
+
+      "morale": 85,
+
+      "suppression": 0,
+
+      "fatigue": 0,
+
+      "ammo": 100,
+
+      "isHQ": false,
+
+      "parentArmyGroup": "第二集团军",
+
+      "parentCorps": "第30军",
+
+      "parentDivision": "第31师",
+
+      "parentRegiment": "第31师第2团",
+
+      "deploymentRole": "frontline"
+
+    },
+
+    {
+
+      "id": "CHI_31D_R2_B2",
+
+      "name": "第31师第2团第2营",
+
+      "fullName": "第31师第2团第2营",
+
+      "faction": "chinese",
+
+      "type": "infantry",
+
+      "echelon": "battalion",
+
+      "q": 48,
+
+      "r": 35,
+
+      "strength": 395,
+
+      "maxStrength": 450,
+
+      "attack": 6,
+
+      "defense": 10,
+
+      "movement": 4,
+
+      "range": 1,
+
+      "morale": 85,
+
+      "suppression": 0,
+
+      "fatigue": 0,
+
+      "ammo": 100,
+
+      "isHQ": false,
+
+      "parentArmyGroup": "第二集团军",
+
+      "parentCorps": "第30军",
+
+      "parentDivision": "第31师",
+
+      "parentRegiment": "第31师第2团",
+
+      "deploymentRole": "frontline"
+
+    },
+
+    {
+
+      "id": "CHI_31D_R2_B3",
+
+      "name": "第31师第2团第3营",
+
+      "fullName": "第31师第2团第3营",
+
+      "faction": "chinese",
+
+      "type": "infantry",
+
+      "echelon": "battalion",
+
+      "q": 51,
+
+      "r": 35,
+
+      "strength": 375,
+
+      "maxStrength": 450,
+
+      "attack": 6,
+
+      "defense": 10,
+
+      "movement": 4,
+
+      "range": 1,
+
+      "morale": 85,
+
+      "suppression": 0,
+
+      "fatigue": 0,
+
+      "ammo": 100,
+
+      "isHQ": false,
+
+      "parentArmyGroup": "第二集团军",
+
+      "parentCorps": "第30军",
+
+      "parentDivision": "第31师",
+
+      "parentRegiment": "第31师第2团",
+
+      "deploymentRole": "frontline"
+
+    },
+
+    {
+
+      "id": "CHI_31D_MG",
+
+      "name": "第31师重机枪连",
+
+      "fullName": "第31师重机枪连",
+
+      "faction": "chinese",
+
+      "type": "machinegun",
+
+      "echelon": "company",
+
+      "q": 50,
+
+      "r": 39,
+
+      "strength": 90,
+
+      "maxStrength": 100,
+
+      "attack": 8,
+
+      "defense": 11,
+
+      "movement": 3,
+
+      "range": 1,
+
+      "morale": 84,
+
+      "suppression": 0,
+
+      "fatigue": 0,
+
+      "ammo": 100,
+
+      "isHQ": false,
+
+      "parentArmyGroup": "第二集团军",
+
+      "parentCorps": "第30军",
+
+      "parentDivision": "第31师",
+
+      "deploymentRole": "support"
+
+    },
+
+    {
+
+      "id": "CHI_31D_ENG",
+
+      "name": "第31师工兵连",
+
+      "fullName": "第31师工兵连",
+
+      "faction": "chinese",
+
+      "type": "engineer",
+
+      "echelon": "company",
+
+      "q": 46,
+
+      "r": 39,
+
+      "strength": 88,
+
+      "maxStrength": 100,
+
+      "attack": 7,
+
+      "defense": 8,
+
+      "movement": 4,
+
+      "range": 1,
+
+      "morale": 84,
+
+      "suppression": 0,
+
+      "fatigue": 0,
+
+      "ammo": 100,
+
+      "isHQ": false,
+
+      "parentArmyGroup": "第二集团军",
+
+      "parentCorps": "第30军",
+
+      "parentDivision": "第31师",
+
+      "deploymentRole": "support"
+
+    },
+
+    {
+
+      "id": "CHI_30D_HQ",
+
+      "name": "第30师部",
+
+      "fullName": "第30师部",
+
+      "faction": "chinese",
+
+      "type": "headquarters",
+
+      "echelon": "company",
+
+      "q": 37,
+
+      "r": 36,
+
+      "strength": 100,
+
+      "maxStrength": 100,
+
+      "attack": 2,
+
+      "defense": 3,
+
+      "movement": 5,
+
+      "range": 1,
+
+      "morale": 86,
+
+      "suppression": 0,
+
+      "fatigue": 0,
+
+      "ammo": 100,
+
+      "isHQ": true,
+
+      "hqLevel": "division",
+
+      "hqRole": "command",
+
+      "parentArmyGroup": "第二集团军",
+
+      "parentCorps": "第30军",
+
+      "parentDivision": "第30师",
+
+      "deploymentRole": "rear_command"
+
+    },
+
+    {
+
+      "id": "CHI_30D_GUARD_1",
+
+      "name": "第30师师部第1警卫连",
+
+      "fullName": "第30师师部第1警卫连",
+
+      "faction": "chinese",
+
+      "type": "infantry",
+
+      "echelon": "company",
+
+      "q": 36,
+
+      "r": 36,
+
+      "strength": 180,
+
+      "maxStrength": 180,
+
+      "attack": 5,
+
+      "defense": 6,
+
+      "movement": 4,
+
+      "range": 1,
+
+      "morale": 82,
+
+      "suppression": 0,
+
+      "fatigue": 0,
+
+      "ammo": 100,
+
+      "isHQ": true,
+
+      "hqLevel": "division",
+
+      "hqRole": "guard",
+
+      "parentArmyGroup": "第二集团军",
+
+      "parentCorps": "第30军",
+
+      "parentDivision": "第30师",
+
+      "deploymentRole": "division_command"
+
+    },
+
+    {
+
+      "id": "CHI_30D_GUARD_2",
+
+      "name": "第30师师部第2警卫连",
+
+      "fullName": "第30师师部第2警卫连",
+
+      "faction": "chinese",
+
+      "type": "infantry",
+
+      "echelon": "company",
+
+      "q": 38,
+
+      "r": 36,
+
+      "strength": 180,
+
+      "maxStrength": 180,
+
+      "attack": 5,
+
+      "defense": 6,
+
+      "movement": 4,
+
+      "range": 1,
+
+      "morale": 82,
+
+      "suppression": 0,
+
+      "fatigue": 0,
+
+      "ammo": 100,
+
+      "isHQ": true,
+
+      "hqLevel": "division",
+
+      "hqRole": "guard",
+
+      "parentArmyGroup": "第二集团军",
+
+      "parentCorps": "第30军",
+
+      "parentDivision": "第30师",
+
+      "deploymentRole": "division_command"
+
+    },
+
+    {
+
+      "id": "CHI_30D_R1_HQ",
+
+      "name": "第30师第1团部",
+
+      "fullName": "第30师第1团部",
+
+      "faction": "chinese",
+
+      "type": "headquarters",
+
+      "echelon": "company",
+
+      "q": 37,
+
+      "r": 35,
+
+      "strength": 100,
+
+      "maxStrength": 100,
+
+      "attack": 2,
+
+      "defense": 3,
+
+      "movement": 5,
+
+      "range": 1,
+
+      "morale": 80,
+
+      "suppression": 0,
+
+      "fatigue": 0,
+
+      "ammo": 100,
+
+      "isHQ": true,
+
+      "hqLevel": "regiment",
+
+      "hqRole": "command",
+
+      "parentArmyGroup": "第二集团军",
+
+      "parentCorps": "第30军",
+
+      "parentDivision": "第30师",
+
+      "parentRegiment": "第30师第1团",
+
+      "deploymentRole": "rear_command"
+
+    },
+
+    {
+
+      "id": "CHI_30D_R1_GUARD_1",
+
+      "name": "第30师第1团警卫连",
+
+      "fullName": "第30师第1团警卫连",
+
+      "faction": "chinese",
+
+      "type": "infantry",
+
+      "echelon": "company",
+
+      "q": 39,
+
+      "r": 36,
+
+      "strength": 180,
+
+      "maxStrength": 180,
+
+      "attack": 5,
+
+      "defense": 6,
+
+      "movement": 4,
+
+      "range": 1,
+
+      "morale": 78,
+
+      "suppression": 0,
+
+      "fatigue": 0,
+
+      "ammo": 100,
+
+      "isHQ": true,
+
+      "hqLevel": "regiment",
+
+      "hqRole": "guard",
+
+      "parentArmyGroup": "第二集团军",
+
+      "parentCorps": "第30军",
+
+      "parentDivision": "第30师",
+
+      "parentRegiment": "第30师第1团",
+
+      "deploymentRole": "regiment_command"
+
+    },
+
+    {
+
+      "id": "CHI_30D_R1_B1",
+
+      "name": "第30师第1团第1营",
+
+      "fullName": "第30师第1团第1营",
+
+      "faction": "chinese",
+
+      "type": "infantry",
+
+      "echelon": "battalion",
+
+      "q": 36,
+
+      "r": 31,
+
+      "strength": 420,
+
+      "maxStrength": 450,
+
+      "attack": 6,
+
+      "defense": 10,
+
+      "movement": 4,
+
+      "range": 1,
+
+      "morale": 85,
+
+      "suppression": 0,
+
+      "fatigue": 0,
+
+      "ammo": 100,
+
+      "isHQ": false,
+
+      "parentArmyGroup": "第二集团军",
+
+      "parentCorps": "第30军",
+
+      "parentDivision": "第30师",
+
+      "parentRegiment": "第30师第1团",
+
+      "deploymentRole": "frontline"
+
+    },
+
+    {
+
+      "id": "CHI_30D_R1_B2",
+
+      "name": "第30师第1团第2营",
+
+      "fullName": "第30师第1团第2营",
+
+      "faction": "chinese",
+
+      "type": "infantry",
+
+      "echelon": "battalion",
+
+      "q": 39,
+
+      "r": 31,
+
+      "strength": 405,
+
+      "maxStrength": 450,
+
+      "attack": 6,
+
+      "defense": 10,
+
+      "movement": 4,
+
+      "range": 1,
+
+      "morale": 85,
+
+      "suppression": 0,
+
+      "fatigue": 0,
+
+      "ammo": 100,
+
+      "isHQ": false,
+
+      "parentArmyGroup": "第二集团军",
+
+      "parentCorps": "第30军",
+
+      "parentDivision": "第30师",
+
+      "parentRegiment": "第30师第1团",
+
+      "deploymentRole": "frontline"
+
+    },
+
+    {
+
+      "id": "CHI_30D_R1_B3",
+
+      "name": "第30师第1团第3营",
+
+      "fullName": "第30师第1团第3营",
+
+      "faction": "chinese",
+
+      "type": "infantry",
+
+      "echelon": "battalion",
+
+      "q": 41,
+
+      "r": 32,
+
+      "strength": 390,
+
+      "maxStrength": 450,
+
+      "attack": 6,
+
+      "defense": 10,
+
+      "movement": 4,
+
+      "range": 1,
+
+      "morale": 85,
+
+      "suppression": 0,
+
+      "fatigue": 0,
+
+      "ammo": 100,
+
+      "isHQ": false,
+
+      "parentArmyGroup": "第二集团军",
+
+      "parentCorps": "第30军",
+
+      "parentDivision": "第30师",
+
+      "parentRegiment": "第30师第1团",
+
+      "deploymentRole": "frontline"
+
+    },
+
+    {
+
+      "id": "CHI_30D_R2_HQ",
+
+      "name": "第30师第2团部",
+
+      "fullName": "第30师第2团部",
+
+      "faction": "chinese",
+
+      "type": "headquarters",
+
+      "echelon": "company",
+
+      "q": 39,
+
+      "r": 35,
+
+      "strength": 100,
+
+      "maxStrength": 100,
+
+      "attack": 2,
+
+      "defense": 3,
+
+      "movement": 5,
+
+      "range": 1,
+
+      "morale": 80,
+
+      "suppression": 0,
+
+      "fatigue": 0,
+
+      "ammo": 100,
+
+      "isHQ": true,
+
+      "hqLevel": "regiment",
+
+      "hqRole": "command",
+
+      "parentArmyGroup": "第二集团军",
+
+      "parentCorps": "第30军",
+
+      "parentDivision": "第30师",
+
+      "parentRegiment": "第30师第2团",
+
+      "deploymentRole": "rear_command"
+
+    },
+
+    {
+
+      "id": "CHI_30D_R2_GUARD_1",
+
+      "name": "第30师第2团警卫连",
+
+      "fullName": "第30师第2团警卫连",
+
+      "faction": "chinese",
+
+      "type": "infantry",
+
+      "echelon": "company",
+
+      "q": 40,
+
+      "r": 36,
+
+      "strength": 180,
+
+      "maxStrength": 180,
+
+      "attack": 5,
+
+      "defense": 6,
+
+      "movement": 4,
+
+      "range": 1,
+
+      "morale": 78,
+
+      "suppression": 0,
+
+      "fatigue": 0,
+
+      "ammo": 100,
+
+      "isHQ": true,
+
+      "hqLevel": "regiment",
+
+      "hqRole": "guard",
+
+      "parentArmyGroup": "第二集团军",
+
+      "parentCorps": "第30军",
+
+      "parentDivision": "第30师",
+
+      "parentRegiment": "第30师第2团",
+
+      "deploymentRole": "regiment_command"
+
+    },
+
+    {
+
+      "id": "CHI_30D_R2_B1",
+
+      "name": "第30师第2团第1营",
+
+      "fullName": "第30师第2团第1营",
+
+      "faction": "chinese",
+
+      "type": "infantry",
+
+      "echelon": "battalion",
+
+      "q": 35,
+
+      "r": 34,
+
+      "strength": 410,
+
+      "maxStrength": 450,
+
+      "attack": 6,
+
+      "defense": 10,
+
+      "movement": 4,
+
+      "range": 1,
+
+      "morale": 85,
+
+      "suppression": 0,
+
+      "fatigue": 0,
+
+      "ammo": 100,
+
+      "isHQ": false,
+
+      "parentArmyGroup": "第二集团军",
+
+      "parentCorps": "第30军",
+
+      "parentDivision": "第30师",
+
+      "parentRegiment": "第30师第2团",
+
+      "deploymentRole": "frontline"
+
+    },
+
+    {
+
+      "id": "CHI_30D_R2_B2",
+
+      "name": "第30师第2团第2营",
+
+      "fullName": "第30师第2团第2营",
+
+      "faction": "chinese",
+
+      "type": "infantry",
+
+      "echelon": "battalion",
+
+      "q": 38,
+
+      "r": 34,
+
+      "strength": 395,
+
+      "maxStrength": 450,
+
+      "attack": 6,
+
+      "defense": 10,
+
+      "movement": 4,
+
+      "range": 1,
+
+      "morale": 85,
+
+      "suppression": 0,
+
+      "fatigue": 0,
+
+      "ammo": 100,
+
+      "isHQ": false,
+
+      "parentArmyGroup": "第二集团军",
+
+      "parentCorps": "第30军",
+
+      "parentDivision": "第30师",
+
+      "parentRegiment": "第30师第2团",
+
+      "deploymentRole": "frontline"
+
+    },
+
+    {
+
+      "id": "CHI_30D_R2_B3",
+
+      "name": "第30师第2团第3营",
+
+      "fullName": "第30师第2团第3营",
+
+      "faction": "chinese",
+
+      "type": "infantry",
+
+      "echelon": "battalion",
+
+      "q": 41,
+
+      "r": 35,
+
+      "strength": 375,
+
+      "maxStrength": 450,
+
+      "attack": 6,
+
+      "defense": 10,
+
+      "movement": 4,
+
+      "range": 1,
+
+      "morale": 85,
+
+      "suppression": 0,
+
+      "fatigue": 0,
+
+      "ammo": 100,
+
+      "isHQ": false,
+
+      "parentArmyGroup": "第二集团军",
+
+      "parentCorps": "第30军",
+
+      "parentDivision": "第30师",
+
+      "parentRegiment": "第30师第2团",
+
+      "deploymentRole": "frontline"
+
+    },
+
+    {
+
+      "id": "CHI_30D_MG",
+
+      "name": "第30师重机枪连",
+
+      "fullName": "第30师重机枪连",
+
+      "faction": "chinese",
+
+      "type": "machinegun",
+
+      "echelon": "company",
+
+      "q": 39,
+
+      "r": 37,
+
+      "strength": 90,
+
+      "maxStrength": 100,
+
+      "attack": 8,
+
+      "defense": 11,
+
+      "movement": 3,
+
+      "range": 1,
+
+      "morale": 84,
+
+      "suppression": 0,
+
+      "fatigue": 0,
+
+      "ammo": 100,
+
+      "isHQ": false,
+
+      "parentArmyGroup": "第二集团军",
+
+      "parentCorps": "第30军",
+
+      "parentDivision": "第30师",
+
+      "deploymentRole": "support"
+
+    },
+
+    {
+
+      "id": "CHI_30D_ENG",
+
+      "name": "第30师工兵连",
+
+      "fullName": "第30师工兵连",
+
+      "faction": "chinese",
+
+      "type": "engineer",
+
+      "echelon": "company",
+
+      "q": 35,
+
+      "r": 37,
+
+      "strength": 88,
+
+      "maxStrength": 100,
+
+      "attack": 7,
+
+      "defense": 8,
+
+      "movement": 4,
+
+      "range": 1,
+
+      "morale": 84,
+
+      "suppression": 0,
+
+      "fatigue": 0,
+
+      "ammo": 100,
+
+      "isHQ": false,
+
+      "parentArmyGroup": "第二集团军",
+
+      "parentCorps": "第30军",
+
+      "parentDivision": "第30师",
+
+      "deploymentRole": "support"
+
+    },
+
+    {
+
+      "id": "CHI_42C_HQ",
+
+      "name": "第42军司令部",
+
+      "fullName": "第42军司令部",
+
+      "faction": "chinese",
+
+      "type": "headquarters",
+
+      "echelon": "company",
+
+      "q": 59,
+
+      "r": 39,
+
+      "strength": 100,
+
+      "maxStrength": 100,
+
+      "attack": 2,
+
+      "defense": 3,
+
+      "movement": 5,
+
+      "range": 1,
+
+      "morale": 84,
+
+      "suppression": 0,
+
+      "fatigue": 0,
+
+      "ammo": 100,
+
+      "isHQ": true,
+
+      "hqLevel": "corps",
+
+      "hqRole": "command",
+
+      "commander": "冯安邦",
+
+      "parentArmyGroup": "第二集团军",
+
+      "parentCorps": "第42军",
+
+      "deploymentRole": "rear_command"
+
+    },
+
+    {
+
+      "id": "CHI_42C_GUARD_1",
+
+      "name": "第42军警卫第1营",
+
+      "fullName": "第42军警卫第1营",
+
+      "faction": "chinese",
+
+      "type": "infantry",
+
+      "echelon": "battalion",
+
+      "q": 60,
+
+      "r": 39,
+
+      "strength": 650,
+
+      "maxStrength": 650,
+
+      "attack": 6,
+
+      "defense": 7,
+
+      "movement": 4,
+
+      "range": 1,
+
+      "morale": 80,
+
+      "suppression": 0,
+
+      "fatigue": 0,
+
+      "ammo": 100,
+
+      "isHQ": true,
+
+      "hqLevel": "corps",
+
+      "hqRole": "guard",
+
+      "parentArmyGroup": "第二集团军",
+
+      "parentCorps": "第42军",
+
+      "deploymentRole": "rear_command"
+
+    },
+
+    {
+
+      "id": "CHI_27D_HQ",
+
+      "name": "第27师部",
+
+      "fullName": "第27师部",
+
+      "faction": "chinese",
+
+      "type": "headquarters",
+
+      "echelon": "company",
+
+      "q": 58,
+
+      "r": 36,
+
+      "strength": 100,
+
+      "maxStrength": 100,
+
+      "attack": 2,
+
+      "defense": 3,
+
+      "movement": 5,
+
+      "range": 1,
+
+      "morale": 86,
+
+      "suppression": 0,
+
+      "fatigue": 0,
+
+      "ammo": 100,
+
+      "isHQ": true,
+
+      "hqLevel": "division",
+
+      "hqRole": "command",
+
+      "commander": "黄樵松",
+
+      "parentArmyGroup": "第二集团军",
+
+      "parentCorps": "第42军",
+
+      "parentDivision": "第27师",
+
+      "deploymentRole": "rear_command"
+
+    },
+
+    {
+
+      "id": "CHI_27D_GUARD_1",
+
+      "name": "第27师师部第1警卫连",
+
+      "fullName": "第27师师部第1警卫连",
+
+      "faction": "chinese",
+
+      "type": "infantry",
+
+      "echelon": "company",
+
+      "q": 57,
+
+      "r": 36,
+
+      "strength": 180,
+
+      "maxStrength": 180,
+
+      "attack": 5,
+
+      "defense": 6,
+
+      "movement": 4,
+
+      "range": 1,
+
+      "morale": 82,
+
+      "suppression": 0,
+
+      "fatigue": 0,
+
+      "ammo": 100,
+
+      "isHQ": true,
+
+      "hqLevel": "division",
+
+      "hqRole": "guard",
+
+      "parentArmyGroup": "第二集团军",
+
+      "parentCorps": "第42军",
+
+      "parentDivision": "第27师",
+
+      "deploymentRole": "division_command"
+
+    },
+
+    {
+
+      "id": "CHI_27D_GUARD_2",
+
+      "name": "第27师师部第2警卫连",
+
+      "fullName": "第27师师部第2警卫连",
+
+      "faction": "chinese",
+
+      "type": "infantry",
+
+      "echelon": "company",
+
+      "q": 59,
+
+      "r": 36,
+
+      "strength": 180,
+
+      "maxStrength": 180,
+
+      "attack": 5,
+
+      "defense": 6,
+
+      "movement": 4,
+
+      "range": 1,
+
+      "morale": 82,
+
+      "suppression": 0,
+
+      "fatigue": 0,
+
+      "ammo": 100,
+
+      "isHQ": true,
+
+      "hqLevel": "division",
+
+      "hqRole": "guard",
+
+      "parentArmyGroup": "第二集团军",
+
+      "parentCorps": "第42军",
+
+      "parentDivision": "第27师",
+
+      "deploymentRole": "division_command"
+
+    },
+
+    {
+
+      "id": "CHI_27D_R1_HQ",
+
+      "name": "第27师第1团部",
+
+      "fullName": "第27师第1团部",
+
+      "faction": "chinese",
+
+      "type": "headquarters",
+
+      "echelon": "company",
+
+      "q": 58,
+
+      "r": 35,
+
+      "strength": 100,
+
+      "maxStrength": 100,
+
+      "attack": 2,
+
+      "defense": 3,
+
+      "movement": 5,
+
+      "range": 1,
+
+      "morale": 80,
+
+      "suppression": 0,
+
+      "fatigue": 0,
+
+      "ammo": 100,
+
+      "isHQ": true,
+
+      "hqLevel": "regiment",
+
+      "hqRole": "command",
+
+      "parentArmyGroup": "第二集团军",
+
+      "parentCorps": "第42军",
+
+      "parentDivision": "第27师",
+
+      "parentRegiment": "第27师第1团",
+
+      "deploymentRole": "rear_command"
+
+    },
+
+    {
+
+      "id": "CHI_27D_R1_GUARD_1",
+
+      "name": "第27师第1团警卫连",
+
+      "fullName": "第27师第1团警卫连",
+
+      "faction": "chinese",
+
+      "type": "infantry",
+
+      "echelon": "company",
+
+      "q": 60,
+
+      "r": 36,
+
+      "strength": 180,
+
+      "maxStrength": 180,
+
+      "attack": 5,
+
+      "defense": 6,
+
+      "movement": 4,
+
+      "range": 1,
+
+      "morale": 78,
+
+      "suppression": 0,
+
+      "fatigue": 0,
+
+      "ammo": 100,
+
+      "isHQ": true,
+
+      "hqLevel": "regiment",
+
+      "hqRole": "guard",
+
+      "parentArmyGroup": "第二集团军",
+
+      "parentCorps": "第42军",
+
+      "parentDivision": "第27师",
+
+      "parentRegiment": "第27师第1团",
+
+      "deploymentRole": "regiment_command"
+
+    },
+
+    {
+
+      "id": "CHI_27D_R1_B1",
+
+      "name": "第27师第1团第1营",
+
+      "fullName": "第27师第1团第1营",
+
+      "faction": "chinese",
+
+      "type": "infantry",
+
+      "echelon": "battalion",
+
+      "q": 54,
+
+      "r": 31,
+
+      "strength": 420,
+
+      "maxStrength": 450,
+
+      "attack": 6,
+
+      "defense": 10,
+
+      "movement": 4,
+
+      "range": 1,
+
+      "morale": 85,
+
+      "suppression": 0,
+
+      "fatigue": 0,
+
+      "ammo": 100,
+
+      "isHQ": false,
+
+      "parentArmyGroup": "第二集团军",
+
+      "parentCorps": "第42军",
+
+      "parentDivision": "第27师",
+
+      "parentRegiment": "第27师第1团",
+
+      "deploymentRole": "frontline"
+
+    },
+
+    {
+
+      "id": "CHI_27D_R1_B2",
+
+      "name": "第27师第1团第2营",
+
+      "fullName": "第27师第1团第2营",
+
+      "faction": "chinese",
+
+      "type": "infantry",
+
+      "echelon": "battalion",
+
+      "q": 57,
+
+      "r": 31,
+
+      "strength": 405,
+
+      "maxStrength": 450,
+
+      "attack": 6,
+
+      "defense": 10,
+
+      "movement": 4,
+
+      "range": 1,
+
+      "morale": 85,
+
+      "suppression": 0,
+
+      "fatigue": 0,
+
+      "ammo": 100,
+
+      "isHQ": false,
+
+      "parentArmyGroup": "第二集团军",
+
+      "parentCorps": "第42军",
+
+      "parentDivision": "第27师",
+
+      "parentRegiment": "第27师第1团",
+
+      "deploymentRole": "frontline"
+
+    },
+
+    {
+
+      "id": "CHI_27D_R1_B3",
+
+      "name": "第27师第1团第3营",
+
+      "fullName": "第27师第1团第3营",
+
+      "faction": "chinese",
+
+      "type": "infantry",
+
+      "echelon": "battalion",
+
+      "q": 60,
+
+      "r": 31,
+
+      "strength": 390,
+
+      "maxStrength": 450,
+
+      "attack": 6,
+
+      "defense": 10,
+
+      "movement": 4,
+
+      "range": 1,
+
+      "morale": 85,
+
+      "suppression": 0,
+
+      "fatigue": 0,
+
+      "ammo": 100,
+
+      "isHQ": false,
+
+      "parentArmyGroup": "第二集团军",
+
+      "parentCorps": "第42军",
+
+      "parentDivision": "第27师",
+
+      "parentRegiment": "第27师第1团",
+
+      "deploymentRole": "frontline"
+
+    },
+
+    {
+
+      "id": "CHI_27D_R2_HQ",
+
+      "name": "第27师第2团部",
+
+      "fullName": "第27师第2团部",
+
+      "faction": "chinese",
+
+      "type": "headquarters",
+
+      "echelon": "company",
+
+      "q": 60,
+
+      "r": 35,
+
+      "strength": 100,
+
+      "maxStrength": 100,
+
+      "attack": 2,
+
+      "defense": 3,
+
+      "movement": 5,
+
+      "range": 1,
+
+      "morale": 80,
+
+      "suppression": 0,
+
+      "fatigue": 0,
+
+      "ammo": 100,
+
+      "isHQ": true,
+
+      "hqLevel": "regiment",
+
+      "hqRole": "command",
+
+      "parentArmyGroup": "第二集团军",
+
+      "parentCorps": "第42军",
+
+      "parentDivision": "第27师",
+
+      "parentRegiment": "第27师第2团",
+
+      "deploymentRole": "rear_command"
+
+    },
+
+    {
+
+      "id": "CHI_27D_R2_GUARD_1",
+
+      "name": "第27师第2团警卫连",
+
+      "fullName": "第27师第2团警卫连",
+
+      "faction": "chinese",
+
+      "type": "infantry",
+
+      "echelon": "company",
+
+      "q": 61,
+
+      "r": 36,
+
+      "strength": 180,
+
+      "maxStrength": 180,
+
+      "attack": 5,
+
+      "defense": 6,
+
+      "movement": 4,
+
+      "range": 1,
+
+      "morale": 78,
+
+      "suppression": 0,
+
+      "fatigue": 0,
+
+      "ammo": 100,
+
+      "isHQ": true,
+
+      "hqLevel": "regiment",
+
+      "hqRole": "guard",
+
+      "parentArmyGroup": "第二集团军",
+
+      "parentCorps": "第42军",
+
+      "parentDivision": "第27师",
+
+      "parentRegiment": "第27师第2团",
+
+      "deploymentRole": "regiment_command"
+
+    },
+
+    {
+
+      "id": "CHI_27D_R2_B1",
+
+      "name": "第27师第2团第1营",
+
+      "fullName": "第27师第2团第1营",
+
+      "faction": "chinese",
+
+      "type": "infantry",
+
+      "echelon": "battalion",
+
+      "q": 54,
+
+      "r": 34,
+
+      "strength": 410,
+
+      "maxStrength": 450,
+
+      "attack": 6,
+
+      "defense": 10,
+
+      "movement": 4,
+
+      "range": 1,
+
+      "morale": 85,
+
+      "suppression": 0,
+
+      "fatigue": 0,
+
+      "ammo": 100,
+
+      "isHQ": false,
+
+      "parentArmyGroup": "第二集团军",
+
+      "parentCorps": "第42军",
+
+      "parentDivision": "第27师",
+
+      "parentRegiment": "第27师第2团",
+
+      "deploymentRole": "frontline"
+
+    },
+
+    {
+
+      "id": "CHI_27D_R2_B2",
+
+      "name": "第27师第2团第2营",
+
+      "fullName": "第27师第2团第2营",
+
+      "faction": "chinese",
+
+      "type": "infantry",
+
+      "echelon": "battalion",
+
+      "q": 58,
+
+      "r": 34,
+
+      "strength": 395,
+
+      "maxStrength": 450,
+
+      "attack": 6,
+
+      "defense": 10,
+
+      "movement": 4,
+
+      "range": 1,
+
+      "morale": 85,
+
+      "suppression": 0,
+
+      "fatigue": 0,
+
+      "ammo": 100,
+
+      "isHQ": false,
+
+      "parentArmyGroup": "第二集团军",
+
+      "parentCorps": "第42军",
+
+      "parentDivision": "第27师",
+
+      "parentRegiment": "第27师第2团",
+
+      "deploymentRole": "frontline"
+
+    },
+
+    {
+
+      "id": "CHI_27D_R2_B3",
+
+      "name": "第27师第2团第3营",
+
+      "fullName": "第27师第2团第3营",
+
+      "faction": "chinese",
+
+      "type": "infantry",
+
+      "echelon": "battalion",
+
+      "q": 61,
+
+      "r": 35,
+
+      "strength": 375,
+
+      "maxStrength": 450,
+
+      "attack": 6,
+
+      "defense": 10,
+
+      "movement": 4,
+
+      "range": 1,
+
+      "morale": 85,
+
+      "suppression": 0,
+
+      "fatigue": 0,
+
+      "ammo": 100,
+
+      "isHQ": false,
+
+      "parentArmyGroup": "第二集团军",
+
+      "parentCorps": "第42军",
+
+      "parentDivision": "第27师",
+
+      "parentRegiment": "第27师第2团",
+
+      "deploymentRole": "frontline"
+
+    },
+
+    {
+
+      "id": "CHI_27D_MG",
+
+      "name": "第27师重机枪连",
+
+      "fullName": "第27师重机枪连",
+
+      "faction": "chinese",
+
+      "type": "machinegun",
+
+      "echelon": "company",
+
+      "q": 60,
+
+      "r": 37,
+
+      "strength": 90,
+
+      "maxStrength": 100,
+
+      "attack": 8,
+
+      "defense": 11,
+
+      "movement": 3,
+
+      "range": 1,
+
+      "morale": 84,
+
+      "suppression": 0,
+
+      "fatigue": 0,
+
+      "ammo": 100,
+
+      "isHQ": false,
+
+      "parentArmyGroup": "第二集团军",
+
+      "parentCorps": "第42军",
+
+      "parentDivision": "第27师",
+
+      "deploymentRole": "support"
+
+    },
+
+    {
+
+      "id": "CHI_27D_ENG",
+
+      "name": "第27师工兵连",
+
+      "fullName": "第27师工兵连",
+
+      "faction": "chinese",
+
+      "type": "engineer",
+
+      "echelon": "company",
+
+      "q": 56,
+
+      "r": 37,
+
+      "strength": 88,
+
+      "maxStrength": 100,
+
+      "attack": 7,
+
+      "defense": 8,
+
+      "movement": 4,
+
+      "range": 1,
+
+      "morale": 84,
+
+      "suppression": 0,
+
+      "fatigue": 0,
+
+      "ammo": 100,
+
+      "isHQ": false,
+
+      "parentArmyGroup": "第二集团军",
+
+      "parentCorps": "第42军",
+
+      "parentDivision": "第27师",
+
+      "deploymentRole": "support"
+
+    },
+
+    {
+
+      "id": "CHI_44B_HQ",
+
+      "name": "独立第44旅部",
+
+      "fullName": "独立第44旅部",
+
+      "faction": "chinese",
+
+      "type": "headquarters",
+
+      "echelon": "company",
+
+      "q": 66,
+
+      "r": 38,
+
+      "strength": 100,
+
+      "maxStrength": 100,
+
+      "attack": 2,
+
+      "defense": 3,
+
+      "movement": 5,
+
+      "range": 1,
+
+      "morale": 82,
+
+      "suppression": 0,
+
+      "fatigue": 0,
+
+      "ammo": 100,
+
+      "isHQ": true,
+
+      "hqLevel": "brigade",
+
+      "hqRole": "command",
+
+      "parentArmyGroup": "第二集团军",
+
+      "parentCorps": "第42军",
+
+      "parentBrigade": "独立第44旅",
+
+      "deploymentRole": "rear_command"
+
+    },
+
+    {
+
+      "id": "CHI_44B_GUARD_1",
+
+      "name": "独立第44旅警卫连",
+
+      "fullName": "独立第44旅警卫连",
+
+      "faction": "chinese",
+
+      "type": "infantry",
+
+      "echelon": "company",
+
+      "q": 67,
+
+      "r": 38,
+
+      "strength": 180,
+
+      "maxStrength": 180,
+
+      "attack": 5,
+
+      "defense": 6,
+
+      "movement": 4,
+
+      "range": 1,
+
+      "morale": 78,
+
+      "suppression": 0,
+
+      "fatigue": 0,
+
+      "ammo": 100,
+
+      "isHQ": true,
+
+      "hqLevel": "regiment",
+
+      "hqRole": "guard",
+
+      "parentArmyGroup": "第二集团军",
+
+      "parentCorps": "第42军",
+
+      "parentBrigade": "独立第44旅",
+
+      "deploymentRole": "regiment_command"
+
+    },
+
+    {
+
+      "id": "CHI_44B_B1",
+
+      "name": "独立第44旅第1营",
+
+      "fullName": "独立第44旅第1营",
+
+      "faction": "chinese",
+
+      "type": "infantry",
+
+      "echelon": "battalion",
+
+      "q": 64,
+
+      "r": 34,
+
+      "strength": 400,
+
+      "maxStrength": 450,
+
+      "attack": 6,
+
+      "defense": 9,
+
+      "movement": 4,
+
+      "range": 1,
+
+      "morale": 82,
+
+      "suppression": 0,
+
+      "fatigue": 0,
+
+      "ammo": 100,
+
+      "isHQ": false,
+
+      "parentArmyGroup": "第二集团军",
+
+      "parentCorps": "第42军",
+
+      "parentBrigade": "独立第44旅",
+
+      "deploymentRole": "frontline"
+
+    },
+
+    {
+
+      "id": "CHI_44B_B2",
+
+      "name": "独立第44旅第2营",
+
+      "fullName": "独立第44旅第2营",
+
+      "faction": "chinese",
+
+      "type": "infantry",
+
+      "echelon": "battalion",
+
+      "q": 67,
+
+      "r": 34,
+
+      "strength": 390,
+
+      "maxStrength": 450,
+
+      "attack": 6,
+
+      "defense": 9,
+
+      "movement": 4,
+
+      "range": 1,
+
+      "morale": 82,
+
+      "suppression": 0,
+
+      "fatigue": 0,
+
+      "ammo": 100,
+
+      "isHQ": false,
+
+      "parentArmyGroup": "第二集团军",
+
+      "parentCorps": "第42军",
+
+      "parentBrigade": "独立第44旅",
+
+      "deploymentRole": "frontline"
+
+    },
+
+    {
+
+      "id": "CHI_44B_B3",
+
+      "name": "独立第44旅第3营",
+
+      "fullName": "独立第44旅第3营",
+
+      "faction": "chinese",
+
+      "type": "infantry",
+
+      "echelon": "battalion",
+
+      "q": 70,
+
+      "r": 35,
+
+      "strength": 370,
+
+      "maxStrength": 450,
+
+      "attack": 6,
+
+      "defense": 9,
+
+      "movement": 4,
+
+      "range": 1,
+
+      "morale": 82,
+
+      "suppression": 0,
+
+      "fatigue": 0,
+
+      "ammo": 100,
+
+      "isHQ": false,
+
+      "parentArmyGroup": "第二集团军",
+
+      "parentCorps": "第42军",
+
+      "parentBrigade": "独立第44旅",
+
+      "deploymentRole": "frontline"
+
+    },
+
+    {
+
+      "id": "CHI_20AC_HQ",
+
+      "name": "第二十军团司令部",
+
+      "fullName": "第二十军团司令部",
+
+      "faction": "chinese",
+
+      "type": "headquarters",
+
+      "echelon": "company",
+
+      "q": 20,
+
+      "r": 24,
+
+      "strength": 100,
+
+      "maxStrength": 100,
+
+      "attack": 2,
+
+      "defense": 3,
+
+      "movement": 5,
+
+      "range": 1,
+
+      "morale": 90,
+
+      "suppression": 0,
+
+      "fatigue": 0,
+
+      "ammo": 100,
+
+      "isHQ": true,
+
+      "hqLevel": "army",
+
+      "hqRole": "command",
+
+      "commander": "汤恩伯",
+
+      "parentArmy": "第二十军团",
+
+      "deploymentRole": "rear_command"
+
+    },
+
+    {
+
+      "id": "CHI_20AC_GUARD_1",
+
+      "name": "第二十军团警卫第1营",
+
+      "fullName": "第二十军团警卫第1营",
+
+      "faction": "chinese",
+
+      "type": "infantry",
+
+      "echelon": "battalion",
+
+      "q": 19,
+
+      "r": 25,
+
+      "strength": 650,
+
+      "maxStrength": 650,
+
+      "attack": 6,
+
+      "defense": 7,
+
+      "movement": 4,
+
+      "range": 1,
+
+      "morale": 86,
+
+      "suppression": 0,
+
+      "fatigue": 0,
+
+      "ammo": 100,
+
+      "isHQ": true,
+
+      "hqLevel": "army",
+
+      "hqRole": "guard",
+
+      "parentArmy": "第二十军团",
+
+      "deploymentRole": "rear_command"
+
+    },
+
+    {
+
+      "id": "CHI_20AC_GUARD_2",
+
+      "name": "第二十军团警卫第2营",
+
+      "fullName": "第二十军团警卫第2营",
+
+      "faction": "chinese",
+
+      "type": "infantry",
+
+      "echelon": "battalion",
+
+      "q": 21,
+
+      "r": 25,
+
+      "strength": 650,
+
+      "maxStrength": 650,
+
+      "attack": 6,
+
+      "defense": 7,
+
+      "movement": 4,
+
+      "range": 1,
+
+      "morale": 86,
+
+      "suppression": 0,
+
+      "fatigue": 0,
+
+      "ammo": 100,
+
+      "isHQ": true,
+
+      "hqLevel": "army",
+
+      "hqRole": "guard",
+
+      "parentArmy": "第二十军团",
+
+      "deploymentRole": "rear_command"
+
+    },
+
+    {
+
+      "id": "CHI_52C_HQ",
+
+      "name": "第52军司令部",
+
+      "fullName": "第52军司令部",
+
+      "faction": "chinese",
+
+      "type": "headquarters",
+
+      "echelon": "company",
+
+      "q": 25,
+
+      "r": 22,
+
+      "strength": 100,
+
+      "maxStrength": 100,
+
+      "attack": 2,
+
+      "defense": 3,
+
+      "movement": 5,
+
+      "range": 1,
+
+      "morale": 88,
+
+      "suppression": 0,
+
+      "fatigue": 0,
+
+      "ammo": 100,
+
+      "isHQ": true,
+
+      "hqLevel": "corps",
+
+      "hqRole": "command",
+
+      "commander": "关麟征",
+
+      "parentArmy": "第二十军团",
+
+      "parentCorps": "第52军",
+
+      "deploymentRole": "rear_command"
+
+    },
+
+    {
+
+      "id": "CHI_52C_GUARD_1",
+
+      "name": "第52军警卫第1营",
+
+      "fullName": "第52军警卫第1营",
+
+      "faction": "chinese",
+
+      "type": "infantry",
+
+      "echelon": "battalion",
+
+      "q": 26,
+
+      "r": 22,
+
+      "strength": 650,
+
+      "maxStrength": 650,
+
+      "attack": 6,
+
+      "defense": 7,
+
+      "movement": 4,
+
+      "range": 1,
+
+      "morale": 84,
+
+      "suppression": 0,
+
+      "fatigue": 0,
+
+      "ammo": 100,
+
+      "isHQ": true,
+
+      "hqLevel": "corps",
+
+      "hqRole": "guard",
+
+      "parentArmy": "第二十军团",
+
+      "parentCorps": "第52军",
+
+      "deploymentRole": "rear_command"
+
+    },
+
+    {
+
+      "id": "CHI_85C_HQ",
+
+      "name": "第85军司令部",
+
+      "fullName": "第85军司令部",
+
+      "faction": "chinese",
+
+      "type": "headquarters",
+
+      "echelon": "company",
+
+      "q": 14,
+
+      "r": 27,
+
+      "strength": 100,
+
+      "maxStrength": 100,
+
+      "attack": 2,
+
+      "defense": 3,
+
+      "movement": 5,
+
+      "range": 1,
+
+      "morale": 88,
+
+      "suppression": 0,
+
+      "fatigue": 0,
+
+      "ammo": 100,
+
+      "isHQ": true,
+
+      "hqLevel": "corps",
+
+      "hqRole": "command",
+
+      "commander": "王仲廉",
+
+      "parentArmy": "第二十军团",
+
+      "parentCorps": "第85军",
+
+      "deploymentRole": "rear_command"
+
+    },
+
+    {
+
+      "id": "CHI_85C_GUARD_1",
+
+      "name": "第85军警卫第1营",
+
+      "fullName": "第85军警卫第1营",
+
+      "faction": "chinese",
+
+      "type": "infantry",
+
+      "echelon": "battalion",
+
+      "q": 15,
+
+      "r": 27,
+
+      "strength": 650,
+
+      "maxStrength": 650,
+
+      "attack": 6,
+
+      "defense": 7,
+
+      "movement": 4,
+
+      "range": 1,
+
+      "morale": 84,
+
+      "suppression": 0,
+
+      "fatigue": 0,
+
+      "ammo": 100,
+
+      "isHQ": true,
+
+      "hqLevel": "corps",
+
+      "hqRole": "guard",
+
+      "parentArmy": "第二十军团",
+
+      "parentCorps": "第85军",
+
+      "deploymentRole": "rear_command"
+
+    },
+
+    {
+
+      "id": "CHI_75C_HQ",
+
+      "name": "第75军司令部",
+
+      "fullName": "第75军司令部",
+
+      "faction": "chinese",
+
+      "type": "headquarters",
+
+      "echelon": "company",
+
+      "q": 8,
+
+      "r": 35,
+
+      "strength": 100,
+
+      "maxStrength": 100,
+
+      "attack": 2,
+
+      "defense": 3,
+
+      "movement": 5,
+
+      "range": 1,
+
+      "morale": 88,
+
+      "suppression": 0,
+
+      "fatigue": 0,
+
+      "ammo": 100,
+
+      "isHQ": true,
+
+      "hqLevel": "corps",
+
+      "hqRole": "command",
+
+      "commander": "周碞",
+
+      "parentArmy": "第二十军团",
+
+      "parentCorps": "第75军",
+
+      "deploymentRole": "rear_command"
+
+    },
+
+    {
+
+      "id": "CHI_75C_GUARD_1",
+
+      "name": "第75军警卫第1营",
+
+      "fullName": "第75军警卫第1营",
+
+      "faction": "chinese",
+
+      "type": "infantry",
+
+      "echelon": "battalion",
+
+      "q": 9,
+
+      "r": 35,
+
+      "strength": 650,
+
+      "maxStrength": 650,
+
+      "attack": 6,
+
+      "defense": 7,
+
+      "movement": 4,
+
+      "range": 1,
+
+      "morale": 84,
+
+      "suppression": 0,
+
+      "fatigue": 0,
+
+      "ammo": 100,
+
+      "isHQ": true,
+
+      "hqLevel": "corps",
+
+      "hqRole": "guard",
+
+      "parentArmy": "第二十军团",
+
+      "parentCorps": "第75军",
+
+      "deploymentRole": "rear_command"
+
+    },
+
+    {
+
+      "id": "CHI_2D_HQ",
+
+      "name": "第2师部",
+
+      "fullName": "第2师部",
+
+      "faction": "chinese",
+
+      "type": "headquarters",
+
+      "echelon": "company",
+
+      "q": 27,
+
+      "r": 19,
+
+      "strength": 100,
+
+      "maxStrength": 100,
+
+      "attack": 2,
+
+      "defense": 3,
+
+      "movement": 5,
+
+      "range": 1,
+
+      "morale": 90,
+
+      "suppression": 0,
+
+      "fatigue": 0,
+
+      "ammo": 100,
+
+      "isHQ": true,
+
+      "hqLevel": "division",
+
+      "hqRole": "command",
+
+      "commander": "郑洞国",
+
+      "parentArmy": "第二十军团",
+
+      "parentCorps": "第52军",
+
+      "parentDivision": "第2师",
+
+      "deploymentRole": "rear_command"
+
+    },
+
+    {
+
+      "id": "CHI_2D_GUARD_1",
+
+      "name": "第2师师部第1警卫连",
+
+      "fullName": "第2师师部第1警卫连",
+
+      "faction": "chinese",
+
+      "type": "infantry",
+
+      "echelon": "company",
+
+      "q": 26,
+
+      "r": 19,
+
+      "strength": 180,
+
+      "maxStrength": 180,
+
+      "attack": 5,
+
+      "defense": 6,
+
+      "movement": 4,
+
+      "range": 1,
+
+      "morale": 86,
+
+      "suppression": 0,
+
+      "fatigue": 0,
+
+      "ammo": 100,
+
+      "isHQ": true,
+
+      "hqLevel": "division",
+
+      "hqRole": "guard",
+
+      "parentArmy": "第二十军团",
+
+      "parentCorps": "第52军",
+
+      "parentDivision": "第2师",
+
+      "deploymentRole": "division_command"
+
+    },
+
+    {
+
+      "id": "CHI_2D_GUARD_2",
+
+      "name": "第2师师部第2警卫连",
+
+      "fullName": "第2师师部第2警卫连",
+
+      "faction": "chinese",
+
+      "type": "infantry",
+
+      "echelon": "company",
+
+      "q": 28,
+
+      "r": 19,
+
+      "strength": 180,
+
+      "maxStrength": 180,
+
+      "attack": 5,
+
+      "defense": 6,
+
+      "movement": 4,
+
+      "range": 1,
+
+      "morale": 86,
+
+      "suppression": 0,
+
+      "fatigue": 0,
+
+      "ammo": 100,
+
+      "isHQ": true,
+
+      "hqLevel": "division",
+
+      "hqRole": "guard",
+
+      "parentArmy": "第二十军团",
+
+      "parentCorps": "第52军",
+
+      "parentDivision": "第2师",
+
+      "deploymentRole": "division_command"
+
+    },
+
+    {
+
+      "id": "CHI_2D_R1_HQ",
+
+      "name": "第2师第1团部",
+
+      "fullName": "第2师第1团部",
+
+      "faction": "chinese",
+
+      "type": "headquarters",
+
+      "echelon": "company",
+
+      "q": 27,
+
+      "r": 20,
+
+      "strength": 100,
+
+      "maxStrength": 100,
+
+      "attack": 2,
+
+      "defense": 3,
+
+      "movement": 5,
+
+      "range": 1,
+
+      "morale": 84,
+
+      "suppression": 0,
+
+      "fatigue": 0,
+
+      "ammo": 100,
+
+      "isHQ": true,
+
+      "hqLevel": "regiment",
+
+      "hqRole": "command",
+
+      "parentArmy": "第二十军团",
+
+      "parentCorps": "第52军",
+
+      "parentDivision": "第2师",
+
+      "parentRegiment": "第2师第1团",
+
+      "deploymentRole": "rear_command"
+
+    },
+
+    {
+
+      "id": "CHI_2D_R1_GUARD_1",
+
+      "name": "第2师第1团警卫连",
+
+      "fullName": "第2师第1团警卫连",
+
+      "faction": "chinese",
+
+      "type": "infantry",
+
+      "echelon": "company",
+
+      "q": 27,
+
+      "r": 21,
+
+      "strength": 180,
+
+      "maxStrength": 180,
+
+      "attack": 5,
+
+      "defense": 6,
+
+      "movement": 4,
+
+      "range": 1,
+
+      "morale": 82,
+
+      "suppression": 0,
+
+      "fatigue": 0,
+
+      "ammo": 100,
+
+      "isHQ": true,
+
+      "hqLevel": "regiment",
+
+      "hqRole": "guard",
+
+      "parentArmy": "第二十军团",
+
+      "parentCorps": "第52军",
+
+      "parentDivision": "第2师",
+
+      "parentRegiment": "第2师第1团",
+
+      "deploymentRole": "regiment_command"
+
+    },
+
+    {
+
+      "id": "CHI_2D_R1_B1",
+
+      "name": "第2师第1团第1营",
+
+      "fullName": "第2师第1团第1营",
+
+      "faction": "chinese",
+
+      "type": "infantry",
+
+      "echelon": "battalion",
+
+      "q": 24,
+
+      "r": 15,
+
+      "strength": 690,
+
+      "maxStrength": 700,
+
+      "attack": 8,
+
+      "defense": 8,
+
+      "movement": 4,
+
+      "range": 1,
+
+      "morale": 88,
+
+      "suppression": 0,
+
+      "fatigue": 0,
+
+      "ammo": 100,
+
+      "isHQ": false,
+
+      "parentArmy": "第二十军团",
+
+      "parentCorps": "第52军",
+
+      "parentDivision": "第2师",
+
+      "parentRegiment": "第2师第1团",
+
+      "deploymentRole": "frontline"
+
+    },
+
+    {
+
+      "id": "CHI_2D_R1_B2",
+
+      "name": "第2师第1团第2营",
+
+      "fullName": "第2师第1团第2营",
+
+      "faction": "chinese",
+
+      "type": "infantry",
+
+      "echelon": "battalion",
+
+      "q": 27,
+
+      "r": 15,
+
+      "strength": 680,
+
+      "maxStrength": 700,
+
+      "attack": 8,
+
+      "defense": 8,
+
+      "movement": 4,
+
+      "range": 1,
+
+      "morale": 88,
+
+      "suppression": 0,
+
+      "fatigue": 0,
+
+      "ammo": 100,
+
+      "isHQ": false,
+
+      "parentArmy": "第二十军团",
+
+      "parentCorps": "第52军",
+
+      "parentDivision": "第2师",
+
+      "parentRegiment": "第2师第1团",
+
+      "deploymentRole": "frontline"
+
+    },
+
+    {
+
+      "id": "CHI_2D_R1_B3",
+
+      "name": "第2师第1团第3营",
+
+      "fullName": "第2师第1团第3营",
+
+      "faction": "chinese",
+
+      "type": "infantry",
+
+      "echelon": "battalion",
+
+      "q": 30,
+
+      "r": 16,
+
+      "strength": 670,
+
+      "maxStrength": 700,
+
+      "attack": 8,
+
+      "defense": 8,
+
+      "movement": 4,
+
+      "range": 1,
+
+      "morale": 88,
+
+      "suppression": 0,
+
+      "fatigue": 0,
+
+      "ammo": 100,
+
+      "isHQ": false,
+
+      "parentArmy": "第二十军团",
+
+      "parentCorps": "第52军",
+
+      "parentDivision": "第2师",
+
+      "parentRegiment": "第2师第1团",
+
+      "deploymentRole": "frontline"
+
+    },
+
+    {
+
+      "id": "CHI_2D_R2_HQ",
+
+      "name": "第2师第2团部",
+
+      "fullName": "第2师第2团部",
+
+      "faction": "chinese",
+
+      "type": "headquarters",
+
+      "echelon": "company",
+
+      "q": 29,
+
+      "r": 20,
+
+      "strength": 100,
+
+      "maxStrength": 100,
+
+      "attack": 2,
+
+      "defense": 3,
+
+      "movement": 5,
+
+      "range": 1,
+
+      "morale": 84,
+
+      "suppression": 0,
+
+      "fatigue": 0,
+
+      "ammo": 100,
+
+      "isHQ": true,
+
+      "hqLevel": "regiment",
+
+      "hqRole": "command",
+
+      "parentArmy": "第二十军团",
+
+      "parentCorps": "第52军",
+
+      "parentDivision": "第2师",
+
+      "parentRegiment": "第2师第2团",
+
+      "deploymentRole": "rear_command"
+
+    },
+
+    {
+
+      "id": "CHI_2D_R2_GUARD_1",
+
+      "name": "第2师第2团警卫连",
+
+      "fullName": "第2师第2团警卫连",
+
+      "faction": "chinese",
+
+      "type": "infantry",
+
+      "echelon": "company",
+
+      "q": 29,
+
+      "r": 21,
+
+      "strength": 180,
+
+      "maxStrength": 180,
+
+      "attack": 5,
+
+      "defense": 6,
+
+      "movement": 4,
+
+      "range": 1,
+
+      "morale": 82,
+
+      "suppression": 0,
+
+      "fatigue": 0,
+
+      "ammo": 100,
+
+      "isHQ": true,
+
+      "hqLevel": "regiment",
+
+      "hqRole": "guard",
+
+      "parentArmy": "第二十军团",
+
+      "parentCorps": "第52军",
+
+      "parentDivision": "第2师",
+
+      "parentRegiment": "第2师第2团",
+
+      "deploymentRole": "regiment_command"
+
+    },
+
+    {
+
+      "id": "CHI_2D_R2_B1",
+
+      "name": "第2师第2团第1营",
+
+      "fullName": "第2师第2团第1营",
+
+      "faction": "chinese",
+
+      "type": "infantry",
+
+      "echelon": "battalion",
+
+      "q": 23,
+
+      "r": 18,
+
+      "strength": 685,
+
+      "maxStrength": 700,
+
+      "attack": 8,
+
+      "defense": 8,
+
+      "movement": 4,
+
+      "range": 1,
+
+      "morale": 88,
+
+      "suppression": 0,
+
+      "fatigue": 0,
+
+      "ammo": 100,
+
+      "isHQ": false,
+
+      "parentArmy": "第二十军团",
+
+      "parentCorps": "第52军",
+
+      "parentDivision": "第2师",
+
+      "parentRegiment": "第2师第2团",
+
+      "deploymentRole": "frontline"
+
+    },
+
+    {
+
+      "id": "CHI_2D_R2_B2",
+
+      "name": "第2师第2团第2营",
+
+      "fullName": "第2师第2团第2营",
+
+      "faction": "chinese",
+
+      "type": "infantry",
+
+      "echelon": "battalion",
+
+      "q": 27,
+
+      "r": 18,
+
+      "strength": 675,
+
+      "maxStrength": 700,
+
+      "attack": 8,
+
+      "defense": 8,
+
+      "movement": 4,
+
+      "range": 1,
+
+      "morale": 88,
+
+      "suppression": 0,
+
+      "fatigue": 0,
+
+      "ammo": 100,
+
+      "isHQ": false,
+
+      "parentArmy": "第二十军团",
+
+      "parentCorps": "第52军",
+
+      "parentDivision": "第2师",
+
+      "parentRegiment": "第2师第2团",
+
+      "deploymentRole": "frontline"
+
+    },
+
+    {
+
+      "id": "CHI_2D_R2_B3",
+
+      "name": "第2师第2团第3营",
+
+      "fullName": "第2师第2团第3营",
+
+      "faction": "chinese",
+
+      "type": "infantry",
+
+      "echelon": "battalion",
+
+      "q": 31,
+
+      "r": 19,
+
+      "strength": 660,
+
+      "maxStrength": 700,
+
+      "attack": 8,
+
+      "defense": 8,
+
+      "movement": 4,
+
+      "range": 1,
+
+      "morale": 88,
+
+      "suppression": 0,
+
+      "fatigue": 0,
+
+      "ammo": 100,
+
+      "isHQ": false,
+
+      "parentArmy": "第二十军团",
+
+      "parentCorps": "第52军",
+
+      "parentDivision": "第2师",
+
+      "parentRegiment": "第2师第2团",
+
+      "deploymentRole": "frontline"
+
+    },
+
+    {
+
+      "id": "CHI_2D_MORTAR",
+
+      "name": "第2师81毫米迫击炮连",
+
+      "fullName": "第2师81毫米迫击炮连",
+
+      "faction": "chinese",
+
+      "type": "artillery",
+
+      "echelon": "company",
+
+      "q": 27,
+
+      "r": 22,
+
+      "strength": 115,
+
+      "maxStrength": 120,
+
+      "attack": 5,
+
+      "defense": 4,
+
+      "movement": 4,
+
+      "range": 3,
+
+      "morale": 86,
+
+      "suppression": 0,
+
+      "fatigue": 0,
+
+      "ammo": 100,
+
+      "isHQ": false,
+
+      "parentArmy": "第二十军团",
+
+      "parentCorps": "第52军",
+
+      "parentDivision": "第2师",
+
+      "deploymentRole": "support"
+
+    },
+
+    {
+
+      "id": "CHI_2D_ENG",
+
+      "name": "第2师工兵连",
+
+      "fullName": "第2师工兵连",
+
+      "faction": "chinese",
+
+      "type": "engineer",
+
+      "echelon": "company",
+
+      "q": 29,
+
+      "r": 22,
+
+      "strength": 95,
+
+      "maxStrength": 100,
+
+      "attack": 7,
+
+      "defense": 8,
+
+      "movement": 4,
+
+      "range": 1,
+
+      "morale": 86,
+
+      "suppression": 0,
+
+      "fatigue": 0,
+
+      "ammo": 100,
+
+      "isHQ": false,
+
+      "parentArmy": "第二十军团",
+
+      "parentCorps": "第52军",
+
+      "parentDivision": "第2师",
+
+      "deploymentRole": "support"
+
+    },
+
+    {
+
+      "id": "CHI_25D_HQ",
+
+      "name": "第25师部",
+
+      "fullName": "第25师部",
+
+      "faction": "chinese",
+
+      "type": "headquarters",
+
+      "echelon": "company",
+
+      "q": 35,
+
+      "r": 21,
+
+      "strength": 100,
+
+      "maxStrength": 100,
+
+      "attack": 2,
+
+      "defense": 3,
+
+      "movement": 5,
+
+      "range": 1,
+
+      "morale": 90,
+
+      "suppression": 0,
+
+      "fatigue": 0,
+
+      "ammo": 100,
+
+      "isHQ": true,
+
+      "hqLevel": "division",
+
+      "hqRole": "command",
+
+      "commander": "张耀明",
+
+      "parentArmy": "第二十军团",
+
+      "parentCorps": "第52军",
+
+      "parentDivision": "第25师",
+
+      "deploymentRole": "rear_command"
+
+    },
+
+    {
+
+      "id": "CHI_25D_GUARD_1",
+
+      "name": "第25师师部第1警卫连",
+
+      "fullName": "第25师师部第1警卫连",
+
+      "faction": "chinese",
+
+      "type": "infantry",
+
+      "echelon": "company",
+
+      "q": 34,
+
+      "r": 21,
+
+      "strength": 180,
+
+      "maxStrength": 180,
+
+      "attack": 5,
+
+      "defense": 6,
+
+      "movement": 4,
+
+      "range": 1,
+
+      "morale": 86,
+
+      "suppression": 0,
+
+      "fatigue": 0,
+
+      "ammo": 100,
+
+      "isHQ": true,
+
+      "hqLevel": "division",
+
+      "hqRole": "guard",
+
+      "parentArmy": "第二十军团",
+
+      "parentCorps": "第52军",
+
+      "parentDivision": "第25师",
+
+      "deploymentRole": "division_command"
+
+    },
+
+    {
+
+      "id": "CHI_25D_GUARD_2",
+
+      "name": "第25师师部第2警卫连",
+
+      "fullName": "第25师师部第2警卫连",
+
+      "faction": "chinese",
+
+      "type": "infantry",
+
+      "echelon": "company",
+
+      "q": 36,
+
+      "r": 21,
+
+      "strength": 180,
+
+      "maxStrength": 180,
+
+      "attack": 5,
+
+      "defense": 6,
+
+      "movement": 4,
+
+      "range": 1,
+
+      "morale": 86,
+
+      "suppression": 0,
+
+      "fatigue": 0,
+
+      "ammo": 100,
+
+      "isHQ": true,
+
+      "hqLevel": "division",
+
+      "hqRole": "guard",
+
+      "parentArmy": "第二十军团",
+
+      "parentCorps": "第52军",
+
+      "parentDivision": "第25师",
+
+      "deploymentRole": "division_command"
+
+    },
+
+    {
+
+      "id": "CHI_25D_R1_HQ",
+
+      "name": "第25师第1团部",
+
+      "fullName": "第25师第1团部",
+
+      "faction": "chinese",
+
+      "type": "headquarters",
+
+      "echelon": "company",
+
+      "q": 35,
+
+      "r": 22,
+
+      "strength": 100,
+
+      "maxStrength": 100,
+
+      "attack": 2,
+
+      "defense": 3,
+
+      "movement": 5,
+
+      "range": 1,
+
+      "morale": 84,
+
+      "suppression": 0,
+
+      "fatigue": 0,
+
+      "ammo": 100,
+
+      "isHQ": true,
+
+      "hqLevel": "regiment",
+
+      "hqRole": "command",
+
+      "parentArmy": "第二十军团",
+
+      "parentCorps": "第52军",
+
+      "parentDivision": "第25师",
+
+      "parentRegiment": "第25师第1团",
+
+      "deploymentRole": "rear_command"
+
+    },
+
+    {
+
+      "id": "CHI_25D_R1_GUARD_1",
+
+      "name": "第25师第1团警卫连",
+
+      "fullName": "第25师第1团警卫连",
+
+      "faction": "chinese",
+
+      "type": "infantry",
+
+      "echelon": "company",
+
+      "q": 35,
+
+      "r": 23,
+
+      "strength": 180,
+
+      "maxStrength": 180,
+
+      "attack": 5,
+
+      "defense": 6,
+
+      "movement": 4,
+
+      "range": 1,
+
+      "morale": 82,
+
+      "suppression": 0,
+
+      "fatigue": 0,
+
+      "ammo": 100,
+
+      "isHQ": true,
+
+      "hqLevel": "regiment",
+
+      "hqRole": "guard",
+
+      "parentArmy": "第二十军团",
+
+      "parentCorps": "第52军",
+
+      "parentDivision": "第25师",
+
+      "parentRegiment": "第25师第1团",
+
+      "deploymentRole": "regiment_command"
+
+    },
+
+    {
+
+      "id": "CHI_25D_R1_B1",
+
+      "name": "第25师第1团第1营",
+
+      "fullName": "第25师第1团第1营",
+
+      "faction": "chinese",
+
+      "type": "infantry",
+
+      "echelon": "battalion",
+
+      "q": 33,
+
+      "r": 17,
+
+      "strength": 690,
+
+      "maxStrength": 700,
+
+      "attack": 8,
+
+      "defense": 8,
+
+      "movement": 4,
+
+      "range": 1,
+
+      "morale": 88,
+
+      "suppression": 0,
+
+      "fatigue": 0,
+
+      "ammo": 100,
+
+      "isHQ": false,
+
+      "parentArmy": "第二十军团",
+
+      "parentCorps": "第52军",
+
+      "parentDivision": "第25师",
+
+      "parentRegiment": "第25师第1团",
+
+      "deploymentRole": "frontline"
+
+    },
+
+    {
+
+      "id": "CHI_25D_R1_B2",
+
+      "name": "第25师第1团第2营",
+
+      "fullName": "第25师第1团第2营",
+
+      "faction": "chinese",
+
+      "type": "infantry",
+
+      "echelon": "battalion",
+
+      "q": 36,
+
+      "r": 17,
+
+      "strength": 680,
+
+      "maxStrength": 700,
+
+      "attack": 8,
+
+      "defense": 8,
+
+      "movement": 4,
+
+      "range": 1,
+
+      "morale": 88,
+
+      "suppression": 0,
+
+      "fatigue": 0,
+
+      "ammo": 100,
+
+      "isHQ": false,
+
+      "parentArmy": "第二十军团",
+
+      "parentCorps": "第52军",
+
+      "parentDivision": "第25师",
+
+      "parentRegiment": "第25师第1团",
+
+      "deploymentRole": "frontline"
+
+    },
+
+    {
+
+      "id": "CHI_25D_R1_B3",
+
+      "name": "第25师第1团第3营",
+
+      "fullName": "第25师第1团第3营",
+
+      "faction": "chinese",
+
+      "type": "infantry",
+
+      "echelon": "battalion",
+
+      "q": 39,
+
+      "r": 18,
+
+      "strength": 670,
+
+      "maxStrength": 700,
+
+      "attack": 8,
+
+      "defense": 8,
+
+      "movement": 4,
+
+      "range": 1,
+
+      "morale": 88,
+
+      "suppression": 0,
+
+      "fatigue": 0,
+
+      "ammo": 100,
+
+      "isHQ": false,
+
+      "parentArmy": "第二十军团",
+
+      "parentCorps": "第52军",
+
+      "parentDivision": "第25师",
+
+      "parentRegiment": "第25师第1团",
+
+      "deploymentRole": "frontline"
+
+    },
+
+    {
+
+      "id": "CHI_25D_R2_HQ",
+
+      "name": "第25师第2团部",
+
+      "fullName": "第25师第2团部",
+
+      "faction": "chinese",
+
+      "type": "headquarters",
+
+      "echelon": "company",
+
+      "q": 37,
+
+      "r": 22,
+
+      "strength": 100,
+
+      "maxStrength": 100,
+
+      "attack": 2,
+
+      "defense": 3,
+
+      "movement": 5,
+
+      "range": 1,
+
+      "morale": 84,
+
+      "suppression": 0,
+
+      "fatigue": 0,
+
+      "ammo": 100,
+
+      "isHQ": true,
+
+      "hqLevel": "regiment",
+
+      "hqRole": "command",
+
+      "parentArmy": "第二十军团",
+
+      "parentCorps": "第52军",
+
+      "parentDivision": "第25师",
+
+      "parentRegiment": "第25师第2团",
+
+      "deploymentRole": "rear_command"
+
+    },
+
+    {
+
+      "id": "CHI_25D_R2_GUARD_1",
+
+      "name": "第25师第2团警卫连",
+
+      "fullName": "第25师第2团警卫连",
+
+      "faction": "chinese",
+
+      "type": "infantry",
+
+      "echelon": "company",
+
+      "q": 37,
+
+      "r": 23,
+
+      "strength": 180,
+
+      "maxStrength": 180,
+
+      "attack": 5,
+
+      "defense": 6,
+
+      "movement": 4,
+
+      "range": 1,
+
+      "morale": 82,
+
+      "suppression": 0,
+
+      "fatigue": 0,
+
+      "ammo": 100,
+
+      "isHQ": true,
+
+      "hqLevel": "regiment",
+
+      "hqRole": "guard",
+
+      "parentArmy": "第二十军团",
+
+      "parentCorps": "第52军",
+
+      "parentDivision": "第25师",
+
+      "parentRegiment": "第25师第2团",
+
+      "deploymentRole": "regiment_command"
+
+    },
+
+    {
+
+      "id": "CHI_25D_R2_B1",
+
+      "name": "第25师第2团第1营",
+
+      "fullName": "第25师第2团第1营",
+
+      "faction": "chinese",
+
+      "type": "infantry",
+
+      "echelon": "battalion",
+
+      "q": 32,
+
+      "r": 20,
+
+      "strength": 685,
+
+      "maxStrength": 700,
+
+      "attack": 8,
+
+      "defense": 8,
+
+      "movement": 4,
+
+      "range": 1,
+
+      "morale": 88,
+
+      "suppression": 0,
+
+      "fatigue": 0,
+
+      "ammo": 100,
+
+      "isHQ": false,
+
+      "parentArmy": "第二十军团",
+
+      "parentCorps": "第52军",
+
+      "parentDivision": "第25师",
+
+      "parentRegiment": "第25师第2团",
+
+      "deploymentRole": "frontline"
+
+    },
+
+    {
+
+      "id": "CHI_25D_R2_B2",
+
+      "name": "第25师第2团第2营",
+
+      "fullName": "第25师第2团第2营",
+
+      "faction": "chinese",
+
+      "type": "infantry",
+
+      "echelon": "battalion",
+
+      "q": 36,
+
+      "r": 20,
+
+      "strength": 675,
+
+      "maxStrength": 700,
+
+      "attack": 8,
+
+      "defense": 8,
+
+      "movement": 4,
+
+      "range": 1,
+
+      "morale": 88,
+
+      "suppression": 0,
+
+      "fatigue": 0,
+
+      "ammo": 100,
+
+      "isHQ": false,
+
+      "parentArmy": "第二十军团",
+
+      "parentCorps": "第52军",
+
+      "parentDivision": "第25师",
+
+      "parentRegiment": "第25师第2团",
+
+      "deploymentRole": "frontline"
+
+    },
+
+    {
+
+      "id": "CHI_25D_R2_B3",
+
+      "name": "第25师第2团第3营",
+
+      "fullName": "第25师第2团第3营",
+
+      "faction": "chinese",
+
+      "type": "infantry",
+
+      "echelon": "battalion",
+
+      "q": 40,
+
+      "r": 21,
+
+      "strength": 660,
+
+      "maxStrength": 700,
+
+      "attack": 8,
+
+      "defense": 8,
+
+      "movement": 4,
+
+      "range": 1,
+
+      "morale": 88,
+
+      "suppression": 0,
+
+      "fatigue": 0,
+
+      "ammo": 100,
+
+      "isHQ": false,
+
+      "parentArmy": "第二十军团",
+
+      "parentCorps": "第52军",
+
+      "parentDivision": "第25师",
+
+      "parentRegiment": "第25师第2团",
+
+      "deploymentRole": "frontline"
+
+    },
+
+    {
+
+      "id": "CHI_25D_MORTAR",
+
+      "name": "第25师81毫米迫击炮连",
+
+      "fullName": "第25师81毫米迫击炮连",
+
+      "faction": "chinese",
+
+      "type": "artillery",
+
+      "echelon": "company",
+
+      "q": 35,
+
+      "r": 24,
+
+      "strength": 115,
+
+      "maxStrength": 120,
+
+      "attack": 5,
+
+      "defense": 4,
+
+      "movement": 4,
+
+      "range": 3,
+
+      "morale": 86,
+
+      "suppression": 0,
+
+      "fatigue": 0,
+
+      "ammo": 100,
+
+      "isHQ": false,
+
+      "parentArmy": "第二十军团",
+
+      "parentCorps": "第52军",
+
+      "parentDivision": "第25师",
+
+      "deploymentRole": "support"
+
+    },
+
+    {
+
+      "id": "CHI_25D_ENG",
+
+      "name": "第25师工兵连",
+
+      "fullName": "第25师工兵连",
+
+      "faction": "chinese",
+
+      "type": "engineer",
+
+      "echelon": "company",
+
+      "q": 37,
+
+      "r": 24,
+
+      "strength": 95,
+
+      "maxStrength": 100,
+
+      "attack": 7,
+
+      "defense": 8,
+
+      "movement": 4,
+
+      "range": 1,
+
+      "morale": 86,
+
+      "suppression": 0,
+
+      "fatigue": 0,
+
+      "ammo": 100,
+
+      "isHQ": false,
+
+      "parentArmy": "第二十军团",
+
+      "parentCorps": "第52军",
+
+      "parentDivision": "第25师",
+
+      "deploymentRole": "support"
+
+    },
+
+    {
+
+      "id": "CHI_4D_HQ",
+
+      "name": "第4师部",
+
+      "fullName": "第4师部",
+
+      "faction": "chinese",
+
+      "type": "headquarters",
+
+      "echelon": "company",
+
+      "q": 15,
+
+      "r": 23,
+
+      "strength": 100,
+
+      "maxStrength": 100,
+
+      "attack": 2,
+
+      "defense": 3,
+
+      "movement": 5,
+
+      "range": 1,
+
+      "morale": 90,
+
+      "suppression": 0,
+
+      "fatigue": 0,
+
+      "ammo": 100,
+
+      "isHQ": true,
+
+      "hqLevel": "division",
+
+      "hqRole": "command",
+
+      "commander": "陈大庆",
+
+      "parentArmy": "第二十军团",
+
+      "parentCorps": "第85军",
+
+      "parentDivision": "第4师",
+
+      "deploymentRole": "rear_command"
+
+    },
+
+    {
+
+      "id": "CHI_4D_GUARD_1",
+
+      "name": "第4师师部第1警卫连",
+
+      "fullName": "第4师师部第1警卫连",
+
+      "faction": "chinese",
+
+      "type": "infantry",
+
+      "echelon": "company",
+
+      "q": 14,
+
+      "r": 23,
+
+      "strength": 180,
+
+      "maxStrength": 180,
+
+      "attack": 5,
+
+      "defense": 6,
+
+      "movement": 4,
+
+      "range": 1,
+
+      "morale": 86,
+
+      "suppression": 0,
+
+      "fatigue": 0,
+
+      "ammo": 100,
+
+      "isHQ": true,
+
+      "hqLevel": "division",
+
+      "hqRole": "guard",
+
+      "parentArmy": "第二十军团",
+
+      "parentCorps": "第85军",
+
+      "parentDivision": "第4师",
+
+      "deploymentRole": "division_command"
+
+    },
+
+    {
+
+      "id": "CHI_4D_GUARD_2",
+
+      "name": "第4师师部第2警卫连",
+
+      "fullName": "第4师师部第2警卫连",
+
+      "faction": "chinese",
+
+      "type": "infantry",
+
+      "echelon": "company",
+
+      "q": 16,
+
+      "r": 23,
+
+      "strength": 180,
+
+      "maxStrength": 180,
+
+      "attack": 5,
+
+      "defense": 6,
+
+      "movement": 4,
+
+      "range": 1,
+
+      "morale": 86,
+
+      "suppression": 0,
+
+      "fatigue": 0,
+
+      "ammo": 100,
+
+      "isHQ": true,
+
+      "hqLevel": "division",
+
+      "hqRole": "guard",
+
+      "parentArmy": "第二十军团",
+
+      "parentCorps": "第85军",
+
+      "parentDivision": "第4师",
+
+      "deploymentRole": "division_command"
+
+    },
+
+    {
+
+      "id": "CHI_4D_R1_HQ",
+
+      "name": "第4师第1团部",
+
+      "fullName": "第4师第1团部",
+
+      "faction": "chinese",
+
+      "type": "headquarters",
+
+      "echelon": "company",
+
+      "q": 15,
+
+      "r": 24,
+
+      "strength": 100,
+
+      "maxStrength": 100,
+
+      "attack": 2,
+
+      "defense": 3,
+
+      "movement": 5,
+
+      "range": 1,
+
+      "morale": 84,
+
+      "suppression": 0,
+
+      "fatigue": 0,
+
+      "ammo": 100,
+
+      "isHQ": true,
+
+      "hqLevel": "regiment",
+
+      "hqRole": "command",
+
+      "parentArmy": "第二十军团",
+
+      "parentCorps": "第85军",
+
+      "parentDivision": "第4师",
+
+      "parentRegiment": "第4师第1团",
+
+      "deploymentRole": "rear_command"
+
+    },
+
+    {
+
+      "id": "CHI_4D_R1_GUARD_1",
+
+      "name": "第4师第1团警卫连",
+
+      "fullName": "第4师第1团警卫连",
+
+      "faction": "chinese",
+
+      "type": "infantry",
+
+      "echelon": "company",
+
+      "q": 15,
+
+      "r": 25,
+
+      "strength": 180,
+
+      "maxStrength": 180,
+
+      "attack": 5,
+
+      "defense": 6,
+
+      "movement": 4,
+
+      "range": 1,
+
+      "morale": 82,
+
+      "suppression": 0,
+
+      "fatigue": 0,
+
+      "ammo": 100,
+
+      "isHQ": true,
+
+      "hqLevel": "regiment",
+
+      "hqRole": "guard",
+
+      "parentArmy": "第二十军团",
+
+      "parentCorps": "第85军",
+
+      "parentDivision": "第4师",
+
+      "parentRegiment": "第4师第1团",
+
+      "deploymentRole": "regiment_command"
+
+    },
+
+    {
+
+      "id": "CHI_4D_R1_B1",
+
+      "name": "第4师第1团第1营",
+
+      "fullName": "第4师第1团第1营",
+
+      "faction": "chinese",
+
+      "type": "infantry",
+
+      "echelon": "battalion",
+
+      "q": 11,
+
+      "r": 19,
+
+      "strength": 690,
+
+      "maxStrength": 700,
+
+      "attack": 8,
+
+      "defense": 8,
+
+      "movement": 4,
+
+      "range": 1,
+
+      "morale": 88,
+
+      "suppression": 0,
+
+      "fatigue": 0,
+
+      "ammo": 100,
+
+      "isHQ": false,
+
+      "parentArmy": "第二十军团",
+
+      "parentCorps": "第85军",
+
+      "parentDivision": "第4师",
+
+      "parentRegiment": "第4师第1团",
+
+      "deploymentRole": "frontline"
+
+    },
+
+    {
+
+      "id": "CHI_4D_R1_B2",
+
+      "name": "第4师第1团第2营",
+
+      "fullName": "第4师第1团第2营",
+
+      "faction": "chinese",
+
+      "type": "infantry",
+
+      "echelon": "battalion",
+
+      "q": 14,
+
+      "r": 19,
+
+      "strength": 680,
+
+      "maxStrength": 700,
+
+      "attack": 8,
+
+      "defense": 8,
+
+      "movement": 4,
+
+      "range": 1,
+
+      "morale": 88,
+
+      "suppression": 0,
+
+      "fatigue": 0,
+
+      "ammo": 100,
+
+      "isHQ": false,
+
+      "parentArmy": "第二十军团",
+
+      "parentCorps": "第85军",
+
+      "parentDivision": "第4师",
+
+      "parentRegiment": "第4师第1团",
+
+      "deploymentRole": "frontline"
+
+    },
+
+    {
+
+      "id": "CHI_4D_R1_B3",
+
+      "name": "第4师第1团第3营",
+
+      "fullName": "第4师第1团第3营",
+
+      "faction": "chinese",
+
+      "type": "infantry",
+
+      "echelon": "battalion",
+
+      "q": 17,
+
+      "r": 20,
+
+      "strength": 670,
+
+      "maxStrength": 700,
+
+      "attack": 8,
+
+      "defense": 8,
+
+      "movement": 4,
+
+      "range": 1,
+
+      "morale": 88,
+
+      "suppression": 0,
+
+      "fatigue": 0,
+
+      "ammo": 100,
+
+      "isHQ": false,
+
+      "parentArmy": "第二十军团",
+
+      "parentCorps": "第85军",
+
+      "parentDivision": "第4师",
+
+      "parentRegiment": "第4师第1团",
+
+      "deploymentRole": "frontline"
+
+    },
+
+    {
+
+      "id": "CHI_4D_R2_HQ",
+
+      "name": "第4师第2团部",
+
+      "fullName": "第4师第2团部",
+
+      "faction": "chinese",
+
+      "type": "headquarters",
+
+      "echelon": "company",
+
+      "q": 17,
+
+      "r": 24,
+
+      "strength": 100,
+
+      "maxStrength": 100,
+
+      "attack": 2,
+
+      "defense": 3,
+
+      "movement": 5,
+
+      "range": 1,
+
+      "morale": 84,
+
+      "suppression": 0,
+
+      "fatigue": 0,
+
+      "ammo": 100,
+
+      "isHQ": true,
+
+      "hqLevel": "regiment",
+
+      "hqRole": "command",
+
+      "parentArmy": "第二十军团",
+
+      "parentCorps": "第85军",
+
+      "parentDivision": "第4师",
+
+      "parentRegiment": "第4师第2团",
+
+      "deploymentRole": "rear_command"
+
+    },
+
+    {
+
+      "id": "CHI_4D_R2_GUARD_1",
+
+      "name": "第4师第2团警卫连",
+
+      "fullName": "第4师第2团警卫连",
+
+      "faction": "chinese",
+
+      "type": "infantry",
+
+      "echelon": "company",
+
+      "q": 17,
+
+      "r": 25,
+
+      "strength": 180,
+
+      "maxStrength": 180,
+
+      "attack": 5,
+
+      "defense": 6,
+
+      "movement": 4,
+
+      "range": 1,
+
+      "morale": 82,
+
+      "suppression": 0,
+
+      "fatigue": 0,
+
+      "ammo": 100,
+
+      "isHQ": true,
+
+      "hqLevel": "regiment",
+
+      "hqRole": "guard",
+
+      "parentArmy": "第二十军团",
+
+      "parentCorps": "第85军",
+
+      "parentDivision": "第4师",
+
+      "parentRegiment": "第4师第2团",
+
+      "deploymentRole": "regiment_command"
+
+    },
+
+    {
+
+      "id": "CHI_4D_R2_B1",
+
+      "name": "第4师第2团第1营",
+
+      "fullName": "第4师第2团第1营",
+
+      "faction": "chinese",
+
+      "type": "infantry",
+
+      "echelon": "battalion",
+
+      "q": 10,
+
+      "r": 22,
+
+      "strength": 685,
+
+      "maxStrength": 700,
+
+      "attack": 8,
+
+      "defense": 8,
+
+      "movement": 4,
+
+      "range": 1,
+
+      "morale": 88,
+
+      "suppression": 0,
+
+      "fatigue": 0,
+
+      "ammo": 100,
+
+      "isHQ": false,
+
+      "parentArmy": "第二十军团",
+
+      "parentCorps": "第85军",
+
+      "parentDivision": "第4师",
+
+      "parentRegiment": "第4师第2团",
+
+      "deploymentRole": "frontline"
+
+    },
+
+    {
+
+      "id": "CHI_4D_R2_B2",
+
+      "name": "第4师第2团第2营",
+
+      "fullName": "第4师第2团第2营",
+
+      "faction": "chinese",
+
+      "type": "infantry",
+
+      "echelon": "battalion",
+
+      "q": 14,
+
+      "r": 22,
+
+      "strength": 675,
+
+      "maxStrength": 700,
+
+      "attack": 8,
+
+      "defense": 8,
+
+      "movement": 4,
+
+      "range": 1,
+
+      "morale": 88,
+
+      "suppression": 0,
+
+      "fatigue": 0,
+
+      "ammo": 100,
+
+      "isHQ": false,
+
+      "parentArmy": "第二十军团",
+
+      "parentCorps": "第85军",
+
+      "parentDivision": "第4师",
+
+      "parentRegiment": "第4师第2团",
+
+      "deploymentRole": "frontline"
+
+    },
+
+    {
+
+      "id": "CHI_4D_R2_B3",
+
+      "name": "第4师第2团第3营",
+
+      "fullName": "第4师第2团第3营",
+
+      "faction": "chinese",
+
+      "type": "infantry",
+
+      "echelon": "battalion",
+
+      "q": 18,
+
+      "r": 23,
+
+      "strength": 660,
+
+      "maxStrength": 700,
+
+      "attack": 8,
+
+      "defense": 8,
+
+      "movement": 4,
+
+      "range": 1,
+
+      "morale": 88,
+
+      "suppression": 0,
+
+      "fatigue": 0,
+
+      "ammo": 100,
+
+      "isHQ": false,
+
+      "parentArmy": "第二十军团",
+
+      "parentCorps": "第85军",
+
+      "parentDivision": "第4师",
+
+      "parentRegiment": "第4师第2团",
+
+      "deploymentRole": "frontline"
+
+    },
+
+    {
+
+      "id": "CHI_4D_MORTAR",
+
+      "name": "第4师81毫米迫击炮连",
+
+      "fullName": "第4师81毫米迫击炮连",
+
+      "faction": "chinese",
+
+      "type": "artillery",
+
+      "echelon": "company",
+
+      "q": 15,
+
+      "r": 26,
+
+      "strength": 115,
+
+      "maxStrength": 120,
+
+      "attack": 5,
+
+      "defense": 4,
+
+      "movement": 4,
+
+      "range": 3,
+
+      "morale": 86,
+
+      "suppression": 0,
+
+      "fatigue": 0,
+
+      "ammo": 100,
+
+      "isHQ": false,
+
+      "parentArmy": "第二十军团",
+
+      "parentCorps": "第85军",
+
+      "parentDivision": "第4师",
+
+      "deploymentRole": "support"
+
+    },
+
+    {
+
+      "id": "CHI_4D_ENG",
+
+      "name": "第4师工兵连",
+
+      "fullName": "第4师工兵连",
+
+      "faction": "chinese",
+
+      "type": "engineer",
+
+      "echelon": "company",
+
+      "q": 17,
+
+      "r": 26,
+
+      "strength": 95,
+
+      "maxStrength": 100,
+
+      "attack": 7,
+
+      "defense": 8,
+
+      "movement": 4,
+
+      "range": 1,
+
+      "morale": 86,
+
+      "suppression": 0,
+
+      "fatigue": 0,
+
+      "ammo": 100,
+
+      "isHQ": false,
+
+      "parentArmy": "第二十军团",
+
+      "parentCorps": "第85军",
+
+      "parentDivision": "第4师",
+
+      "deploymentRole": "support"
+
+    },
+
+    {
+
+      "id": "CHI_89D_HQ",
+
+      "name": "第89师部",
+
+      "fullName": "第89师部",
+
+      "faction": "chinese",
+
+      "type": "headquarters",
+
+      "echelon": "company",
+
+      "q": 19,
+
+      "r": 31,
+
+      "strength": 100,
+
+      "maxStrength": 100,
+
+      "attack": 2,
+
+      "defense": 3,
+
+      "movement": 5,
+
+      "range": 1,
+
+      "morale": 90,
+
+      "suppression": 0,
+
+      "fatigue": 0,
+
+      "ammo": 100,
+
+      "isHQ": true,
+
+      "hqLevel": "division",
+
+      "hqRole": "command",
+
+      "commander": "张雪中",
+
+      "parentArmy": "第二十军团",
+
+      "parentCorps": "第85军",
+
+      "parentDivision": "第89师",
+
+      "deploymentRole": "rear_command"
+
+    },
+
+    {
+
+      "id": "CHI_89D_GUARD_1",
+
+      "name": "第89师师部第1警卫连",
+
+      "fullName": "第89师师部第1警卫连",
+
+      "faction": "chinese",
+
+      "type": "infantry",
+
+      "echelon": "company",
+
+      "q": 18,
+
+      "r": 31,
+
+      "strength": 180,
+
+      "maxStrength": 180,
+
+      "attack": 5,
+
+      "defense": 6,
+
+      "movement": 4,
+
+      "range": 1,
+
+      "morale": 86,
+
+      "suppression": 0,
+
+      "fatigue": 0,
+
+      "ammo": 100,
+
+      "isHQ": true,
+
+      "hqLevel": "division",
+
+      "hqRole": "guard",
+
+      "parentArmy": "第二十军团",
+
+      "parentCorps": "第85军",
+
+      "parentDivision": "第89师",
+
+      "deploymentRole": "division_command"
+
+    },
+
+    {
+
+      "id": "CHI_89D_GUARD_2",
+
+      "name": "第89师师部第2警卫连",
+
+      "fullName": "第89师师部第2警卫连",
+
+      "faction": "chinese",
+
+      "type": "infantry",
+
+      "echelon": "company",
+
+      "q": 20,
+
+      "r": 31,
+
+      "strength": 180,
+
+      "maxStrength": 180,
+
+      "attack": 5,
+
+      "defense": 6,
+
+      "movement": 4,
+
+      "range": 1,
+
+      "morale": 86,
+
+      "suppression": 0,
+
+      "fatigue": 0,
+
+      "ammo": 100,
+
+      "isHQ": true,
+
+      "hqLevel": "division",
+
+      "hqRole": "guard",
+
+      "parentArmy": "第二十军团",
+
+      "parentCorps": "第85军",
+
+      "parentDivision": "第89师",
+
+      "deploymentRole": "division_command"
+
+    },
+
+    {
+
+      "id": "CHI_89D_R1_HQ",
+
+      "name": "第89师第1团部",
+
+      "fullName": "第89师第1团部",
+
+      "faction": "chinese",
+
+      "type": "headquarters",
+
+      "echelon": "company",
+
+      "q": 19,
+
+      "r": 32,
+
+      "strength": 100,
+
+      "maxStrength": 100,
+
+      "attack": 2,
+
+      "defense": 3,
+
+      "movement": 5,
+
+      "range": 1,
+
+      "morale": 84,
+
+      "suppression": 0,
+
+      "fatigue": 0,
+
+      "ammo": 100,
+
+      "isHQ": true,
+
+      "hqLevel": "regiment",
+
+      "hqRole": "command",
+
+      "parentArmy": "第二十军团",
+
+      "parentCorps": "第85军",
+
+      "parentDivision": "第89师",
+
+      "parentRegiment": "第89师第1团",
+
+      "deploymentRole": "rear_command"
+
+    },
+
+    {
+
+      "id": "CHI_89D_R1_GUARD_1",
+
+      "name": "第89师第1团警卫连",
+
+      "fullName": "第89师第1团警卫连",
+
+      "faction": "chinese",
+
+      "type": "infantry",
+
+      "echelon": "company",
+
+      "q": 19,
+
+      "r": 33,
+
+      "strength": 180,
+
+      "maxStrength": 180,
+
+      "attack": 5,
+
+      "defense": 6,
+
+      "movement": 4,
+
+      "range": 1,
+
+      "morale": 82,
+
+      "suppression": 0,
+
+      "fatigue": 0,
+
+      "ammo": 100,
+
+      "isHQ": true,
+
+      "hqLevel": "regiment",
+
+      "hqRole": "guard",
+
+      "parentArmy": "第二十军团",
+
+      "parentCorps": "第85军",
+
+      "parentDivision": "第89师",
+
+      "parentRegiment": "第89师第1团",
+
+      "deploymentRole": "regiment_command"
+
+    },
+
+    {
+
+      "id": "CHI_89D_R1_B1",
+
+      "name": "第89师第1团第1营",
+
+      "fullName": "第89师第1团第1营",
+
+      "faction": "chinese",
+
+      "type": "infantry",
+
+      "echelon": "battalion",
+
+      "q": 16,
+
+      "r": 27,
+
+      "strength": 690,
+
+      "maxStrength": 700,
+
+      "attack": 8,
+
+      "defense": 8,
+
+      "movement": 4,
+
+      "range": 1,
+
+      "morale": 88,
+
+      "suppression": 0,
+
+      "fatigue": 0,
+
+      "ammo": 100,
+
+      "isHQ": false,
+
+      "parentArmy": "第二十军团",
+
+      "parentCorps": "第85军",
+
+      "parentDivision": "第89师",
+
+      "parentRegiment": "第89师第1团",
+
+      "deploymentRole": "frontline"
+
+    },
+
+    {
+
+      "id": "CHI_89D_R1_B2",
+
+      "name": "第89师第1团第2营",
+
+      "fullName": "第89师第1团第2营",
+
+      "faction": "chinese",
+
+      "type": "infantry",
+
+      "echelon": "battalion",
+
+      "q": 18,
+
+      "r": 27,
+
+      "strength": 680,
+
+      "maxStrength": 700,
+
+      "attack": 8,
+
+      "defense": 8,
+
+      "movement": 4,
+
+      "range": 1,
+
+      "morale": 88,
+
+      "suppression": 0,
+
+      "fatigue": 0,
+
+      "ammo": 100,
+
+      "isHQ": false,
+
+      "parentArmy": "第二十军团",
+
+      "parentCorps": "第85军",
+
+      "parentDivision": "第89师",
+
+      "parentRegiment": "第89师第1团",
+
+      "deploymentRole": "frontline"
+
+    },
+
+    {
+
+      "id": "CHI_89D_R1_B3",
+
+      "name": "第89师第1团第3营",
+
+      "fullName": "第89师第1团第3营",
+
+      "faction": "chinese",
+
+      "type": "infantry",
+
+      "echelon": "battalion",
+
+      "q": 21,
+
+      "r": 28,
+
+      "strength": 670,
+
+      "maxStrength": 700,
+
+      "attack": 8,
+
+      "defense": 8,
+
+      "movement": 4,
+
+      "range": 1,
+
+      "morale": 88,
+
+      "suppression": 0,
+
+      "fatigue": 0,
+
+      "ammo": 100,
+
+      "isHQ": false,
+
+      "parentArmy": "第二十军团",
+
+      "parentCorps": "第85军",
+
+      "parentDivision": "第89师",
+
+      "parentRegiment": "第89师第1团",
+
+      "deploymentRole": "frontline"
+
+    },
+
+    {
+
+      "id": "CHI_89D_R2_HQ",
+
+      "name": "第89师第2团部",
+
+      "fullName": "第89师第2团部",
+
+      "faction": "chinese",
+
+      "type": "headquarters",
+
+      "echelon": "company",
+
+      "q": 21,
+
+      "r": 32,
+
+      "strength": 100,
+
+      "maxStrength": 100,
+
+      "attack": 2,
+
+      "defense": 3,
+
+      "movement": 5,
+
+      "range": 1,
+
+      "morale": 84,
+
+      "suppression": 0,
+
+      "fatigue": 0,
+
+      "ammo": 100,
+
+      "isHQ": true,
+
+      "hqLevel": "regiment",
+
+      "hqRole": "command",
+
+      "parentArmy": "第二十军团",
+
+      "parentCorps": "第85军",
+
+      "parentDivision": "第89师",
+
+      "parentRegiment": "第89师第2团",
+
+      "deploymentRole": "rear_command"
+
+    },
+
+    {
+
+      "id": "CHI_89D_R2_GUARD_1",
+
+      "name": "第89师第2团警卫连",
+
+      "fullName": "第89师第2团警卫连",
+
+      "faction": "chinese",
+
+      "type": "infantry",
+
+      "echelon": "company",
+
+      "q": 21,
+
+      "r": 33,
+
+      "strength": 180,
+
+      "maxStrength": 180,
+
+      "attack": 5,
+
+      "defense": 6,
+
+      "movement": 4,
+
+      "range": 1,
+
+      "morale": 82,
+
+      "suppression": 0,
+
+      "fatigue": 0,
+
+      "ammo": 100,
+
+      "isHQ": true,
+
+      "hqLevel": "regiment",
+
+      "hqRole": "guard",
+
+      "parentArmy": "第二十军团",
+
+      "parentCorps": "第85军",
+
+      "parentDivision": "第89师",
+
+      "parentRegiment": "第89师第2团",
+
+      "deploymentRole": "regiment_command"
+
+    },
+
+    {
+
+      "id": "CHI_89D_R2_B1",
+
+      "name": "第89师第2团第1营",
+
+      "fullName": "第89师第2团第1营",
+
+      "faction": "chinese",
+
+      "type": "infantry",
+
+      "echelon": "battalion",
+
+      "q": 14,
+
+      "r": 30,
+
+      "strength": 685,
+
+      "maxStrength": 700,
+
+      "attack": 8,
+
+      "defense": 8,
+
+      "movement": 4,
+
+      "range": 1,
+
+      "morale": 88,
+
+      "suppression": 0,
+
+      "fatigue": 0,
+
+      "ammo": 100,
+
+      "isHQ": false,
+
+      "parentArmy": "第二十军团",
+
+      "parentCorps": "第85军",
+
+      "parentDivision": "第89师",
+
+      "parentRegiment": "第89师第2团",
+
+      "deploymentRole": "frontline"
+
+    },
+
+    {
+
+      "id": "CHI_89D_R2_B2",
+
+      "name": "第89师第2团第2营",
+
+      "fullName": "第89师第2团第2营",
+
+      "faction": "chinese",
+
+      "type": "infantry",
+
+      "echelon": "battalion",
+
+      "q": 18,
+
+      "r": 30,
+
+      "strength": 675,
+
+      "maxStrength": 700,
+
+      "attack": 8,
+
+      "defense": 8,
+
+      "movement": 4,
+
+      "range": 1,
+
+      "morale": 88,
+
+      "suppression": 0,
+
+      "fatigue": 0,
+
+      "ammo": 100,
+
+      "isHQ": false,
+
+      "parentArmy": "第二十军团",
+
+      "parentCorps": "第85军",
+
+      "parentDivision": "第89师",
+
+      "parentRegiment": "第89师第2团",
+
+      "deploymentRole": "frontline"
+
+    },
+
+    {
+
+      "id": "CHI_89D_R2_B3",
+
+      "name": "第89师第2团第3营",
+
+      "fullName": "第89师第2团第3营",
+
+      "faction": "chinese",
+
+      "type": "infantry",
+
+      "echelon": "battalion",
+
+      "q": 22,
+
+      "r": 31,
+
+      "strength": 660,
+
+      "maxStrength": 700,
+
+      "attack": 8,
+
+      "defense": 8,
+
+      "movement": 4,
+
+      "range": 1,
+
+      "morale": 88,
+
+      "suppression": 0,
+
+      "fatigue": 0,
+
+      "ammo": 100,
+
+      "isHQ": false,
+
+      "parentArmy": "第二十军团",
+
+      "parentCorps": "第85军",
+
+      "parentDivision": "第89师",
+
+      "parentRegiment": "第89师第2团",
+
+      "deploymentRole": "frontline"
+
+    },
+
+    {
+
+      "id": "CHI_89D_MORTAR",
+
+      "name": "第89师81毫米迫击炮连",
+
+      "fullName": "第89师81毫米迫击炮连",
+
+      "faction": "chinese",
+
+      "type": "artillery",
+
+      "echelon": "company",
+
+      "q": 19,
+
+      "r": 34,
+
+      "strength": 115,
+
+      "maxStrength": 120,
+
+      "attack": 5,
+
+      "defense": 4,
+
+      "movement": 4,
+
+      "range": 3,
+
+      "morale": 86,
+
+      "suppression": 0,
+
+      "fatigue": 0,
+
+      "ammo": 100,
+
+      "isHQ": false,
+
+      "parentArmy": "第二十军团",
+
+      "parentCorps": "第85军",
+
+      "parentDivision": "第89师",
+
+      "deploymentRole": "support"
+
+    },
+
+    {
+
+      "id": "CHI_89D_ENG",
+
+      "name": "第89师工兵连",
+
+      "fullName": "第89师工兵连",
+
+      "faction": "chinese",
+
+      "type": "engineer",
+
+      "echelon": "company",
+
+      "q": 21,
+
+      "r": 34,
+
+      "strength": 95,
+
+      "maxStrength": 100,
+
+      "attack": 7,
+
+      "defense": 8,
+
+      "movement": 4,
+
+      "range": 1,
+
+      "morale": 86,
+
+      "suppression": 0,
+
+      "fatigue": 0,
+
+      "ammo": 100,
+
+      "isHQ": false,
+
+      "parentArmy": "第二十军团",
+
+      "parentCorps": "第85军",
+
+      "parentDivision": "第89师",
+
+      "deploymentRole": "support"
+
+    },
+
+    {
+
+      "id": "CHI_6D_HQ",
+
+      "name": "第6师部",
+
+      "fullName": "第6师部",
+
+      "faction": "chinese",
+
+      "type": "headquarters",
+
+      "echelon": "company",
+
+      "q": 10,
+
+      "r": 39,
+
+      "strength": 100,
+
+      "maxStrength": 100,
+
+      "attack": 2,
+
+      "defense": 3,
+
+      "movement": 5,
+
+      "range": 1,
+
+      "morale": 90,
+
+      "suppression": 0,
+
+      "fatigue": 0,
+
+      "ammo": 100,
+
+      "isHQ": true,
+
+      "hqLevel": "division",
+
+      "hqRole": "command",
+
+      "parentArmy": "第二十军团",
+
+      "parentCorps": "第75军",
+
+      "parentDivision": "第6师",
+
+      "deploymentRole": "rear_command"
+
+    },
+
+    {
+
+      "id": "CHI_6D_GUARD_1",
+
+      "name": "第6师师部第1警卫连",
+
+      "fullName": "第6师师部第1警卫连",
+
+      "faction": "chinese",
+
+      "type": "infantry",
+
+      "echelon": "company",
+
+      "q": 9,
+
+      "r": 39,
+
+      "strength": 180,
+
+      "maxStrength": 180,
+
+      "attack": 5,
+
+      "defense": 6,
+
+      "movement": 4,
+
+      "range": 1,
+
+      "morale": 86,
+
+      "suppression": 0,
+
+      "fatigue": 0,
+
+      "ammo": 100,
+
+      "isHQ": true,
+
+      "hqLevel": "division",
+
+      "hqRole": "guard",
+
+      "parentArmy": "第二十军团",
+
+      "parentCorps": "第75军",
+
+      "parentDivision": "第6师",
+
+      "deploymentRole": "division_command"
+
+    },
+
+    {
+
+      "id": "CHI_6D_GUARD_2",
+
+      "name": "第6师师部第2警卫连",
+
+      "fullName": "第6师师部第2警卫连",
+
+      "faction": "chinese",
+
+      "type": "infantry",
+
+      "echelon": "company",
+
+      "q": 11,
+
+      "r": 39,
+
+      "strength": 180,
+
+      "maxStrength": 180,
+
+      "attack": 5,
+
+      "defense": 6,
+
+      "movement": 4,
+
+      "range": 1,
+
+      "morale": 86,
+
+      "suppression": 0,
+
+      "fatigue": 0,
+
+      "ammo": 100,
+
+      "isHQ": true,
+
+      "hqLevel": "division",
+
+      "hqRole": "guard",
+
+      "parentArmy": "第二十军团",
+
+      "parentCorps": "第75军",
+
+      "parentDivision": "第6师",
+
+      "deploymentRole": "division_command"
+
+    },
+
+    {
+
+      "id": "CHI_6D_R1_HQ",
+
+      "name": "第6师第1团部",
+
+      "fullName": "第6师第1团部",
+
+      "faction": "chinese",
+
+      "type": "headquarters",
+
+      "echelon": "company",
+
+      "q": 10,
+
+      "r": 40,
+
+      "strength": 100,
+
+      "maxStrength": 100,
+
+      "attack": 2,
+
+      "defense": 3,
+
+      "movement": 5,
+
+      "range": 1,
+
+      "morale": 84,
+
+      "suppression": 0,
+
+      "fatigue": 0,
+
+      "ammo": 100,
+
+      "isHQ": true,
+
+      "hqLevel": "regiment",
+
+      "hqRole": "command",
+
+      "parentArmy": "第二十军团",
+
+      "parentCorps": "第75军",
+
+      "parentDivision": "第6师",
+
+      "parentRegiment": "第6师第1团",
+
+      "deploymentRole": "rear_command"
+
+    },
+
+    {
+
+      "id": "CHI_6D_R1_GUARD_1",
+
+      "name": "第6师第1团警卫连",
+
+      "fullName": "第6师第1团警卫连",
+
+      "faction": "chinese",
+
+      "type": "infantry",
+
+      "echelon": "company",
+
+      "q": 10,
+
+      "r": 41,
+
+      "strength": 180,
+
+      "maxStrength": 180,
+
+      "attack": 5,
+
+      "defense": 6,
+
+      "movement": 4,
+
+      "range": 1,
+
+      "morale": 82,
+
+      "suppression": 0,
+
+      "fatigue": 0,
+
+      "ammo": 100,
+
+      "isHQ": true,
+
+      "hqLevel": "regiment",
+
+      "hqRole": "guard",
+
+      "parentArmy": "第二十军团",
+
+      "parentCorps": "第75军",
+
+      "parentDivision": "第6师",
+
+      "parentRegiment": "第6师第1团",
+
+      "deploymentRole": "regiment_command"
+
+    },
+
+    {
+
+      "id": "CHI_6D_R1_B1",
+
+      "name": "第6师第1团第1营",
+
+      "fullName": "第6师第1团第1营",
+
+      "faction": "chinese",
+
+      "type": "infantry",
+
+      "echelon": "battalion",
+
+      "q": 6,
+
+      "r": 35,
+
+      "strength": 690,
+
+      "maxStrength": 700,
+
+      "attack": 8,
+
+      "defense": 8,
+
+      "movement": 4,
+
+      "range": 1,
+
+      "morale": 88,
+
+      "suppression": 0,
+
+      "fatigue": 0,
+
+      "ammo": 100,
+
+      "isHQ": false,
+
+      "parentArmy": "第二十军团",
+
+      "parentCorps": "第75军",
+
+      "parentDivision": "第6师",
+
+      "parentRegiment": "第6师第1团",
+
+      "deploymentRole": "frontline"
+
+    },
+
+    {
+
+      "id": "CHI_6D_R1_B2",
+
+      "name": "第6师第1团第2营",
+
+      "fullName": "第6师第1团第2营",
+
+      "faction": "chinese",
+
+      "type": "infantry",
+
+      "echelon": "battalion",
+
+      "q": 10,
+
+      "r": 35,
+
+      "strength": 680,
+
+      "maxStrength": 700,
+
+      "attack": 8,
+
+      "defense": 8,
+
+      "movement": 4,
+
+      "range": 1,
+
+      "morale": 88,
+
+      "suppression": 0,
+
+      "fatigue": 0,
+
+      "ammo": 100,
+
+      "isHQ": false,
+
+      "parentArmy": "第二十军团",
+
+      "parentCorps": "第75军",
+
+      "parentDivision": "第6师",
+
+      "parentRegiment": "第6师第1团",
+
+      "deploymentRole": "frontline"
+
+    },
+
+    {
+
+      "id": "CHI_6D_R1_B3",
+
+      "name": "第6师第1团第3营",
+
+      "fullName": "第6师第1团第3营",
+
+      "faction": "chinese",
+
+      "type": "infantry",
+
+      "echelon": "battalion",
+
+      "q": 12,
+
+      "r": 36,
+
+      "strength": 670,
+
+      "maxStrength": 700,
+
+      "attack": 8,
+
+      "defense": 8,
+
+      "movement": 4,
+
+      "range": 1,
+
+      "morale": 88,
+
+      "suppression": 0,
+
+      "fatigue": 0,
+
+      "ammo": 100,
+
+      "isHQ": false,
+
+      "parentArmy": "第二十军团",
+
+      "parentCorps": "第75军",
+
+      "parentDivision": "第6师",
+
+      "parentRegiment": "第6师第1团",
+
+      "deploymentRole": "frontline"
+
+    },
+
+    {
+
+      "id": "CHI_6D_R2_HQ",
+
+      "name": "第6师第2团部",
+
+      "fullName": "第6师第2团部",
+
+      "faction": "chinese",
+
+      "type": "headquarters",
+
+      "echelon": "company",
+
+      "q": 12,
+
+      "r": 40,
+
+      "strength": 100,
+
+      "maxStrength": 100,
+
+      "attack": 2,
+
+      "defense": 3,
+
+      "movement": 5,
+
+      "range": 1,
+
+      "morale": 84,
+
+      "suppression": 0,
+
+      "fatigue": 0,
+
+      "ammo": 100,
+
+      "isHQ": true,
+
+      "hqLevel": "regiment",
+
+      "hqRole": "command",
+
+      "parentArmy": "第二十军团",
+
+      "parentCorps": "第75军",
+
+      "parentDivision": "第6师",
+
+      "parentRegiment": "第6师第2团",
+
+      "deploymentRole": "rear_command"
+
+    },
+
+    {
+
+      "id": "CHI_6D_R2_GUARD_1",
+
+      "name": "第6师第2团警卫连",
+
+      "fullName": "第6师第2团警卫连",
+
+      "faction": "chinese",
+
+      "type": "infantry",
+
+      "echelon": "company",
+
+      "q": 12,
+
+      "r": 41,
+
+      "strength": 180,
+
+      "maxStrength": 180,
+
+      "attack": 5,
+
+      "defense": 6,
+
+      "movement": 4,
+
+      "range": 1,
+
+      "morale": 82,
+
+      "suppression": 0,
+
+      "fatigue": 0,
+
+      "ammo": 100,
+
+      "isHQ": true,
+
+      "hqLevel": "regiment",
+
+      "hqRole": "guard",
+
+      "parentArmy": "第二十军团",
+
+      "parentCorps": "第75军",
+
+      "parentDivision": "第6师",
+
+      "parentRegiment": "第6师第2团",
+
+      "deploymentRole": "regiment_command"
+
+    },
+
+    {
+
+      "id": "CHI_6D_R2_B1",
+
+      "name": "第6师第2团第1营",
+
+      "fullName": "第6师第2团第1营",
+
+      "faction": "chinese",
+
+      "type": "infantry",
+
+      "echelon": "battalion",
+
+      "q": 5,
+
+      "r": 38,
+
+      "strength": 685,
+
+      "maxStrength": 700,
+
+      "attack": 8,
+
+      "defense": 8,
+
+      "movement": 4,
+
+      "range": 1,
+
+      "morale": 88,
+
+      "suppression": 0,
+
+      "fatigue": 0,
+
+      "ammo": 100,
+
+      "isHQ": false,
+
+      "parentArmy": "第二十军团",
+
+      "parentCorps": "第75军",
+
+      "parentDivision": "第6师",
+
+      "parentRegiment": "第6师第2团",
+
+      "deploymentRole": "frontline"
+
+    },
+
+    {
+
+      "id": "CHI_6D_R2_B2",
+
+      "name": "第6师第2团第2营",
+
+      "fullName": "第6师第2团第2营",
+
+      "faction": "chinese",
+
+      "type": "infantry",
+
+      "echelon": "battalion",
+
+      "q": 9,
+
+      "r": 38,
+
+      "strength": 675,
+
+      "maxStrength": 700,
+
+      "attack": 8,
+
+      "defense": 8,
+
+      "movement": 4,
+
+      "range": 1,
+
+      "morale": 88,
+
+      "suppression": 0,
+
+      "fatigue": 0,
+
+      "ammo": 100,
+
+      "isHQ": false,
+
+      "parentArmy": "第二十军团",
+
+      "parentCorps": "第75军",
+
+      "parentDivision": "第6师",
+
+      "parentRegiment": "第6师第2团",
+
+      "deploymentRole": "frontline"
+
+    },
+
+    {
+
+      "id": "CHI_6D_R2_B3",
+
+      "name": "第6师第2团第3营",
+
+      "fullName": "第6师第2团第3营",
+
+      "faction": "chinese",
+
+      "type": "infantry",
+
+      "echelon": "battalion",
+
+      "q": 13,
+
+      "r": 39,
+
+      "strength": 660,
+
+      "maxStrength": 700,
+
+      "attack": 8,
+
+      "defense": 8,
+
+      "movement": 4,
+
+      "range": 1,
+
+      "morale": 88,
+
+      "suppression": 0,
+
+      "fatigue": 0,
+
+      "ammo": 100,
+
+      "isHQ": false,
+
+      "parentArmy": "第二十军团",
+
+      "parentCorps": "第75军",
+
+      "parentDivision": "第6师",
+
+      "parentRegiment": "第6师第2团",
+
+      "deploymentRole": "frontline"
+
+    },
+
+    {
+
+      "id": "CHI_6D_MORTAR",
+
+      "name": "第6师81毫米迫击炮连",
+
+      "fullName": "第6师81毫米迫击炮连",
+
+      "faction": "chinese",
+
+      "type": "artillery",
+
+      "echelon": "company",
+
+      "q": 10,
+
+      "r": 42,
+
+      "strength": 115,
+
+      "maxStrength": 120,
+
+      "attack": 5,
+
+      "defense": 4,
+
+      "movement": 4,
+
+      "range": 3,
+
+      "morale": 86,
+
+      "suppression": 0,
+
+      "fatigue": 0,
+
+      "ammo": 100,
+
+      "isHQ": false,
+
+      "parentArmy": "第二十军团",
+
+      "parentCorps": "第75军",
+
+      "parentDivision": "第6师",
+
+      "deploymentRole": "support"
+
+    },
+
+    {
+
+      "id": "CHI_6D_ENG",
+
+      "name": "第6师工兵连",
+
+      "fullName": "第6师工兵连",
+
+      "faction": "chinese",
+
+      "type": "engineer",
+
+      "echelon": "company",
+
+      "q": 12,
+
+      "r": 42,
+
+      "strength": 95,
+
+      "maxStrength": 100,
+
+      "attack": 7,
+
+      "defense": 8,
+
+      "movement": 4,
+
+      "range": 1,
+
+      "morale": 86,
+
+      "suppression": 0,
+
+      "fatigue": 0,
+
+      "ammo": 100,
+
+      "isHQ": false,
+
+      "parentArmy": "第二十军团",
+
+      "parentCorps": "第75军",
+
+      "parentDivision": "第6师",
+
+      "deploymentRole": "support"
+
+    },
+
+    {
+
+      "id": "CHI_139D_HQ",
+
+      "name": "第139师部",
+
+      "fullName": "第139师部",
+
+      "faction": "chinese",
+
+      "type": "headquarters",
+
+      "echelon": "company",
+
+      "q": 18,
+
+      "r": 43,
+
+      "strength": 100,
+
+      "maxStrength": 100,
+
+      "attack": 2,
+
+      "defense": 3,
+
+      "movement": 5,
+
+      "range": 1,
+
+      "morale": 90,
+
+      "suppression": 0,
+
+      "fatigue": 0,
+
+      "ammo": 100,
+
+      "isHQ": true,
+
+      "hqLevel": "division",
+
+      "hqRole": "command",
+
+      "parentArmy": "第二十军团",
+
+      "parentCorps": "第75军",
+
+      "parentDivision": "第139师",
+
+      "deploymentRole": "rear_command"
+
+    },
+
+    {
+
+      "id": "CHI_139D_GUARD_1",
+
+      "name": "第139师师部第1警卫连",
+
+      "fullName": "第139师师部第1警卫连",
+
+      "faction": "chinese",
+
+      "type": "infantry",
+
+      "echelon": "company",
+
+      "q": 17,
+
+      "r": 43,
+
+      "strength": 180,
+
+      "maxStrength": 180,
+
+      "attack": 5,
+
+      "defense": 6,
+
+      "movement": 4,
+
+      "range": 1,
+
+      "morale": 86,
+
+      "suppression": 0,
+
+      "fatigue": 0,
+
+      "ammo": 100,
+
+      "isHQ": true,
+
+      "hqLevel": "division",
+
+      "hqRole": "guard",
+
+      "parentArmy": "第二十军团",
+
+      "parentCorps": "第75军",
+
+      "parentDivision": "第139师",
+
+      "deploymentRole": "division_command"
+
+    },
+
+    {
+
+      "id": "CHI_139D_GUARD_2",
+
+      "name": "第139师师部第2警卫连",
+
+      "fullName": "第139师师部第2警卫连",
+
+      "faction": "chinese",
+
+      "type": "infantry",
+
+      "echelon": "company",
+
+      "q": 19,
+
+      "r": 43,
+
+      "strength": 180,
+
+      "maxStrength": 180,
+
+      "attack": 5,
+
+      "defense": 6,
+
+      "movement": 4,
+
+      "range": 1,
+
+      "morale": 86,
+
+      "suppression": 0,
+
+      "fatigue": 0,
+
+      "ammo": 100,
+
+      "isHQ": true,
+
+      "hqLevel": "division",
+
+      "hqRole": "guard",
+
+      "parentArmy": "第二十军团",
+
+      "parentCorps": "第75军",
+
+      "parentDivision": "第139师",
+
+      "deploymentRole": "division_command"
+
+    },
+
+    {
+
+      "id": "CHI_139D_R1_HQ",
+
+      "name": "第139师第1团部",
+
+      "fullName": "第139师第1团部",
+
+      "faction": "chinese",
+
+      "type": "headquarters",
+
+      "echelon": "company",
+
+      "q": 18,
+
+      "r": 44,
+
+      "strength": 100,
+
+      "maxStrength": 100,
+
+      "attack": 2,
+
+      "defense": 3,
+
+      "movement": 5,
+
+      "range": 1,
+
+      "morale": 84,
+
+      "suppression": 0,
+
+      "fatigue": 0,
+
+      "ammo": 100,
+
+      "isHQ": true,
+
+      "hqLevel": "regiment",
+
+      "hqRole": "command",
+
+      "parentArmy": "第二十军团",
+
+      "parentCorps": "第75军",
+
+      "parentDivision": "第139师",
+
+      "parentRegiment": "第139师第1团",
+
+      "deploymentRole": "rear_command"
+
+    },
+
+    {
+
+      "id": "CHI_139D_R1_GUARD_1",
+
+      "name": "第139师第1团警卫连",
+
+      "fullName": "第139师第1团警卫连",
+
+      "faction": "chinese",
+
+      "type": "infantry",
+
+      "echelon": "company",
+
+      "q": 18,
+
+      "r": 45,
+
+      "strength": 180,
+
+      "maxStrength": 180,
+
+      "attack": 5,
+
+      "defense": 6,
+
+      "movement": 4,
+
+      "range": 1,
+
+      "morale": 82,
+
+      "suppression": 0,
+
+      "fatigue": 0,
+
+      "ammo": 100,
+
+      "isHQ": true,
+
+      "hqLevel": "regiment",
+
+      "hqRole": "guard",
+
+      "parentArmy": "第二十军团",
+
+      "parentCorps": "第75军",
+
+      "parentDivision": "第139师",
+
+      "parentRegiment": "第139师第1团",
+
+      "deploymentRole": "regiment_command"
+
+    },
+
+    {
+
+      "id": "CHI_139D_R1_B1",
+
+      "name": "第139师第1团第1营",
+
+      "fullName": "第139师第1团第1营",
+
+      "faction": "chinese",
+
+      "type": "infantry",
+
+      "echelon": "battalion",
+
+      "q": 14,
+
+      "r": 39,
+
+      "strength": 690,
+
+      "maxStrength": 700,
+
+      "attack": 8,
+
+      "defense": 8,
+
+      "movement": 4,
+
+      "range": 1,
+
+      "morale": 88,
+
+      "suppression": 0,
+
+      "fatigue": 0,
+
+      "ammo": 100,
+
+      "isHQ": false,
+
+      "parentArmy": "第二十军团",
+
+      "parentCorps": "第75军",
+
+      "parentDivision": "第139师",
+
+      "parentRegiment": "第139师第1团",
+
+      "deploymentRole": "frontline"
+
+    },
+
+    {
+
+      "id": "CHI_139D_R1_B2",
+
+      "name": "第139师第1团第2营",
+
+      "fullName": "第139师第1团第2营",
+
+      "faction": "chinese",
+
+      "type": "infantry",
+
+      "echelon": "battalion",
+
+      "q": 17,
+
+      "r": 39,
+
+      "strength": 680,
+
+      "maxStrength": 700,
+
+      "attack": 8,
+
+      "defense": 8,
+
+      "movement": 4,
+
+      "range": 1,
+
+      "morale": 88,
+
+      "suppression": 0,
+
+      "fatigue": 0,
+
+      "ammo": 100,
+
+      "isHQ": false,
+
+      "parentArmy": "第二十军团",
+
+      "parentCorps": "第75军",
+
+      "parentDivision": "第139师",
+
+      "parentRegiment": "第139师第1团",
+
+      "deploymentRole": "frontline"
+
+    },
+
+    {
+
+      "id": "CHI_139D_R1_B3",
+
+      "name": "第139师第1团第3营",
+
+      "fullName": "第139师第1团第3营",
+
+      "faction": "chinese",
+
+      "type": "infantry",
+
+      "echelon": "battalion",
+
+      "q": 20,
+
+      "r": 40,
+
+      "strength": 670,
+
+      "maxStrength": 700,
+
+      "attack": 8,
+
+      "defense": 8,
+
+      "movement": 4,
+
+      "range": 1,
+
+      "morale": 88,
+
+      "suppression": 0,
+
+      "fatigue": 0,
+
+      "ammo": 100,
+
+      "isHQ": false,
+
+      "parentArmy": "第二十军团",
+
+      "parentCorps": "第75军",
+
+      "parentDivision": "第139师",
+
+      "parentRegiment": "第139师第1团",
+
+      "deploymentRole": "frontline"
+
+    },
+
+    {
+
+      "id": "CHI_139D_R2_HQ",
+
+      "name": "第139师第2团部",
+
+      "fullName": "第139师第2团部",
+
+      "faction": "chinese",
+
+      "type": "headquarters",
+
+      "echelon": "company",
+
+      "q": 20,
+
+      "r": 44,
+
+      "strength": 100,
+
+      "maxStrength": 100,
+
+      "attack": 2,
+
+      "defense": 3,
+
+      "movement": 5,
+
+      "range": 1,
+
+      "morale": 84,
+
+      "suppression": 0,
+
+      "fatigue": 0,
+
+      "ammo": 100,
+
+      "isHQ": true,
+
+      "hqLevel": "regiment",
+
+      "hqRole": "command",
+
+      "parentArmy": "第二十军团",
+
+      "parentCorps": "第75军",
+
+      "parentDivision": "第139师",
+
+      "parentRegiment": "第139师第2团",
+
+      "deploymentRole": "rear_command"
+
+    },
+
+    {
+
+      "id": "CHI_139D_R2_GUARD_1",
+
+      "name": "第139师第2团警卫连",
+
+      "fullName": "第139师第2团警卫连",
+
+      "faction": "chinese",
+
+      "type": "infantry",
+
+      "echelon": "company",
+
+      "q": 20,
+
+      "r": 45,
+
+      "strength": 180,
+
+      "maxStrength": 180,
+
+      "attack": 5,
+
+      "defense": 6,
+
+      "movement": 4,
+
+      "range": 1,
+
+      "morale": 82,
+
+      "suppression": 0,
+
+      "fatigue": 0,
+
+      "ammo": 100,
+
+      "isHQ": true,
+
+      "hqLevel": "regiment",
+
+      "hqRole": "guard",
+
+      "parentArmy": "第二十军团",
+
+      "parentCorps": "第75军",
+
+      "parentDivision": "第139师",
+
+      "parentRegiment": "第139师第2团",
+
+      "deploymentRole": "regiment_command"
+
+    },
+
+    {
+
+      "id": "CHI_139D_R2_B1",
+
+      "name": "第139师第2团第1营",
+
+      "fullName": "第139师第2团第1营",
+
+      "faction": "chinese",
+
+      "type": "infantry",
+
+      "echelon": "battalion",
+
+      "q": 13,
+
+      "r": 42,
+
+      "strength": 685,
+
+      "maxStrength": 700,
+
+      "attack": 8,
+
+      "defense": 8,
+
+      "movement": 4,
+
+      "range": 1,
+
+      "morale": 88,
+
+      "suppression": 0,
+
+      "fatigue": 0,
+
+      "ammo": 100,
+
+      "isHQ": false,
+
+      "parentArmy": "第二十军团",
+
+      "parentCorps": "第75军",
+
+      "parentDivision": "第139师",
+
+      "parentRegiment": "第139师第2团",
+
+      "deploymentRole": "frontline"
+
+    },
+
+    {
+
+      "id": "CHI_139D_R2_B2",
+
+      "name": "第139师第2团第2营",
+
+      "fullName": "第139师第2团第2营",
+
+      "faction": "chinese",
+
+      "type": "infantry",
+
+      "echelon": "battalion",
+
+      "q": 17,
+
+      "r": 42,
+
+      "strength": 675,
+
+      "maxStrength": 700,
+
+      "attack": 8,
+
+      "defense": 8,
+
+      "movement": 4,
+
+      "range": 1,
+
+      "morale": 88,
+
+      "suppression": 0,
+
+      "fatigue": 0,
+
+      "ammo": 100,
+
+      "isHQ": false,
+
+      "parentArmy": "第二十军团",
+
+      "parentCorps": "第75军",
+
+      "parentDivision": "第139师",
+
+      "parentRegiment": "第139师第2团",
+
+      "deploymentRole": "frontline"
+
+    },
+
+    {
+
+      "id": "CHI_139D_R2_B3",
+
+      "name": "第139师第2团第3营",
+
+      "fullName": "第139师第2团第3营",
+
+      "faction": "chinese",
+
+      "type": "infantry",
+
+      "echelon": "battalion",
+
+      "q": 21,
+
+      "r": 43,
+
+      "strength": 660,
+
+      "maxStrength": 700,
+
+      "attack": 8,
+
+      "defense": 8,
+
+      "movement": 4,
+
+      "range": 1,
+
+      "morale": 88,
+
+      "suppression": 0,
+
+      "fatigue": 0,
+
+      "ammo": 100,
+
+      "isHQ": false,
+
+      "parentArmy": "第二十军团",
+
+      "parentCorps": "第75军",
+
+      "parentDivision": "第139师",
+
+      "parentRegiment": "第139师第2团",
+
+      "deploymentRole": "frontline"
+
+    },
+
+    {
+
+      "id": "CHI_139D_MORTAR",
+
+      "name": "第139师81毫米迫击炮连",
+
+      "fullName": "第139师81毫米迫击炮连",
+
+      "faction": "chinese",
+
+      "type": "artillery",
+
+      "echelon": "company",
+
+      "q": 18,
+
+      "r": 46,
+
+      "strength": 115,
+
+      "maxStrength": 120,
+
+      "attack": 5,
+
+      "defense": 4,
+
+      "movement": 4,
+
+      "range": 3,
+
+      "morale": 86,
+
+      "suppression": 0,
+
+      "fatigue": 0,
+
+      "ammo": 100,
+
+      "isHQ": false,
+
+      "parentArmy": "第二十军团",
+
+      "parentCorps": "第75军",
+
+      "parentDivision": "第139师",
+
+      "deploymentRole": "support"
+
+    },
+
+    {
+
+      "id": "CHI_139D_ENG",
+
+      "name": "第139师工兵连",
+
+      "fullName": "第139师工兵连",
+
+      "faction": "chinese",
+
+      "type": "engineer",
+
+      "echelon": "company",
+
+      "q": 20,
+
+      "r": 46,
+
+      "strength": 95,
+
+      "maxStrength": 100,
+
+      "attack": 7,
+
+      "defense": 8,
+
+      "movement": 4,
+
+      "range": 1,
+
+      "morale": 86,
+
+      "suppression": 0,
+
+      "fatigue": 0,
+
+      "ammo": 100,
+
+      "isHQ": false,
+
+      "parentArmy": "第二十军团",
+
+      "parentCorps": "第75军",
+
+      "parentDivision": "第139师",
+
+      "deploymentRole": "support"
+
+    },
+
+    {
+
+      "id": "JPN_10D_HQ",
+
+      "name": "第10师团部",
+
+      "fullName": "第10师团部",
+
+      "faction": "japanese",
+
+      "type": "headquarters",
+
+      "echelon": "company",
+
+      "q": 47,
+
+      "r": 3,
+
+      "strength": 100,
+
+      "maxStrength": 100,
+
+      "attack": 2,
+
+      "defense": 3,
+
+      "movement": 5,
+
+      "range": 1,
+
+      "morale": 92,
+
+      "suppression": 0,
+
+      "fatigue": 0,
+
+      "ammo": 100,
+
+      "isHQ": true,
+
+      "hqLevel": "division",
+
+      "hqRole": "command",
+
+      "commander": "矶谷廉介",
+
+      "parentDivision": "第10师团",
+
+      "deploymentRole": "rear_command"
+
+    },
+
+    {
+
+      "id": "JPN_10D_GUARD_1",
+
+      "name": "第10师团师部第1警卫连",
+
+      "fullName": "第10师团师部第1警卫连",
+
+      "faction": "japanese",
+
+      "type": "infantry",
+
+      "echelon": "company",
+
+      "q": 46,
+
+      "r": 4,
+
+      "strength": 180,
+
+      "maxStrength": 180,
+
+      "attack": 5,
+
+      "defense": 6,
+
+      "movement": 4,
+
+      "range": 1,
+
+      "morale": 88,
+
+      "suppression": 0,
+
+      "fatigue": 0,
+
+      "ammo": 100,
+
+      "isHQ": true,
+
+      "hqLevel": "division",
+
+      "hqRole": "guard",
+
+      "parentDivision": "第10师团",
+
+      "deploymentRole": "division_command"
+
+    },
+
+    {
+
+      "id": "JPN_10D_GUARD_2",
+
+      "name": "第10师团师部第2警卫连",
+
+      "fullName": "第10师团师部第2警卫连",
+
+      "faction": "japanese",
+
+      "type": "infantry",
+
+      "echelon": "company",
+
+      "q": 48,
+
+      "r": 4,
+
+      "strength": 180,
+
+      "maxStrength": 180,
+
+      "attack": 5,
+
+      "defense": 6,
+
+      "movement": 4,
+
+      "range": 1,
+
+      "morale": 88,
+
+      "suppression": 0,
+
+      "fatigue": 0,
+
+      "ammo": 100,
+
+      "isHQ": true,
+
+      "hqLevel": "division",
+
+      "hqRole": "guard",
+
+      "parentDivision": "第10师团",
+
+      "deploymentRole": "division_command"
+
+    },
+
+    {
+
+      "id": "JPN_SEYA_HQ",
+
+      "name": "濑谷支队部",
+
+      "fullName": "濑谷支队部",
+
+      "faction": "japanese",
+
+      "type": "headquarters",
+
+      "echelon": "company",
+
+      "q": 47,
+
+      "r": 8,
+
+      "strength": 100,
+
+      "maxStrength": 100,
+
+      "attack": 2,
+
+      "defense": 3,
+
+      "movement": 5,
+
+      "range": 1,
+
+      "morale": 92,
+
+      "suppression": 0,
+
+      "fatigue": 0,
+
+      "ammo": 100,
+
+      "isHQ": true,
+
+      "hqLevel": "brigade",
+
+      "hqRole": "command",
+
+      "commander": "濑谷启",
+
+      "parentDivision": "第10师团",
+
+      "parentBrigade": "濑谷支队",
+
+      "deploymentRole": "rear_command"
+
+    },
+
+    {
+
+      "id": "JPN_R63_HQ",
+
+      "name": "步兵第63联队部",
+
+      "fullName": "步兵第63联队部",
+
+      "faction": "japanese",
+
+      "type": "headquarters",
+
+      "echelon": "company",
+
+      "q": 49,
+
+      "r": 10,
+
+      "strength": 100,
+
+      "maxStrength": 100,
+
+      "attack": 2,
+
+      "defense": 3,
+
+      "movement": 5,
+
+      "range": 1,
+
+      "morale": 90,
+
+      "suppression": 0,
+
+      "fatigue": 0,
+
+      "ammo": 100,
+
+      "isHQ": true,
+
+      "hqLevel": "regiment",
+
+      "hqRole": "command",
+
+      "commander": "福荣真平",
+
+      "parentDivision": "第10师团",
+
+      "parentBrigade": "濑谷支队",
+
+      "parentRegiment": "步兵第63联队",
+
+      "deploymentRole": "rear_command"
+
+    },
+
+    {
+
+      "id": "JPN_R63_GUARD_1",
+
+      "name": "步兵第63联队警卫连",
+
+      "fullName": "步兵第63联队警卫连",
+
+      "faction": "japanese",
+
+      "type": "infantry",
+
+      "echelon": "company",
+
+      "q": 50,
+
+      "r": 10,
+
+      "strength": 180,
+
+      "maxStrength": 180,
+
+      "attack": 5,
+
+      "defense": 6,
+
+      "movement": 4,
+
+      "range": 1,
+
+      "morale": 86,
+
+      "suppression": 0,
+
+      "fatigue": 0,
+
+      "ammo": 100,
+
+      "isHQ": true,
+
+      "hqLevel": "regiment",
+
+      "hqRole": "guard",
+
+      "parentDivision": "第10师团",
+
+      "parentBrigade": "濑谷支队",
+
+      "parentRegiment": "步兵第63联队",
+
+      "deploymentRole": "regiment_command"
+
+    },
+
+    {
+
+      "id": "JPN_R63_B1_C1",
+
+      "name": "步兵第63联队第1大队第1中队",
+
+      "fullName": "步兵第63联队第1大队第1中队",
+
+      "faction": "japanese",
+
+      "type": "infantry",
+
+      "echelon": "company",
+
+      "q": 44,
+
+      "r": 17,
+
+      "strength": 180,
+
+      "maxStrength": 180,
+
+      "attack": 10,
+
+      "defense": 8,
+
+      "movement": 5,
+
+      "range": 1,
+
+      "morale": 90,
+
+      "suppression": 0,
+
+      "fatigue": 0,
+
+      "ammo": 100,
+
+      "isHQ": false,
+
+      "parentDivision": "第10师团",
+
+      "parentBrigade": "濑谷支队",
+
+      "parentRegiment": "步兵第63联队",
+
+      "parentBattalion": "步兵第63联队第1大队",
+
+      "deploymentRole": "frontline"
+
+    },
+
+    {
+
+      "id": "JPN_R63_B1_C2",
+
+      "name": "步兵第63联队第1大队第2中队",
+
+      "fullName": "步兵第63联队第1大队第2中队",
+
+      "faction": "japanese",
+
+      "type": "infantry",
+
+      "echelon": "company",
+
+      "q": 45,
+
+      "r": 17,
+
+      "strength": 180,
+
+      "maxStrength": 180,
+
+      "attack": 10,
+
+      "defense": 8,
+
+      "movement": 5,
+
+      "range": 1,
+
+      "morale": 90,
+
+      "suppression": 0,
+
+      "fatigue": 0,
+
+      "ammo": 100,
+
+      "isHQ": false,
+
+      "parentDivision": "第10师团",
+
+      "parentBrigade": "濑谷支队",
+
+      "parentRegiment": "步兵第63联队",
+
+      "parentBattalion": "步兵第63联队第1大队",
+
+      "deploymentRole": "frontline"
+
+    },
+
+    {
+
+      "id": "JPN_R63_B1_C3",
+
+      "name": "步兵第63联队第1大队第3中队",
+
+      "fullName": "步兵第63联队第1大队第3中队",
+
+      "faction": "japanese",
+
+      "type": "infantry",
+
+      "echelon": "company",
+
+      "q": 46,
+
+      "r": 17,
+
+      "strength": 180,
+
+      "maxStrength": 180,
+
+      "attack": 10,
+
+      "defense": 8,
+
+      "movement": 5,
+
+      "range": 1,
+
+      "morale": 90,
+
+      "suppression": 0,
+
+      "fatigue": 0,
+
+      "ammo": 100,
+
+      "isHQ": false,
+
+      "parentDivision": "第10师团",
+
+      "parentBrigade": "濑谷支队",
+
+      "parentRegiment": "步兵第63联队",
+
+      "parentBattalion": "步兵第63联队第1大队",
+
+      "deploymentRole": "frontline"
+
+    },
+
+    {
+
+      "id": "JPN_R63_B1_C4",
+
+      "name": "步兵第63联队第1大队第4中队",
+
+      "fullName": "步兵第63联队第1大队第4中队",
+
+      "faction": "japanese",
+
+      "type": "infantry",
+
+      "echelon": "company",
+
+      "q": 45,
+
+      "r": 18,
+
+      "strength": 180,
+
+      "maxStrength": 180,
+
+      "attack": 10,
+
+      "defense": 8,
+
+      "movement": 5,
+
+      "range": 1,
+
+      "morale": 90,
+
+      "suppression": 0,
+
+      "fatigue": 0,
+
+      "ammo": 100,
+
+      "isHQ": false,
+
+      "parentDivision": "第10师团",
+
+      "parentBrigade": "濑谷支队",
+
+      "parentRegiment": "步兵第63联队",
+
+      "parentBattalion": "步兵第63联队第1大队",
+
+      "deploymentRole": "frontline"
+
+    },
+
+    {
+
+      "id": "JPN_R63_B1_MG",
+
+      "name": "步兵第63联队第1大队机枪中队",
+
+      "fullName": "步兵第63联队第1大队机枪中队",
+
+      "faction": "japanese",
+
+      "type": "machinegun",
+
+      "echelon": "company",
+
+      "q": 47,
+
+      "r": 18,
+
+      "strength": 144,
+
+      "maxStrength": 144,
+
+      "attack": 11,
+
+      "defense": 10,
+
+      "movement": 4,
+
+      "range": 1,
+
+      "morale": 90,
+
+      "suppression": 0,
+
+      "fatigue": 0,
+
+      "ammo": 100,
+
+      "isHQ": false,
+
+      "parentDivision": "第10师团",
+
+      "parentBrigade": "濑谷支队",
+
+      "parentRegiment": "步兵第63联队",
+
+      "parentBattalion": "步兵第63联队第1大队",
+
+      "deploymentRole": "support"
+
+    },
+
+    {
+
+      "id": "JPN_R63_B1_IG",
+
+      "name": "步兵第63联队第1大队九二式步兵炮小队",
+
+      "fullName": "步兵第63联队第1大队九二式步兵炮小队",
+
+      "faction": "japanese",
+
+      "type": "artillery",
+
+      "echelon": "company",
+
+      "q": 43,
+
+      "r": 18,
+
+      "strength": 60,
+
+      "maxStrength": 60,
+
+      "attack": 4,
+
+      "defense": 4,
+
+      "movement": 4,
+
+      "range": 2,
+
+      "morale": 88,
+
+      "suppression": 0,
+
+      "fatigue": 0,
+
+      "ammo": 100,
+
+      "isHQ": false,
+
+      "parentDivision": "第10师团",
+
+      "parentBrigade": "濑谷支队",
+
+      "parentRegiment": "步兵第63联队",
+
+      "parentBattalion": "步兵第63联队第1大队",
+
+      "deploymentRole": "support"
+
+    },
+
+    {
+
+      "id": "JPN_R63_B2_C1",
+
+      "name": "步兵第63联队第2大队第1中队",
+
+      "fullName": "步兵第63联队第2大队第1中队",
+
+      "faction": "japanese",
+
+      "type": "infantry",
+
+      "echelon": "company",
+
+      "q": 48,
+
+      "r": 20,
+
+      "strength": 180,
+
+      "maxStrength": 180,
+
+      "attack": 10,
+
+      "defense": 8,
+
+      "movement": 5,
+
+      "range": 1,
+
+      "morale": 90,
+
+      "suppression": 0,
+
+      "fatigue": 0,
+
+      "ammo": 100,
+
+      "isHQ": false,
+
+      "parentDivision": "第10师团",
+
+      "parentBrigade": "濑谷支队",
+
+      "parentRegiment": "步兵第63联队",
+
+      "parentBattalion": "步兵第63联队第2大队",
+
+      "deploymentRole": "frontline"
+
+    },
+
+    {
+
+      "id": "JPN_R63_B2_C2",
+
+      "name": "步兵第63联队第2大队第2中队",
+
+      "fullName": "步兵第63联队第2大队第2中队",
+
+      "faction": "japanese",
+
+      "type": "infantry",
+
+      "echelon": "company",
+
+      "q": 49,
+
+      "r": 20,
+
+      "strength": 180,
+
+      "maxStrength": 180,
+
+      "attack": 10,
+
+      "defense": 8,
+
+      "movement": 5,
+
+      "range": 1,
+
+      "morale": 90,
+
+      "suppression": 0,
+
+      "fatigue": 0,
+
+      "ammo": 100,
+
+      "isHQ": false,
+
+      "parentDivision": "第10师团",
+
+      "parentBrigade": "濑谷支队",
+
+      "parentRegiment": "步兵第63联队",
+
+      "parentBattalion": "步兵第63联队第2大队",
+
+      "deploymentRole": "frontline"
+
+    },
+
+    {
+
+      "id": "JPN_R63_B2_C3",
+
+      "name": "步兵第63联队第2大队第3中队",
+
+      "fullName": "步兵第63联队第2大队第3中队",
+
+      "faction": "japanese",
+
+      "type": "infantry",
+
+      "echelon": "company",
+
+      "q": 50,
+
+      "r": 20,
+
+      "strength": 180,
+
+      "maxStrength": 180,
+
+      "attack": 10,
+
+      "defense": 8,
+
+      "movement": 5,
+
+      "range": 1,
+
+      "morale": 90,
+
+      "suppression": 0,
+
+      "fatigue": 0,
+
+      "ammo": 100,
+
+      "isHQ": false,
+
+      "parentDivision": "第10师团",
+
+      "parentBrigade": "濑谷支队",
+
+      "parentRegiment": "步兵第63联队",
+
+      "parentBattalion": "步兵第63联队第2大队",
+
+      "deploymentRole": "frontline"
+
+    },
+
+    {
+
+      "id": "JPN_R63_B2_C4",
+
+      "name": "步兵第63联队第2大队第4中队",
+
+      "fullName": "步兵第63联队第2大队第4中队",
+
+      "faction": "japanese",
+
+      "type": "infantry",
+
+      "echelon": "company",
+
+      "q": 49,
+
+      "r": 21,
+
+      "strength": 180,
+
+      "maxStrength": 180,
+
+      "attack": 10,
+
+      "defense": 8,
+
+      "movement": 5,
+
+      "range": 1,
+
+      "morale": 90,
+
+      "suppression": 0,
+
+      "fatigue": 0,
+
+      "ammo": 100,
+
+      "isHQ": false,
+
+      "parentDivision": "第10师团",
+
+      "parentBrigade": "濑谷支队",
+
+      "parentRegiment": "步兵第63联队",
+
+      "parentBattalion": "步兵第63联队第2大队",
+
+      "deploymentRole": "frontline"
+
+    },
+
+    {
+
+      "id": "JPN_R63_B2_MG",
+
+      "name": "步兵第63联队第2大队机枪中队",
+
+      "fullName": "步兵第63联队第2大队机枪中队",
+
+      "faction": "japanese",
+
+      "type": "machinegun",
+
+      "echelon": "company",
+
+      "q": 51,
+
+      "r": 21,
+
+      "strength": 144,
+
+      "maxStrength": 144,
+
+      "attack": 11,
+
+      "defense": 10,
+
+      "movement": 4,
+
+      "range": 1,
+
+      "morale": 90,
+
+      "suppression": 0,
+
+      "fatigue": 0,
+
+      "ammo": 100,
+
+      "isHQ": false,
+
+      "parentDivision": "第10师团",
+
+      "parentBrigade": "濑谷支队",
+
+      "parentRegiment": "步兵第63联队",
+
+      "parentBattalion": "步兵第63联队第2大队",
+
+      "deploymentRole": "support"
+
+    },
+
+    {
+
+      "id": "JPN_R63_B2_IG",
+
+      "name": "步兵第63联队第2大队九二式步兵炮小队",
+
+      "fullName": "步兵第63联队第2大队九二式步兵炮小队",
+
+      "faction": "japanese",
+
+      "type": "artillery",
+
+      "echelon": "company",
+
+      "q": 47,
+
+      "r": 21,
+
+      "strength": 60,
+
+      "maxStrength": 60,
+
+      "attack": 4,
+
+      "defense": 4,
+
+      "movement": 4,
+
+      "range": 2,
+
+      "morale": 88,
+
+      "suppression": 0,
+
+      "fatigue": 0,
+
+      "ammo": 100,
+
+      "isHQ": false,
+
+      "parentDivision": "第10师团",
+
+      "parentBrigade": "濑谷支队",
+
+      "parentRegiment": "步兵第63联队",
+
+      "parentBattalion": "步兵第63联队第2大队",
+
+      "deploymentRole": "support"
+
+    },
+
+    {
+
+      "id": "JPN_R63_B3_C1",
+
+      "name": "步兵第63联队第3大队第1中队",
+
+      "fullName": "步兵第63联队第3大队第1中队",
+
+      "faction": "japanese",
+
+      "type": "infantry",
+
+      "echelon": "company",
+
+      "q": 52,
+
+      "r": 23,
+
+      "strength": 180,
+
+      "maxStrength": 180,
+
+      "attack": 10,
+
+      "defense": 8,
+
+      "movement": 5,
+
+      "range": 1,
+
+      "morale": 90,
+
+      "suppression": 0,
+
+      "fatigue": 0,
+
+      "ammo": 100,
+
+      "isHQ": false,
+
+      "parentDivision": "第10师团",
+
+      "parentBrigade": "濑谷支队",
+
+      "parentRegiment": "步兵第63联队",
+
+      "parentBattalion": "步兵第63联队第3大队",
+
+      "deploymentRole": "frontline"
+
+    },
+
+    {
+
+      "id": "JPN_R63_B3_C2",
+
+      "name": "步兵第63联队第3大队第2中队",
+
+      "fullName": "步兵第63联队第3大队第2中队",
+
+      "faction": "japanese",
+
+      "type": "infantry",
+
+      "echelon": "company",
+
+      "q": 53,
+
+      "r": 23,
+
+      "strength": 180,
+
+      "maxStrength": 180,
+
+      "attack": 10,
+
+      "defense": 8,
+
+      "movement": 5,
+
+      "range": 1,
+
+      "morale": 90,
+
+      "suppression": 0,
+
+      "fatigue": 0,
+
+      "ammo": 100,
+
+      "isHQ": false,
+
+      "parentDivision": "第10师团",
+
+      "parentBrigade": "濑谷支队",
+
+      "parentRegiment": "步兵第63联队",
+
+      "parentBattalion": "步兵第63联队第3大队",
+
+      "deploymentRole": "frontline"
+
+    },
+
+    {
+
+      "id": "JPN_R63_B3_C3",
+
+      "name": "步兵第63联队第3大队第3中队",
+
+      "fullName": "步兵第63联队第3大队第3中队",
+
+      "faction": "japanese",
+
+      "type": "infantry",
+
+      "echelon": "company",
+
+      "q": 54,
+
+      "r": 23,
+
+      "strength": 180,
+
+      "maxStrength": 180,
+
+      "attack": 10,
+
+      "defense": 8,
+
+      "movement": 5,
+
+      "range": 1,
+
+      "morale": 90,
+
+      "suppression": 0,
+
+      "fatigue": 0,
+
+      "ammo": 100,
+
+      "isHQ": false,
+
+      "parentDivision": "第10师团",
+
+      "parentBrigade": "濑谷支队",
+
+      "parentRegiment": "步兵第63联队",
+
+      "parentBattalion": "步兵第63联队第3大队",
+
+      "deploymentRole": "frontline"
+
+    },
+
+    {
+
+      "id": "JPN_R63_B3_C4",
+
+      "name": "步兵第63联队第3大队第4中队",
+
+      "fullName": "步兵第63联队第3大队第4中队",
+
+      "faction": "japanese",
+
+      "type": "infantry",
+
+      "echelon": "company",
+
+      "q": 53,
+
+      "r": 24,
+
+      "strength": 180,
+
+      "maxStrength": 180,
+
+      "attack": 10,
+
+      "defense": 8,
+
+      "movement": 5,
+
+      "range": 1,
+
+      "morale": 90,
+
+      "suppression": 0,
+
+      "fatigue": 0,
+
+      "ammo": 100,
+
+      "isHQ": false,
+
+      "parentDivision": "第10师团",
+
+      "parentBrigade": "濑谷支队",
+
+      "parentRegiment": "步兵第63联队",
+
+      "parentBattalion": "步兵第63联队第3大队",
+
+      "deploymentRole": "frontline"
+
+    },
+
+    {
+
+      "id": "JPN_R63_B3_MG",
+
+      "name": "步兵第63联队第3大队机枪中队",
+
+      "fullName": "步兵第63联队第3大队机枪中队",
+
+      "faction": "japanese",
+
+      "type": "machinegun",
+
+      "echelon": "company",
+
+      "q": 55,
+
+      "r": 24,
+
+      "strength": 144,
+
+      "maxStrength": 144,
+
+      "attack": 11,
+
+      "defense": 10,
+
+      "movement": 4,
+
+      "range": 1,
+
+      "morale": 90,
+
+      "suppression": 0,
+
+      "fatigue": 0,
+
+      "ammo": 100,
+
+      "isHQ": false,
+
+      "parentDivision": "第10师团",
+
+      "parentBrigade": "濑谷支队",
+
+      "parentRegiment": "步兵第63联队",
+
+      "parentBattalion": "步兵第63联队第3大队",
+
+      "deploymentRole": "support"
+
+    },
+
+    {
+
+      "id": "JPN_R63_B3_IG",
+
+      "name": "步兵第63联队第3大队九二式步兵炮小队",
+
+      "fullName": "步兵第63联队第3大队九二式步兵炮小队",
+
+      "faction": "japanese",
+
+      "type": "artillery",
+
+      "echelon": "company",
+
+      "q": 51,
+
+      "r": 24,
+
+      "strength": 60,
+
+      "maxStrength": 60,
+
+      "attack": 4,
+
+      "defense": 4,
+
+      "movement": 4,
+
+      "range": 2,
+
+      "morale": 88,
+
+      "suppression": 0,
+
+      "fatigue": 0,
+
+      "ammo": 100,
+
+      "isHQ": false,
+
+      "parentDivision": "第10师团",
+
+      "parentBrigade": "濑谷支队",
+
+      "parentRegiment": "步兵第63联队",
+
+      "parentBattalion": "步兵第63联队第3大队",
+
+      "deploymentRole": "support"
+
+    },
+
+    {
+
+      "id": "JPN_R10_HQ",
+
+      "name": "步兵第10联队部",
+
+      "fullName": "步兵第10联队部",
+
+      "faction": "japanese",
+
+      "type": "headquarters",
+
+      "echelon": "company",
+
+      "q": 39,
+
+      "r": 11,
+
+      "strength": 100,
+
+      "maxStrength": 100,
+
+      "attack": 2,
+
+      "defense": 3,
+
+      "movement": 5,
+
+      "range": 1,
+
+      "morale": 90,
+
+      "suppression": 0,
+
+      "fatigue": 0,
+
+      "ammo": 100,
+
+      "isHQ": true,
+
+      "hqLevel": "regiment",
+
+      "hqRole": "command",
+
+      "commander": "赤柴八重藏",
+
+      "parentDivision": "第10师团",
+
+      "parentBrigade": "濑谷支队",
+
+      "parentRegiment": "步兵第10联队",
+
+      "deploymentRole": "rear_command"
+
+    },
+
+    {
+
+      "id": "JPN_R10_GUARD_1",
+
+      "name": "步兵第10联队警卫连",
+
+      "fullName": "步兵第10联队警卫连",
+
+      "faction": "japanese",
+
+      "type": "infantry",
+
+      "echelon": "company",
+
+      "q": 40,
+
+      "r": 11,
+
+      "strength": 180,
+
+      "maxStrength": 180,
+
+      "attack": 5,
+
+      "defense": 6,
+
+      "movement": 4,
+
+      "range": 1,
+
+      "morale": 86,
+
+      "suppression": 0,
+
+      "fatigue": 0,
+
+      "ammo": 100,
+
+      "isHQ": true,
+
+      "hqLevel": "regiment",
+
+      "hqRole": "guard",
+
+      "parentDivision": "第10师团",
+
+      "parentBrigade": "濑谷支队",
+
+      "parentRegiment": "步兵第10联队",
+
+      "deploymentRole": "regiment_command"
+
+    },
+
+    {
+
+      "id": "JPN_R10_B1_C1",
+
+      "name": "步兵第10联队第1大队第1中队",
+
+      "fullName": "步兵第10联队第1大队第1中队",
+
+      "faction": "japanese",
+
+      "type": "infantry",
+
+      "echelon": "company",
+
+      "q": 34,
+
+      "r": 18,
+
+      "strength": 180,
+
+      "maxStrength": 180,
+
+      "attack": 10,
+
+      "defense": 8,
+
+      "movement": 5,
+
+      "range": 1,
+
+      "morale": 90,
+
+      "suppression": 0,
+
+      "fatigue": 0,
+
+      "ammo": 100,
+
+      "isHQ": false,
+
+      "parentDivision": "第10师团",
+
+      "parentBrigade": "濑谷支队",
+
+      "parentRegiment": "步兵第10联队",
+
+      "parentBattalion": "步兵第10联队第1大队",
+
+      "deploymentRole": "frontline"
+
+    },
+
+    {
+
+      "id": "JPN_R10_B1_C2",
+
+      "name": "步兵第10联队第1大队第2中队",
+
+      "fullName": "步兵第10联队第1大队第2中队",
+
+      "faction": "japanese",
+
+      "type": "infantry",
+
+      "echelon": "company",
+
+      "q": 35,
+
+      "r": 18,
+
+      "strength": 180,
+
+      "maxStrength": 180,
+
+      "attack": 10,
+
+      "defense": 8,
+
+      "movement": 5,
+
+      "range": 1,
+
+      "morale": 90,
+
+      "suppression": 0,
+
+      "fatigue": 0,
+
+      "ammo": 100,
+
+      "isHQ": false,
+
+      "parentDivision": "第10师团",
+
+      "parentBrigade": "濑谷支队",
+
+      "parentRegiment": "步兵第10联队",
+
+      "parentBattalion": "步兵第10联队第1大队",
+
+      "deploymentRole": "frontline"
+
+    },
+
+    {
+
+      "id": "JPN_R10_B1_C3",
+
+      "name": "步兵第10联队第1大队第3中队",
+
+      "fullName": "步兵第10联队第1大队第3中队",
+
+      "faction": "japanese",
+
+      "type": "infantry",
+
+      "echelon": "company",
+
+      "q": 36,
+
+      "r": 18,
+
+      "strength": 180,
+
+      "maxStrength": 180,
+
+      "attack": 10,
+
+      "defense": 8,
+
+      "movement": 5,
+
+      "range": 1,
+
+      "morale": 90,
+
+      "suppression": 0,
+
+      "fatigue": 0,
+
+      "ammo": 100,
+
+      "isHQ": false,
+
+      "parentDivision": "第10师团",
+
+      "parentBrigade": "濑谷支队",
+
+      "parentRegiment": "步兵第10联队",
+
+      "parentBattalion": "步兵第10联队第1大队",
+
+      "deploymentRole": "frontline"
+
+    },
+
+    {
+
+      "id": "JPN_R10_B1_C4",
+
+      "name": "步兵第10联队第1大队第4中队",
+
+      "fullName": "步兵第10联队第1大队第4中队",
+
+      "faction": "japanese",
+
+      "type": "infantry",
+
+      "echelon": "company",
+
+      "q": 35,
+
+      "r": 19,
+
+      "strength": 180,
+
+      "maxStrength": 180,
+
+      "attack": 10,
+
+      "defense": 8,
+
+      "movement": 5,
+
+      "range": 1,
+
+      "morale": 90,
+
+      "suppression": 0,
+
+      "fatigue": 0,
+
+      "ammo": 100,
+
+      "isHQ": false,
+
+      "parentDivision": "第10师团",
+
+      "parentBrigade": "濑谷支队",
+
+      "parentRegiment": "步兵第10联队",
+
+      "parentBattalion": "步兵第10联队第1大队",
+
+      "deploymentRole": "frontline"
+
+    },
+
+    {
+
+      "id": "JPN_R10_B1_MG",
+
+      "name": "步兵第10联队第1大队机枪中队",
+
+      "fullName": "步兵第10联队第1大队机枪中队",
+
+      "faction": "japanese",
+
+      "type": "machinegun",
+
+      "echelon": "company",
+
+      "q": 37,
+
+      "r": 19,
+
+      "strength": 144,
+
+      "maxStrength": 144,
+
+      "attack": 11,
+
+      "defense": 10,
+
+      "movement": 4,
+
+      "range": 1,
+
+      "morale": 90,
+
+      "suppression": 0,
+
+      "fatigue": 0,
+
+      "ammo": 100,
+
+      "isHQ": false,
+
+      "parentDivision": "第10师团",
+
+      "parentBrigade": "濑谷支队",
+
+      "parentRegiment": "步兵第10联队",
+
+      "parentBattalion": "步兵第10联队第1大队",
+
+      "deploymentRole": "support"
+
+    },
+
+    {
+
+      "id": "JPN_R10_B1_IG",
+
+      "name": "步兵第10联队第1大队九二式步兵炮小队",
+
+      "fullName": "步兵第10联队第1大队九二式步兵炮小队",
+
+      "faction": "japanese",
+
+      "type": "artillery",
+
+      "echelon": "company",
+
+      "q": 33,
+
+      "r": 19,
+
+      "strength": 60,
+
+      "maxStrength": 60,
+
+      "attack": 4,
+
+      "defense": 4,
+
+      "movement": 4,
+
+      "range": 2,
+
+      "morale": 88,
+
+      "suppression": 0,
+
+      "fatigue": 0,
+
+      "ammo": 100,
+
+      "isHQ": false,
+
+      "parentDivision": "第10师团",
+
+      "parentBrigade": "濑谷支队",
+
+      "parentRegiment": "步兵第10联队",
+
+      "parentBattalion": "步兵第10联队第1大队",
+
+      "deploymentRole": "support"
+
+    },
+
+    {
+
+      "id": "JPN_R10_B2_C1",
+
+      "name": "步兵第10联队第2大队第1中队",
+
+      "fullName": "步兵第10联队第2大队第1中队",
+
+      "faction": "japanese",
+
+      "type": "infantry",
+
+      "echelon": "company",
+
+      "q": 38,
+
+      "r": 21,
+
+      "strength": 180,
+
+      "maxStrength": 180,
+
+      "attack": 10,
+
+      "defense": 8,
+
+      "movement": 5,
+
+      "range": 1,
+
+      "morale": 90,
+
+      "suppression": 0,
+
+      "fatigue": 0,
+
+      "ammo": 100,
+
+      "isHQ": false,
+
+      "parentDivision": "第10师团",
+
+      "parentBrigade": "濑谷支队",
+
+      "parentRegiment": "步兵第10联队",
+
+      "parentBattalion": "步兵第10联队第2大队",
+
+      "deploymentRole": "frontline"
+
+    },
+
+    {
+
+      "id": "JPN_R10_B2_C2",
+
+      "name": "步兵第10联队第2大队第2中队",
+
+      "fullName": "步兵第10联队第2大队第2中队",
+
+      "faction": "japanese",
+
+      "type": "infantry",
+
+      "echelon": "company",
+
+      "q": 39,
+
+      "r": 21,
+
+      "strength": 180,
+
+      "maxStrength": 180,
+
+      "attack": 10,
+
+      "defense": 8,
+
+      "movement": 5,
+
+      "range": 1,
+
+      "morale": 90,
+
+      "suppression": 0,
+
+      "fatigue": 0,
+
+      "ammo": 100,
+
+      "isHQ": false,
+
+      "parentDivision": "第10师团",
+
+      "parentBrigade": "濑谷支队",
+
+      "parentRegiment": "步兵第10联队",
+
+      "parentBattalion": "步兵第10联队第2大队",
+
+      "deploymentRole": "frontline"
+
+    },
+
+    {
+
+      "id": "JPN_R10_B2_C3",
+
+      "name": "步兵第10联队第2大队第3中队",
+
+      "fullName": "步兵第10联队第2大队第3中队",
+
+      "faction": "japanese",
+
+      "type": "infantry",
+
+      "echelon": "company",
+
+      "q": 41,
+
+      "r": 21,
+
+      "strength": 180,
+
+      "maxStrength": 180,
+
+      "attack": 10,
+
+      "defense": 8,
+
+      "movement": 5,
+
+      "range": 1,
+
+      "morale": 90,
+
+      "suppression": 0,
+
+      "fatigue": 0,
+
+      "ammo": 100,
+
+      "isHQ": false,
+
+      "parentDivision": "第10师团",
+
+      "parentBrigade": "濑谷支队",
+
+      "parentRegiment": "步兵第10联队",
+
+      "parentBattalion": "步兵第10联队第2大队",
+
+      "deploymentRole": "frontline"
+
+    },
+
+    {
+
+      "id": "JPN_R10_B2_C4",
+
+      "name": "步兵第10联队第2大队第4中队",
+
+      "fullName": "步兵第10联队第2大队第4中队",
+
+      "faction": "japanese",
+
+      "type": "infantry",
+
+      "echelon": "company",
+
+      "q": 39,
+
+      "r": 22,
+
+      "strength": 180,
+
+      "maxStrength": 180,
+
+      "attack": 10,
+
+      "defense": 8,
+
+      "movement": 5,
+
+      "range": 1,
+
+      "morale": 90,
+
+      "suppression": 0,
+
+      "fatigue": 0,
+
+      "ammo": 100,
+
+      "isHQ": false,
+
+      "parentDivision": "第10师团",
+
+      "parentBrigade": "濑谷支队",
+
+      "parentRegiment": "步兵第10联队",
+
+      "parentBattalion": "步兵第10联队第2大队",
+
+      "deploymentRole": "frontline"
+
+    },
+
+    {
+
+      "id": "JPN_R10_B2_MG",
+
+      "name": "步兵第10联队第2大队机枪中队",
+
+      "fullName": "步兵第10联队第2大队机枪中队",
+
+      "faction": "japanese",
+
+      "type": "machinegun",
+
+      "echelon": "company",
+
+      "q": 41,
+
+      "r": 22,
+
+      "strength": 144,
+
+      "maxStrength": 144,
+
+      "attack": 11,
+
+      "defense": 10,
+
+      "movement": 4,
+
+      "range": 1,
+
+      "morale": 90,
+
+      "suppression": 0,
+
+      "fatigue": 0,
+
+      "ammo": 100,
+
+      "isHQ": false,
+
+      "parentDivision": "第10师团",
+
+      "parentBrigade": "濑谷支队",
+
+      "parentRegiment": "步兵第10联队",
+
+      "parentBattalion": "步兵第10联队第2大队",
+
+      "deploymentRole": "support"
+
+    },
+
+    {
+
+      "id": "JPN_R10_B2_IG",
+
+      "name": "步兵第10联队第2大队九二式步兵炮小队",
+
+      "fullName": "步兵第10联队第2大队九二式步兵炮小队",
+
+      "faction": "japanese",
+
+      "type": "artillery",
+
+      "echelon": "company",
+
+      "q": 38,
+
+      "r": 22,
+
+      "strength": 60,
+
+      "maxStrength": 60,
+
+      "attack": 4,
+
+      "defense": 4,
+
+      "movement": 4,
+
+      "range": 2,
+
+      "morale": 88,
+
+      "suppression": 0,
+
+      "fatigue": 0,
+
+      "ammo": 100,
+
+      "isHQ": false,
+
+      "parentDivision": "第10师团",
+
+      "parentBrigade": "濑谷支队",
+
+      "parentRegiment": "步兵第10联队",
+
+      "parentBattalion": "步兵第10联队第2大队",
+
+      "deploymentRole": "support"
+
+    },
+
+    {
+
+      "id": "JPN_SEYA_MG1",
+
+      "name": "独立机枪第10大队第1中队",
+
+      "fullName": "独立机枪第10大队第1中队",
+
+      "faction": "japanese",
+
+      "type": "machinegun",
+
+      "echelon": "company",
+
+      "q": 45,
+
+      "r": 20,
+
+      "strength": 150,
+
+      "maxStrength": 150,
+
+      "attack": 12,
+
+      "defense": 10,
+
+      "movement": 4,
+
+      "range": 1,
+
+      "morale": 90,
+
+      "suppression": 0,
+
+      "fatigue": 0,
+
+      "ammo": 100,
+
+      "isHQ": false,
+
+      "parentDivision": "第10师团",
+
+      "parentBrigade": "濑谷支队",
+
+      "deploymentRole": "support"
+
+    },
+
+    {
+
+      "id": "JPN_SEYA_MG2",
+
+      "name": "独立机枪第10大队第2中队",
+
+      "fullName": "独立机枪第10大队第2中队",
+
+      "faction": "japanese",
+
+      "type": "machinegun",
+
+      "echelon": "company",
+
+      "q": 47,
+
+      "r": 20,
+
+      "strength": 150,
+
+      "maxStrength": 150,
+
+      "attack": 12,
+
+      "defense": 10,
+
+      "movement": 4,
+
+      "range": 1,
+
+      "morale": 90,
+
+      "suppression": 0,
+
+      "fatigue": 0,
+
+      "ammo": 100,
+
+      "isHQ": false,
+
+      "parentDivision": "第10师团",
+
+      "parentBrigade": "濑谷支队",
+
+      "deploymentRole": "support"
+
+    },
+
+    {
+
+      "id": "JPN_AC10",
+
+      "name": "独立轻装甲车第10中队",
+
+      "fullName": "独立轻装甲车第10中队",
+
+      "faction": "japanese",
+
+      "type": "armor",
+
+      "echelon": "company",
+
+      "q": 50,
+
+      "r": 21,
+
+      "strength": 150,
+
+      "maxStrength": 150,
+
+      "attack": 10,
+
+      "defense": 7,
+
+      "movement": 7,
+
+      "range": 1,
+
+      "morale": 88,
+
+      "suppression": 0,
+
+      "fatigue": 0,
+
+      "ammo": 100,
+
+      "isHQ": false,
+
+      "parentDivision": "第10师团",
+
+      "parentBrigade": "濑谷支队",
+
+      "deploymentRole": "support"
+
+    },
+
+    {
+
+      "id": "JPN_AC12",
+
+      "name": "独立轻装甲车第12中队",
+
+      "fullName": "独立轻装甲车第12中队",
+
+      "faction": "japanese",
+
+      "type": "armor",
+
+      "echelon": "company",
+
+      "q": 52,
+
+      "r": 21,
+
+      "strength": 150,
+
+      "maxStrength": 150,
+
+      "attack": 10,
+
+      "defense": 7,
+
+      "movement": 7,
+
+      "range": 1,
+
+      "morale": 88,
+
+      "suppression": 0,
+
+      "fatigue": 0,
+
+      "ammo": 100,
+
+      "isHQ": false,
+
+      "parentDivision": "第10师团",
+
+      "parentBrigade": "濑谷支队",
+
+      "deploymentRole": "support"
+
+    },
+
+    {
+
+      "id": "JPN_FA10_B1",
+
+      "name": "野炮兵第10联队第1大队（75毫米野炮）",
+
+      "fullName": "野炮兵第10联队第1大队（75毫米野炮）",
+
+      "faction": "japanese",
+
+      "type": "artillery",
+
+      "echelon": "battalion",
+
+      "q": 43,
+
+      "r": 14,
+
+      "strength": 750,
+
+      "maxStrength": 750,
+
+      "attack": 7,
+
+      "defense": 5,
+
+      "movement": 3,
+
+      "range": 5,
+
+      "morale": 88,
+
+      "suppression": 0,
+
+      "fatigue": 0,
+
+      "ammo": 100,
+
+      "isHQ": false,
+
+      "parentDivision": "第10师团",
+
+      "parentBrigade": "濑谷支队",
+
+      "deploymentRole": "support"
+
+    },
+
+    {
+
+      "id": "JPN_FA10_B2",
+
+      "name": "野炮兵第10联队第2大队（75毫米野炮）",
+
+      "fullName": "野炮兵第10联队第2大队（75毫米野炮）",
+
+      "faction": "japanese",
+
+      "type": "artillery",
+
+      "echelon": "battalion",
+
+      "q": 47,
+
+      "r": 14,
+
+      "strength": 750,
+
+      "maxStrength": 750,
+
+      "attack": 7,
+
+      "defense": 5,
+
+      "movement": 3,
+
+      "range": 5,
+
+      "morale": 88,
+
+      "suppression": 0,
+
+      "fatigue": 0,
+
+      "ammo": 100,
+
+      "isHQ": false,
+
+      "parentDivision": "第10师团",
+
+      "parentBrigade": "濑谷支队",
+
+      "deploymentRole": "support"
+
+    },
+
+    {
+
+      "id": "JPN_HA2_B2",
+
+      "name": "野战重炮兵第2联队第2大队（105毫米级重炮）",
+
+      "fullName": "野战重炮兵第2联队第2大队（105毫米级重炮）",
+
+      "faction": "japanese",
+
+      "type": "artillery",
+
+      "echelon": "battalion",
+
+      "q": 51,
+
+      "r": 12,
+
+      "strength": 600,
+
+      "maxStrength": 600,
+
+      "attack": 9,
+
+      "defense": 5,
+
+      "movement": 2,
+
+      "range": 6,
+
+      "morale": 90,
+
+      "suppression": 0,
+
+      "fatigue": 0,
+
+      "ammo": 100,
+
+      "isHQ": false,
+
+      "parentDivision": "第10师团",
+
+      "parentBrigade": "濑谷支队",
+
+      "deploymentRole": "support"
+
+    },
+
+    {
+
+      "id": "JPN_150_B3",
+
+      "name": "中国驻屯炮兵联队第3大队（150毫米重榴弹炮）",
+
+      "fullName": "中国驻屯炮兵联队第3大队（150毫米重榴弹炮）",
+
+      "faction": "japanese",
+
+      "type": "artillery",
+
+      "echelon": "battalion",
+
+      "q": 55,
+
+      "r": 10,
+
+      "strength": 600,
+
+      "maxStrength": 600,
+
+      "attack": 12,
+
+      "defense": 5,
+
+      "movement": 1,
+
+      "range": 7,
+
+      "morale": 90,
+
+      "suppression": 0,
+
+      "fatigue": 0,
+
+      "ammo": 100,
+
+      "isHQ": false,
+
+      "parentDivision": "第10师团",
+
+      "parentBrigade": "濑谷支队",
+
+      "deploymentRole": "support"
+
+    },
+
+    {
+
+      "id": "JPN_ENG10_C1",
+
+      "name": "工兵第10联队第1中队",
+
+      "fullName": "工兵第10联队第1中队",
+
+      "faction": "japanese",
+
+      "type": "engineer",
+
+      "echelon": "company",
+
+      "q": 50,
+
+      "r": 24,
+
+      "strength": 180,
+
+      "maxStrength": 180,
+
+      "attack": 9,
+
+      "defense": 8,
+
+      "movement": 4,
+
+      "range": 1,
+
+      "morale": 90,
+
+      "suppression": 0,
+
+      "fatigue": 0,
+
+      "ammo": 100,
+
+      "isHQ": false,
+
+      "parentDivision": "第10师团",
+
+      "parentBrigade": "濑谷支队",
+
+      "deploymentRole": "support"
+
+    },
+
+    {
+
+      "id": "JPN_5D_HQ",
+
+      "name": "第5师团部",
+
+      "fullName": "第5师团部",
+
+      "faction": "japanese",
+
+      "type": "headquarters",
+
+      "echelon": "company",
+
+      "q": 88,
+
+      "r": 8,
+
+      "strength": 100,
+
+      "maxStrength": 100,
+
+      "attack": 2,
+
+      "defense": 3,
+
+      "movement": 5,
+
+      "range": 1,
+
+      "morale": 92,
+
+      "suppression": 0,
+
+      "fatigue": 0,
+
+      "ammo": 100,
+
+      "isHQ": true,
+
+      "hqLevel": "division",
+
+      "hqRole": "command",
+
+      "parentDivision": "第5师团",
+
+      "deploymentRole": "rear_command"
+
+    },
+
+    {
+
+      "id": "JPN_5D_GUARD_1",
+
+      "name": "第5师团师部第1警卫连",
+
+      "fullName": "第5师团师部第1警卫连",
+
+      "faction": "japanese",
+
+      "type": "infantry",
+
+      "echelon": "company",
+
+      "q": 87,
+
+      "r": 8,
+
+      "strength": 180,
+
+      "maxStrength": 180,
+
+      "attack": 5,
+
+      "defense": 6,
+
+      "movement": 4,
+
+      "range": 1,
+
+      "morale": 88,
+
+      "suppression": 0,
+
+      "fatigue": 0,
+
+      "ammo": 100,
+
+      "isHQ": true,
+
+      "hqLevel": "division",
+
+      "hqRole": "guard",
+
+      "parentDivision": "第5师团",
+
+      "deploymentRole": "division_command"
+
+    },
+
+    {
+
+      "id": "JPN_5D_GUARD_2",
+
+      "name": "第5师团师部第2警卫连",
+
+      "fullName": "第5师团师部第2警卫连",
+
+      "faction": "japanese",
+
+      "type": "infantry",
+
+      "echelon": "company",
+
+      "q": 89,
+
+      "r": 8,
+
+      "strength": 180,
+
+      "maxStrength": 180,
+
+      "attack": 5,
+
+      "defense": 6,
+
+      "movement": 4,
+
+      "range": 1,
+
+      "morale": 88,
+
+      "suppression": 0,
+
+      "fatigue": 0,
+
+      "ammo": 100,
+
+      "isHQ": true,
+
+      "hqLevel": "division",
+
+      "hqRole": "guard",
+
+      "parentDivision": "第5师团",
+
+      "deploymentRole": "division_command"
+
+    },
+
+    {
+
+      "id": "JPN_SAK_HQ",
+
+      "name": "坂本支队部",
+
+      "fullName": "坂本支队部",
+
+      "faction": "japanese",
+
+      "type": "headquarters",
+
+      "echelon": "company",
+
+      "q": 84,
+
+      "r": 12,
+
+      "strength": 100,
+
+      "maxStrength": 100,
+
+      "attack": 2,
+
+      "defense": 3,
+
+      "movement": 5,
+
+      "range": 1,
+
+      "morale": 90,
+
+      "suppression": 0,
+
+      "fatigue": 0,
+
+      "ammo": 100,
+
+      "isHQ": true,
+
+      "hqLevel": "brigade",
+
+      "hqRole": "command",
+
+      "commander": "坂本顺",
+
+      "parentDivision": "第5师团",
+
+      "parentBrigade": "坂本支队",
+
+      "deploymentRole": "rear_command"
+
+    },
+
+    {
+
+      "id": "JPN_R21_HQ",
+
+      "name": "步兵第21联队部",
+
+      "fullName": "步兵第21联队部",
+
+      "faction": "japanese",
+
+      "type": "headquarters",
+
+      "echelon": "company",
+
+      "q": 80,
+
+      "r": 12,
+
+      "strength": 100,
+
+      "maxStrength": 100,
+
+      "attack": 2,
+
+      "defense": 3,
+
+      "movement": 5,
+
+      "range": 1,
+
+      "morale": 90,
+
+      "suppression": 0,
+
+      "fatigue": 0,
+
+      "ammo": 100,
+
+      "isHQ": true,
+
+      "hqLevel": "regiment",
+
+      "hqRole": "command",
+
+      "parentDivision": "第5师团",
+
+      "parentBrigade": "坂本支队",
+
+      "parentRegiment": "步兵第21联队",
+
+      "deploymentRole": "rear_command"
+
+    },
+
+    {
+
+      "id": "JPN_R21_GUARD_1",
+
+      "name": "步兵第21联队警卫连",
+
+      "fullName": "步兵第21联队警卫连",
+
+      "faction": "japanese",
+
+      "type": "infantry",
+
+      "echelon": "company",
+
+      "q": 81,
+
+      "r": 12,
+
+      "strength": 180,
+
+      "maxStrength": 180,
+
+      "attack": 5,
+
+      "defense": 6,
+
+      "movement": 4,
+
+      "range": 1,
+
+      "morale": 86,
+
+      "suppression": 0,
+
+      "fatigue": 0,
+
+      "ammo": 100,
+
+      "isHQ": true,
+
+      "hqLevel": "regiment",
+
+      "hqRole": "guard",
+
+      "parentDivision": "第5师团",
+
+      "parentBrigade": "坂本支队",
+
+      "parentRegiment": "步兵第21联队",
+
+      "deploymentRole": "regiment_command"
+
+    },
+
+    {
+
+      "id": "JPN_R21_B1_C1",
+
+      "name": "步兵第21联队第1大队第1中队",
+
+      "fullName": "步兵第21联队第1大队第1中队",
+
+      "faction": "japanese",
+
+      "type": "infantry",
+
+      "echelon": "company",
+
+      "q": 83,
+
+      "r": 19,
+
+      "strength": 180,
+
+      "maxStrength": 180,
+
+      "attack": 10,
+
+      "defense": 8,
+
+      "movement": 5,
+
+      "range": 1,
+
+      "morale": 90,
+
+      "suppression": 0,
+
+      "fatigue": 0,
+
+      "ammo": 100,
+
+      "isHQ": false,
+
+      "parentDivision": "第5师团",
+
+      "parentBrigade": "坂本支队",
+
+      "parentRegiment": "步兵第21联队",
+
+      "parentBattalion": "步兵第21联队第1大队",
+
+      "deploymentRole": "frontline"
+
+    },
+
+    {
+
+      "id": "JPN_R21_B1_C2",
+
+      "name": "步兵第21联队第1大队第2中队",
+
+      "fullName": "步兵第21联队第1大队第2中队",
+
+      "faction": "japanese",
+
+      "type": "infantry",
+
+      "echelon": "company",
+
+      "q": 84,
+
+      "r": 19,
+
+      "strength": 180,
+
+      "maxStrength": 180,
+
+      "attack": 10,
+
+      "defense": 8,
+
+      "movement": 5,
+
+      "range": 1,
+
+      "morale": 90,
+
+      "suppression": 0,
+
+      "fatigue": 0,
+
+      "ammo": 100,
+
+      "isHQ": false,
+
+      "parentDivision": "第5师团",
+
+      "parentBrigade": "坂本支队",
+
+      "parentRegiment": "步兵第21联队",
+
+      "parentBattalion": "步兵第21联队第1大队",
+
+      "deploymentRole": "frontline"
+
+    },
+
+    {
+
+      "id": "JPN_R21_B1_C3",
+
+      "name": "步兵第21联队第1大队第3中队",
+
+      "fullName": "步兵第21联队第1大队第3中队",
+
+      "faction": "japanese",
+
+      "type": "infantry",
+
+      "echelon": "company",
+
+      "q": 85,
+
+      "r": 19,
+
+      "strength": 180,
+
+      "maxStrength": 180,
+
+      "attack": 10,
+
+      "defense": 8,
+
+      "movement": 5,
+
+      "range": 1,
+
+      "morale": 90,
+
+      "suppression": 0,
+
+      "fatigue": 0,
+
+      "ammo": 100,
+
+      "isHQ": false,
+
+      "parentDivision": "第5师团",
+
+      "parentBrigade": "坂本支队",
+
+      "parentRegiment": "步兵第21联队",
+
+      "parentBattalion": "步兵第21联队第1大队",
+
+      "deploymentRole": "frontline"
+
+    },
+
+    {
+
+      "id": "JPN_R21_B1_C4",
+
+      "name": "步兵第21联队第1大队第4中队",
+
+      "fullName": "步兵第21联队第1大队第4中队",
+
+      "faction": "japanese",
+
+      "type": "infantry",
+
+      "echelon": "company",
+
+      "q": 84,
+
+      "r": 20,
+
+      "strength": 180,
+
+      "maxStrength": 180,
+
+      "attack": 10,
+
+      "defense": 8,
+
+      "movement": 5,
+
+      "range": 1,
+
+      "morale": 90,
+
+      "suppression": 0,
+
+      "fatigue": 0,
+
+      "ammo": 100,
+
+      "isHQ": false,
+
+      "parentDivision": "第5师团",
+
+      "parentBrigade": "坂本支队",
+
+      "parentRegiment": "步兵第21联队",
+
+      "parentBattalion": "步兵第21联队第1大队",
+
+      "deploymentRole": "frontline"
+
+    },
+
+    {
+
+      "id": "JPN_R21_B1_MG",
+
+      "name": "步兵第21联队第1大队机枪中队",
+
+      "fullName": "步兵第21联队第1大队机枪中队",
+
+      "faction": "japanese",
+
+      "type": "machinegun",
+
+      "echelon": "company",
+
+      "q": 86,
+
+      "r": 20,
+
+      "strength": 144,
+
+      "maxStrength": 144,
+
+      "attack": 11,
+
+      "defense": 10,
+
+      "movement": 4,
+
+      "range": 1,
+
+      "morale": 90,
+
+      "suppression": 0,
+
+      "fatigue": 0,
+
+      "ammo": 100,
+
+      "isHQ": false,
+
+      "parentDivision": "第5师团",
+
+      "parentBrigade": "坂本支队",
+
+      "parentRegiment": "步兵第21联队",
+
+      "parentBattalion": "步兵第21联队第1大队",
+
+      "deploymentRole": "support"
+
+    },
+
+    {
+
+      "id": "JPN_R21_B1_IG",
+
+      "name": "步兵第21联队第1大队九二式步兵炮小队",
+
+      "fullName": "步兵第21联队第1大队九二式步兵炮小队",
+
+      "faction": "japanese",
+
+      "type": "artillery",
+
+      "echelon": "company",
+
+      "q": 82,
+
+      "r": 20,
+
+      "strength": 60,
+
+      "maxStrength": 60,
+
+      "attack": 4,
+
+      "defense": 4,
+
+      "movement": 4,
+
+      "range": 2,
+
+      "morale": 88,
+
+      "suppression": 0,
+
+      "fatigue": 0,
+
+      "ammo": 100,
+
+      "isHQ": false,
+
+      "parentDivision": "第5师团",
+
+      "parentBrigade": "坂本支队",
+
+      "parentRegiment": "步兵第21联队",
+
+      "parentBattalion": "步兵第21联队第1大队",
+
+      "deploymentRole": "support"
+
+    },
+
+    {
+
+      "id": "JPN_R21_B2_C1",
+
+      "name": "步兵第21联队第2大队第1中队",
+
+      "fullName": "步兵第21联队第2大队第1中队",
+
+      "faction": "japanese",
+
+      "type": "infantry",
+
+      "echelon": "company",
+
+      "q": 79,
+
+      "r": 22,
+
+      "strength": 180,
+
+      "maxStrength": 180,
+
+      "attack": 10,
+
+      "defense": 8,
+
+      "movement": 5,
+
+      "range": 1,
+
+      "morale": 90,
+
+      "suppression": 0,
+
+      "fatigue": 0,
+
+      "ammo": 100,
+
+      "isHQ": false,
+
+      "parentDivision": "第5师团",
+
+      "parentBrigade": "坂本支队",
+
+      "parentRegiment": "步兵第21联队",
+
+      "parentBattalion": "步兵第21联队第2大队",
+
+      "deploymentRole": "frontline"
+
+    },
+
+    {
+
+      "id": "JPN_R21_B2_C2",
+
+      "name": "步兵第21联队第2大队第2中队",
+
+      "fullName": "步兵第21联队第2大队第2中队",
+
+      "faction": "japanese",
+
+      "type": "infantry",
+
+      "echelon": "company",
+
+      "q": 80,
+
+      "r": 22,
+
+      "strength": 180,
+
+      "maxStrength": 180,
+
+      "attack": 10,
+
+      "defense": 8,
+
+      "movement": 5,
+
+      "range": 1,
+
+      "morale": 90,
+
+      "suppression": 0,
+
+      "fatigue": 0,
+
+      "ammo": 100,
+
+      "isHQ": false,
+
+      "parentDivision": "第5师团",
+
+      "parentBrigade": "坂本支队",
+
+      "parentRegiment": "步兵第21联队",
+
+      "parentBattalion": "步兵第21联队第2大队",
+
+      "deploymentRole": "frontline"
+
+    },
+
+    {
+
+      "id": "JPN_R21_B2_C3",
+
+      "name": "步兵第21联队第2大队第3中队",
+
+      "fullName": "步兵第21联队第2大队第3中队",
+
+      "faction": "japanese",
+
+      "type": "infantry",
+
+      "echelon": "company",
+
+      "q": 81,
+
+      "r": 22,
+
+      "strength": 180,
+
+      "maxStrength": 180,
+
+      "attack": 10,
+
+      "defense": 8,
+
+      "movement": 5,
+
+      "range": 1,
+
+      "morale": 90,
+
+      "suppression": 0,
+
+      "fatigue": 0,
+
+      "ammo": 100,
+
+      "isHQ": false,
+
+      "parentDivision": "第5师团",
+
+      "parentBrigade": "坂本支队",
+
+      "parentRegiment": "步兵第21联队",
+
+      "parentBattalion": "步兵第21联队第2大队",
+
+      "deploymentRole": "frontline"
+
+    },
+
+    {
+
+      "id": "JPN_R21_B2_C4",
+
+      "name": "步兵第21联队第2大队第4中队",
+
+      "fullName": "步兵第21联队第2大队第4中队",
+
+      "faction": "japanese",
+
+      "type": "infantry",
+
+      "echelon": "company",
+
+      "q": 80,
+
+      "r": 23,
+
+      "strength": 180,
+
+      "maxStrength": 180,
+
+      "attack": 10,
+
+      "defense": 8,
+
+      "movement": 5,
+
+      "range": 1,
+
+      "morale": 90,
+
+      "suppression": 0,
+
+      "fatigue": 0,
+
+      "ammo": 100,
+
+      "isHQ": false,
+
+      "parentDivision": "第5师团",
+
+      "parentBrigade": "坂本支队",
+
+      "parentRegiment": "步兵第21联队",
+
+      "parentBattalion": "步兵第21联队第2大队",
+
+      "deploymentRole": "frontline"
+
+    },
+
+    {
+
+      "id": "JPN_R21_B2_MG",
+
+      "name": "步兵第21联队第2大队机枪中队",
+
+      "fullName": "步兵第21联队第2大队机枪中队",
+
+      "faction": "japanese",
+
+      "type": "machinegun",
+
+      "echelon": "company",
+
+      "q": 82,
+
+      "r": 23,
+
+      "strength": 144,
+
+      "maxStrength": 144,
+
+      "attack": 11,
+
+      "defense": 10,
+
+      "movement": 4,
+
+      "range": 1,
+
+      "morale": 90,
+
+      "suppression": 0,
+
+      "fatigue": 0,
+
+      "ammo": 100,
+
+      "isHQ": false,
+
+      "parentDivision": "第5师团",
+
+      "parentBrigade": "坂本支队",
+
+      "parentRegiment": "步兵第21联队",
+
+      "parentBattalion": "步兵第21联队第2大队",
+
+      "deploymentRole": "support"
+
+    },
+
+    {
+
+      "id": "JPN_R21_B2_IG",
+
+      "name": "步兵第21联队第2大队九二式步兵炮小队",
+
+      "fullName": "步兵第21联队第2大队九二式步兵炮小队",
+
+      "faction": "japanese",
+
+      "type": "artillery",
+
+      "echelon": "company",
+
+      "q": 78,
+
+      "r": 23,
+
+      "strength": 60,
+
+      "maxStrength": 60,
+
+      "attack": 4,
+
+      "defense": 4,
+
+      "movement": 4,
+
+      "range": 2,
+
+      "morale": 88,
+
+      "suppression": 0,
+
+      "fatigue": 0,
+
+      "ammo": 100,
+
+      "isHQ": false,
+
+      "parentDivision": "第5师团",
+
+      "parentBrigade": "坂本支队",
+
+      "parentRegiment": "步兵第21联队",
+
+      "parentBattalion": "步兵第21联队第2大队",
+
+      "deploymentRole": "support"
+
+    },
+
+    {
+
+      "id": "JPN_R21_B3_C1",
+
+      "name": "步兵第21联队第3大队第1中队",
+
+      "fullName": "步兵第21联队第3大队第1中队",
+
+      "faction": "japanese",
+
+      "type": "infantry",
+
+      "echelon": "company",
+
+      "q": 75,
+
+      "r": 25,
+
+      "strength": 180,
+
+      "maxStrength": 180,
+
+      "attack": 10,
+
+      "defense": 8,
+
+      "movement": 5,
+
+      "range": 1,
+
+      "morale": 90,
+
+      "suppression": 0,
+
+      "fatigue": 0,
+
+      "ammo": 100,
+
+      "isHQ": false,
+
+      "parentDivision": "第5师团",
+
+      "parentBrigade": "坂本支队",
+
+      "parentRegiment": "步兵第21联队",
+
+      "parentBattalion": "步兵第21联队第3大队",
+
+      "deploymentRole": "frontline"
+
+    },
+
+    {
+
+      "id": "JPN_R21_B3_C2",
+
+      "name": "步兵第21联队第3大队第2中队",
+
+      "fullName": "步兵第21联队第3大队第2中队",
+
+      "faction": "japanese",
+
+      "type": "infantry",
+
+      "echelon": "company",
+
+      "q": 76,
+
+      "r": 25,
+
+      "strength": 180,
+
+      "maxStrength": 180,
+
+      "attack": 10,
+
+      "defense": 8,
+
+      "movement": 5,
+
+      "range": 1,
+
+      "morale": 90,
+
+      "suppression": 0,
+
+      "fatigue": 0,
+
+      "ammo": 100,
+
+      "isHQ": false,
+
+      "parentDivision": "第5师团",
+
+      "parentBrigade": "坂本支队",
+
+      "parentRegiment": "步兵第21联队",
+
+      "parentBattalion": "步兵第21联队第3大队",
+
+      "deploymentRole": "frontline"
+
+    },
+
+    {
+
+      "id": "JPN_R21_B3_C3",
+
+      "name": "步兵第21联队第3大队第3中队",
+
+      "fullName": "步兵第21联队第3大队第3中队",
+
+      "faction": "japanese",
+
+      "type": "infantry",
+
+      "echelon": "company",
+
+      "q": 77,
+
+      "r": 25,
+
+      "strength": 180,
+
+      "maxStrength": 180,
+
+      "attack": 10,
+
+      "defense": 8,
+
+      "movement": 5,
+
+      "range": 1,
+
+      "morale": 90,
+
+      "suppression": 0,
+
+      "fatigue": 0,
+
+      "ammo": 100,
+
+      "isHQ": false,
+
+      "parentDivision": "第5师团",
+
+      "parentBrigade": "坂本支队",
+
+      "parentRegiment": "步兵第21联队",
+
+      "parentBattalion": "步兵第21联队第3大队",
+
+      "deploymentRole": "frontline"
+
+    },
+
+    {
+
+      "id": "JPN_R21_B3_C4",
+
+      "name": "步兵第21联队第3大队第4中队",
+
+      "fullName": "步兵第21联队第3大队第4中队",
+
+      "faction": "japanese",
+
+      "type": "infantry",
+
+      "echelon": "company",
+
+      "q": 76,
+
+      "r": 26,
+
+      "strength": 180,
+
+      "maxStrength": 180,
+
+      "attack": 10,
+
+      "defense": 8,
+
+      "movement": 5,
+
+      "range": 1,
+
+      "morale": 90,
+
+      "suppression": 0,
+
+      "fatigue": 0,
+
+      "ammo": 100,
+
+      "isHQ": false,
+
+      "parentDivision": "第5师团",
+
+      "parentBrigade": "坂本支队",
+
+      "parentRegiment": "步兵第21联队",
+
+      "parentBattalion": "步兵第21联队第3大队",
+
+      "deploymentRole": "frontline"
+
+    },
+
+    {
+
+      "id": "JPN_R21_B3_MG",
+
+      "name": "步兵第21联队第3大队机枪中队",
+
+      "fullName": "步兵第21联队第3大队机枪中队",
+
+      "faction": "japanese",
+
+      "type": "machinegun",
+
+      "echelon": "company",
+
+      "q": 78,
+
+      "r": 26,
+
+      "strength": 144,
+
+      "maxStrength": 144,
+
+      "attack": 11,
+
+      "defense": 10,
+
+      "movement": 4,
+
+      "range": 1,
+
+      "morale": 90,
+
+      "suppression": 0,
+
+      "fatigue": 0,
+
+      "ammo": 100,
+
+      "isHQ": false,
+
+      "parentDivision": "第5师团",
+
+      "parentBrigade": "坂本支队",
+
+      "parentRegiment": "步兵第21联队",
+
+      "parentBattalion": "步兵第21联队第3大队",
+
+      "deploymentRole": "support"
+
+    },
+
+    {
+
+      "id": "JPN_R21_B3_IG",
+
+      "name": "步兵第21联队第3大队九二式步兵炮小队",
+
+      "fullName": "步兵第21联队第3大队九二式步兵炮小队",
+
+      "faction": "japanese",
+
+      "type": "artillery",
+
+      "echelon": "company",
+
+      "q": 74,
+
+      "r": 26,
+
+      "strength": 60,
+
+      "maxStrength": 60,
+
+      "attack": 4,
+
+      "defense": 4,
+
+      "movement": 4,
+
+      "range": 2,
+
+      "morale": 88,
+
+      "suppression": 0,
+
+      "fatigue": 0,
+
+      "ammo": 100,
+
+      "isHQ": false,
+
+      "parentDivision": "第5师团",
+
+      "parentBrigade": "坂本支队",
+
+      "parentRegiment": "步兵第21联队",
+
+      "parentBattalion": "步兵第21联队第3大队",
+
+      "deploymentRole": "support"
+
+    },
+
+    {
+
+      "id": "JPN_R11_HQ",
+
+      "name": "步兵第11联队部",
+
+      "fullName": "步兵第11联队部",
+
+      "faction": "japanese",
+
+      "type": "headquarters",
+
+      "echelon": "company",
+
+      "q": 88,
+
+      "r": 16,
+
+      "strength": 100,
+
+      "maxStrength": 100,
+
+      "attack": 2,
+
+      "defense": 3,
+
+      "movement": 5,
+
+      "range": 1,
+
+      "morale": 90,
+
+      "suppression": 0,
+
+      "fatigue": 0,
+
+      "ammo": 100,
+
+      "isHQ": true,
+
+      "hqLevel": "regiment",
+
+      "hqRole": "command",
+
+      "parentDivision": "第5师团",
+
+      "parentBrigade": "坂本支队",
+
+      "parentRegiment": "步兵第11联队",
+
+      "deploymentRole": "rear_command"
+
+    },
+
+    {
+
+      "id": "JPN_R11_GUARD_1",
+
+      "name": "步兵第11联队警卫连",
+
+      "fullName": "步兵第11联队警卫连",
+
+      "faction": "japanese",
+
+      "type": "infantry",
+
+      "echelon": "company",
+
+      "q": 89,
+
+      "r": 16,
+
+      "strength": 180,
+
+      "maxStrength": 180,
+
+      "attack": 5,
+
+      "defense": 6,
+
+      "movement": 4,
+
+      "range": 1,
+
+      "morale": 86,
+
+      "suppression": 0,
+
+      "fatigue": 0,
+
+      "ammo": 100,
+
+      "isHQ": true,
+
+      "hqLevel": "regiment",
+
+      "hqRole": "guard",
+
+      "parentDivision": "第5师团",
+
+      "parentBrigade": "坂本支队",
+
+      "parentRegiment": "步兵第11联队",
+
+      "deploymentRole": "regiment_command"
+
+    },
+
+    {
+
+      "id": "JPN_R11_B1_C1",
+
+      "name": "步兵第11联队第1大队第1中队",
+
+      "fullName": "步兵第11联队第1大队第1中队",
+
+      "faction": "japanese",
+
+      "type": "infantry",
+
+      "echelon": "company",
+
+      "q": 91,
+
+      "r": 23,
+
+      "strength": 180,
+
+      "maxStrength": 180,
+
+      "attack": 10,
+
+      "defense": 8,
+
+      "movement": 5,
+
+      "range": 1,
+
+      "morale": 90,
+
+      "suppression": 0,
+
+      "fatigue": 0,
+
+      "ammo": 100,
+
+      "isHQ": false,
+
+      "parentDivision": "第5师团",
+
+      "parentBrigade": "坂本支队",
+
+      "parentRegiment": "步兵第11联队",
+
+      "parentBattalion": "步兵第11联队第1大队",
+
+      "deploymentRole": "frontline"
+
+    },
+
+    {
+
+      "id": "JPN_R11_B1_C2",
+
+      "name": "步兵第11联队第1大队第2中队",
+
+      "fullName": "步兵第11联队第1大队第2中队",
+
+      "faction": "japanese",
+
+      "type": "infantry",
+
+      "echelon": "company",
+
+      "q": 92,
+
+      "r": 23,
+
+      "strength": 180,
+
+      "maxStrength": 180,
+
+      "attack": 10,
+
+      "defense": 8,
+
+      "movement": 5,
+
+      "range": 1,
+
+      "morale": 90,
+
+      "suppression": 0,
+
+      "fatigue": 0,
+
+      "ammo": 100,
+
+      "isHQ": false,
+
+      "parentDivision": "第5师团",
+
+      "parentBrigade": "坂本支队",
+
+      "parentRegiment": "步兵第11联队",
+
+      "parentBattalion": "步兵第11联队第1大队",
+
+      "deploymentRole": "frontline"
+
+    },
+
+    {
+
+      "id": "JPN_R11_B1_C3",
+
+      "name": "步兵第11联队第1大队第3中队",
+
+      "fullName": "步兵第11联队第1大队第3中队",
+
+      "faction": "japanese",
+
+      "type": "infantry",
+
+      "echelon": "company",
+
+      "q": 93,
+
+      "r": 23,
+
+      "strength": 180,
+
+      "maxStrength": 180,
+
+      "attack": 10,
+
+      "defense": 8,
+
+      "movement": 5,
+
+      "range": 1,
+
+      "morale": 90,
+
+      "suppression": 0,
+
+      "fatigue": 0,
+
+      "ammo": 100,
+
+      "isHQ": false,
+
+      "parentDivision": "第5师团",
+
+      "parentBrigade": "坂本支队",
+
+      "parentRegiment": "步兵第11联队",
+
+      "parentBattalion": "步兵第11联队第1大队",
+
+      "deploymentRole": "frontline"
+
+    },
+
+    {
+
+      "id": "JPN_R11_B1_C4",
+
+      "name": "步兵第11联队第1大队第4中队",
+
+      "fullName": "步兵第11联队第1大队第4中队",
+
+      "faction": "japanese",
+
+      "type": "infantry",
+
+      "echelon": "company",
+
+      "q": 92,
+
+      "r": 24,
+
+      "strength": 180,
+
+      "maxStrength": 180,
+
+      "attack": 10,
+
+      "defense": 8,
+
+      "movement": 5,
+
+      "range": 1,
+
+      "morale": 90,
+
+      "suppression": 0,
+
+      "fatigue": 0,
+
+      "ammo": 100,
+
+      "isHQ": false,
+
+      "parentDivision": "第5师团",
+
+      "parentBrigade": "坂本支队",
+
+      "parentRegiment": "步兵第11联队",
+
+      "parentBattalion": "步兵第11联队第1大队",
+
+      "deploymentRole": "frontline"
+
+    },
+
+    {
+
+      "id": "JPN_R11_B1_MG",
+
+      "name": "步兵第11联队第1大队机枪中队",
+
+      "fullName": "步兵第11联队第1大队机枪中队",
+
+      "faction": "japanese",
+
+      "type": "machinegun",
+
+      "echelon": "company",
+
+      "q": 94,
+
+      "r": 24,
+
+      "strength": 144,
+
+      "maxStrength": 144,
+
+      "attack": 11,
+
+      "defense": 10,
+
+      "movement": 4,
+
+      "range": 1,
+
+      "morale": 90,
+
+      "suppression": 0,
+
+      "fatigue": 0,
+
+      "ammo": 100,
+
+      "isHQ": false,
+
+      "parentDivision": "第5师团",
+
+      "parentBrigade": "坂本支队",
+
+      "parentRegiment": "步兵第11联队",
+
+      "parentBattalion": "步兵第11联队第1大队",
+
+      "deploymentRole": "support"
+
+    },
+
+    {
+
+      "id": "JPN_R11_B1_IG",
+
+      "name": "步兵第11联队第1大队九二式步兵炮小队",
+
+      "fullName": "步兵第11联队第1大队九二式步兵炮小队",
+
+      "faction": "japanese",
+
+      "type": "artillery",
+
+      "echelon": "company",
+
+      "q": 90,
+
+      "r": 24,
+
+      "strength": 60,
+
+      "maxStrength": 60,
+
+      "attack": 4,
+
+      "defense": 4,
+
+      "movement": 4,
+
+      "range": 2,
+
+      "morale": 88,
+
+      "suppression": 0,
+
+      "fatigue": 0,
+
+      "ammo": 100,
+
+      "isHQ": false,
+
+      "parentDivision": "第5师团",
+
+      "parentBrigade": "坂本支队",
+
+      "parentRegiment": "步兵第11联队",
+
+      "parentBattalion": "步兵第11联队第1大队",
+
+      "deploymentRole": "support"
+
+    },
+
+    {
+
+      "id": "JPN_R11_B2_C1",
+
+      "name": "步兵第11联队第2大队第1中队",
+
+      "fullName": "步兵第11联队第2大队第1中队",
+
+      "faction": "japanese",
+
+      "type": "infantry",
+
+      "echelon": "company",
+
+      "q": 87,
+
+      "r": 26,
+
+      "strength": 180,
+
+      "maxStrength": 180,
+
+      "attack": 10,
+
+      "defense": 8,
+
+      "movement": 5,
+
+      "range": 1,
+
+      "morale": 90,
+
+      "suppression": 0,
+
+      "fatigue": 0,
+
+      "ammo": 100,
+
+      "isHQ": false,
+
+      "parentDivision": "第5师团",
+
+      "parentBrigade": "坂本支队",
+
+      "parentRegiment": "步兵第11联队",
+
+      "parentBattalion": "步兵第11联队第2大队",
+
+      "deploymentRole": "frontline"
+
+    },
+
+    {
+
+      "id": "JPN_R11_B2_C2",
+
+      "name": "步兵第11联队第2大队第2中队",
+
+      "fullName": "步兵第11联队第2大队第2中队",
+
+      "faction": "japanese",
+
+      "type": "infantry",
+
+      "echelon": "company",
+
+      "q": 88,
+
+      "r": 26,
+
+      "strength": 180,
+
+      "maxStrength": 180,
+
+      "attack": 10,
+
+      "defense": 8,
+
+      "movement": 5,
+
+      "range": 1,
+
+      "morale": 90,
+
+      "suppression": 0,
+
+      "fatigue": 0,
+
+      "ammo": 100,
+
+      "isHQ": false,
+
+      "parentDivision": "第5师团",
+
+      "parentBrigade": "坂本支队",
+
+      "parentRegiment": "步兵第11联队",
+
+      "parentBattalion": "步兵第11联队第2大队",
+
+      "deploymentRole": "frontline"
+
+    },
+
+    {
+
+      "id": "JPN_R11_B2_C3",
+
+      "name": "步兵第11联队第2大队第3中队",
+
+      "fullName": "步兵第11联队第2大队第3中队",
+
+      "faction": "japanese",
+
+      "type": "infantry",
+
+      "echelon": "company",
+
+      "q": 89,
+
+      "r": 26,
+
+      "strength": 180,
+
+      "maxStrength": 180,
+
+      "attack": 10,
+
+      "defense": 8,
+
+      "movement": 5,
+
+      "range": 1,
+
+      "morale": 90,
+
+      "suppression": 0,
+
+      "fatigue": 0,
+
+      "ammo": 100,
+
+      "isHQ": false,
+
+      "parentDivision": "第5师团",
+
+      "parentBrigade": "坂本支队",
+
+      "parentRegiment": "步兵第11联队",
+
+      "parentBattalion": "步兵第11联队第2大队",
+
+      "deploymentRole": "frontline"
+
+    },
+
+    {
+
+      "id": "JPN_R11_B2_C4",
+
+      "name": "步兵第11联队第2大队第4中队",
+
+      "fullName": "步兵第11联队第2大队第4中队",
+
+      "faction": "japanese",
+
+      "type": "infantry",
+
+      "echelon": "company",
+
+      "q": 88,
+
+      "r": 27,
+
+      "strength": 180,
+
+      "maxStrength": 180,
+
+      "attack": 10,
+
+      "defense": 8,
+
+      "movement": 5,
+
+      "range": 1,
+
+      "morale": 90,
+
+      "suppression": 0,
+
+      "fatigue": 0,
+
+      "ammo": 100,
+
+      "isHQ": false,
+
+      "parentDivision": "第5师团",
+
+      "parentBrigade": "坂本支队",
+
+      "parentRegiment": "步兵第11联队",
+
+      "parentBattalion": "步兵第11联队第2大队",
+
+      "deploymentRole": "frontline"
+
+    },
+
+    {
+
+      "id": "JPN_R11_B2_MG",
+
+      "name": "步兵第11联队第2大队机枪中队",
+
+      "fullName": "步兵第11联队第2大队机枪中队",
+
+      "faction": "japanese",
+
+      "type": "machinegun",
+
+      "echelon": "company",
+
+      "q": 90,
+
+      "r": 27,
+
+      "strength": 144,
+
+      "maxStrength": 144,
+
+      "attack": 11,
+
+      "defense": 10,
+
+      "movement": 4,
+
+      "range": 1,
+
+      "morale": 90,
+
+      "suppression": 0,
+
+      "fatigue": 0,
+
+      "ammo": 100,
+
+      "isHQ": false,
+
+      "parentDivision": "第5师团",
+
+      "parentBrigade": "坂本支队",
+
+      "parentRegiment": "步兵第11联队",
+
+      "parentBattalion": "步兵第11联队第2大队",
+
+      "deploymentRole": "support"
+
+    },
+
+    {
+
+      "id": "JPN_R11_B2_IG",
+
+      "name": "步兵第11联队第2大队九二式步兵炮小队",
+
+      "fullName": "步兵第11联队第2大队九二式步兵炮小队",
+
+      "faction": "japanese",
+
+      "type": "artillery",
+
+      "echelon": "company",
+
+      "q": 86,
+
+      "r": 27,
+
+      "strength": 60,
+
+      "maxStrength": 60,
+
+      "attack": 4,
+
+      "defense": 4,
+
+      "movement": 4,
+
+      "range": 2,
+
+      "morale": 88,
+
+      "suppression": 0,
+
+      "fatigue": 0,
+
+      "ammo": 100,
+
+      "isHQ": false,
+
+      "parentDivision": "第5师团",
+
+      "parentBrigade": "坂本支队",
+
+      "parentRegiment": "步兵第11联队",
+
+      "parentBattalion": "步兵第11联队第2大队",
+
+      "deploymentRole": "support"
+
+    },
+
+    {
+
+      "id": "JPN_R42_HQ",
+
+      "name": "步兵第42联队部",
+
+      "fullName": "步兵第42联队部",
+
+      "faction": "japanese",
+
+      "type": "headquarters",
+
+      "echelon": "company",
+
+      "q": 92,
+
+      "r": 20,
+
+      "strength": 100,
+
+      "maxStrength": 100,
+
+      "attack": 2,
+
+      "defense": 3,
+
+      "movement": 5,
+
+      "range": 1,
+
+      "morale": 90,
+
+      "suppression": 0,
+
+      "fatigue": 0,
+
+      "ammo": 100,
+
+      "isHQ": true,
+
+      "hqLevel": "regiment",
+
+      "hqRole": "command",
+
+      "parentDivision": "第5师团",
+
+      "parentBrigade": "坂本支队",
+
+      "parentRegiment": "步兵第42联队",
+
+      "deploymentRole": "rear_command"
+
+    },
+
+    {
+
+      "id": "JPN_R42_GUARD_1",
+
+      "name": "步兵第42联队警卫连",
+
+      "fullName": "步兵第42联队警卫连",
+
+      "faction": "japanese",
+
+      "type": "infantry",
+
+      "echelon": "company",
+
+      "q": 93,
+
+      "r": 20,
+
+      "strength": 180,
+
+      "maxStrength": 180,
+
+      "attack": 5,
+
+      "defense": 6,
+
+      "movement": 4,
+
+      "range": 1,
+
+      "morale": 86,
+
+      "suppression": 0,
+
+      "fatigue": 0,
+
+      "ammo": 100,
+
+      "isHQ": true,
+
+      "hqLevel": "regiment",
+
+      "hqRole": "guard",
+
+      "parentDivision": "第5师团",
+
+      "parentBrigade": "坂本支队",
+
+      "parentRegiment": "步兵第42联队",
+
+      "deploymentRole": "regiment_command"
+
+    },
+
+    {
+
+      "id": "JPN_R42_B1_C1",
+
+      "name": "步兵第42联队第1大队第1中队",
+
+      "fullName": "步兵第42联队第1大队第1中队",
+
+      "faction": "japanese",
+
+      "type": "infantry",
+
+      "echelon": "company",
+
+      "q": 95,
+
+      "r": 27,
+
+      "strength": 180,
+
+      "maxStrength": 180,
+
+      "attack": 10,
+
+      "defense": 8,
+
+      "movement": 5,
+
+      "range": 1,
+
+      "morale": 90,
+
+      "suppression": 0,
+
+      "fatigue": 0,
+
+      "ammo": 100,
+
+      "isHQ": false,
+
+      "parentDivision": "第5师团",
+
+      "parentBrigade": "坂本支队",
+
+      "parentRegiment": "步兵第42联队",
+
+      "parentBattalion": "步兵第42联队第1大队",
+
+      "deploymentRole": "frontline"
+
+    },
+
+    {
+
+      "id": "JPN_R42_B1_C2",
+
+      "name": "步兵第42联队第1大队第2中队",
+
+      "fullName": "步兵第42联队第1大队第2中队",
+
+      "faction": "japanese",
+
+      "type": "infantry",
+
+      "echelon": "company",
+
+      "q": 95,
+
+      "r": 27,
+
+      "strength": 180,
+
+      "maxStrength": 180,
+
+      "attack": 10,
+
+      "defense": 8,
+
+      "movement": 5,
+
+      "range": 1,
+
+      "morale": 90,
+
+      "suppression": 0,
+
+      "fatigue": 0,
+
+      "ammo": 100,
+
+      "isHQ": false,
+
+      "parentDivision": "第5师团",
+
+      "parentBrigade": "坂本支队",
+
+      "parentRegiment": "步兵第42联队",
+
+      "parentBattalion": "步兵第42联队第1大队",
+
+      "deploymentRole": "frontline"
+
+    },
+
+    {
+
+      "id": "JPN_R42_B1_C3",
+
+      "name": "步兵第42联队第1大队第3中队",
+
+      "fullName": "步兵第42联队第1大队第3中队",
+
+      "faction": "japanese",
+
+      "type": "infantry",
+
+      "echelon": "company",
+
+      "q": 95,
+
+      "r": 27,
+
+      "strength": 180,
+
+      "maxStrength": 180,
+
+      "attack": 10,
+
+      "defense": 8,
+
+      "movement": 5,
+
+      "range": 1,
+
+      "morale": 90,
+
+      "suppression": 0,
+
+      "fatigue": 0,
+
+      "ammo": 100,
+
+      "isHQ": false,
+
+      "parentDivision": "第5师团",
+
+      "parentBrigade": "坂本支队",
+
+      "parentRegiment": "步兵第42联队",
+
+      "parentBattalion": "步兵第42联队第1大队",
+
+      "deploymentRole": "frontline"
+
+    },
+
+    {
+
+      "id": "JPN_R42_B1_C4",
+
+      "name": "步兵第42联队第1大队第4中队",
+
+      "fullName": "步兵第42联队第1大队第4中队",
+
+      "faction": "japanese",
+
+      "type": "infantry",
+
+      "echelon": "company",
+
+      "q": 95,
+
+      "r": 28,
+
+      "strength": 180,
+
+      "maxStrength": 180,
+
+      "attack": 10,
+
+      "defense": 8,
+
+      "movement": 5,
+
+      "range": 1,
+
+      "morale": 90,
+
+      "suppression": 0,
+
+      "fatigue": 0,
+
+      "ammo": 100,
+
+      "isHQ": false,
+
+      "parentDivision": "第5师团",
+
+      "parentBrigade": "坂本支队",
+
+      "parentRegiment": "步兵第42联队",
+
+      "parentBattalion": "步兵第42联队第1大队",
+
+      "deploymentRole": "frontline"
+
+    },
+
+    {
+
+      "id": "JPN_R42_B1_MG",
+
+      "name": "步兵第42联队第1大队机枪中队",
+
+      "fullName": "步兵第42联队第1大队机枪中队",
+
+      "faction": "japanese",
+
+      "type": "machinegun",
+
+      "echelon": "company",
+
+      "q": 95,
+
+      "r": 28,
+
+      "strength": 144,
+
+      "maxStrength": 144,
+
+      "attack": 11,
+
+      "defense": 10,
+
+      "movement": 4,
+
+      "range": 1,
+
+      "morale": 90,
+
+      "suppression": 0,
+
+      "fatigue": 0,
+
+      "ammo": 100,
+
+      "isHQ": false,
+
+      "parentDivision": "第5师团",
+
+      "parentBrigade": "坂本支队",
+
+      "parentRegiment": "步兵第42联队",
+
+      "parentBattalion": "步兵第42联队第1大队",
+
+      "deploymentRole": "support"
+
+    },
+
+    {
+
+      "id": "JPN_R42_B1_IG",
+
+      "name": "步兵第42联队第1大队九二式步兵炮小队",
+
+      "fullName": "步兵第42联队第1大队九二式步兵炮小队",
+
+      "faction": "japanese",
+
+      "type": "artillery",
+
+      "echelon": "company",
+
+      "q": 94,
+
+      "r": 28,
+
+      "strength": 60,
+
+      "maxStrength": 60,
+
+      "attack": 4,
+
+      "defense": 4,
+
+      "movement": 4,
+
+      "range": 2,
+
+      "morale": 88,
+
+      "suppression": 0,
+
+      "fatigue": 0,
+
+      "ammo": 100,
+
+      "isHQ": false,
+
+      "parentDivision": "第5师团",
+
+      "parentBrigade": "坂本支队",
+
+      "parentRegiment": "步兵第42联队",
+
+      "parentBattalion": "步兵第42联队第1大队",
+
+      "deploymentRole": "support"
+
+    },
+
+    {
+
+      "id": "JPN_FA5_B1",
+
+      "name": "野炮兵第5联队炮兵大队（75毫米野炮）",
+
+      "fullName": "野炮兵第5联队炮兵大队（75毫米野炮）",
+
+      "faction": "japanese",
+
+      "type": "artillery",
+
+      "echelon": "battalion",
+
+      "q": 82,
+
+      "r": 9,
+
+      "strength": 700,
+
+      "maxStrength": 700,
+
+      "attack": 7,
+
+      "defense": 5,
+
+      "movement": 3,
+
+      "range": 5,
+
+      "morale": 88,
+
+      "suppression": 0,
+
+      "fatigue": 0,
+
+      "ammo": 100,
+
+      "isHQ": false,
+
+      "parentDivision": "第5师团",
+
+      "parentBrigade": "坂本支队",
+
+      "deploymentRole": "support"
+
+    },
+
+    {
+
+      "id": "JPN_MA5",
+
+      "name": "第5师团山炮兵中队（75毫米山炮）",
+
+      "fullName": "第5师团山炮兵中队（75毫米山炮）",
+
+      "faction": "japanese",
+
+      "type": "artillery",
+
+      "echelon": "company",
+
+      "q": 86,
+
+      "r": 10,
+
+      "strength": 150,
+
+      "maxStrength": 150,
+
+      "attack": 6,
+
+      "defense": 5,
+
+      "movement": 4,
+
+      "range": 4,
+
+      "morale": 88,
+
+      "suppression": 0,
+
+      "fatigue": 0,
+
+      "ammo": 100,
+
+      "isHQ": false,
+
+      "parentDivision": "第5师团",
+
+      "parentBrigade": "坂本支队",
+
+      "deploymentRole": "support"
+
+    }
+
+  ]
+
+}
