@@ -27,7 +27,7 @@ const SCENARIOS = {
         subtitle: "Battle of Dubno",
         dateText: "1941年6月26日",
         scenarioPath: "./data/scenario.json",
-        unitsPath: "./data/units.json",
+        unitsPath: unitsPath,
         start: {
             year: 1941,
             month: 6,
@@ -108,6 +108,7 @@ function showScenarioSelection() {
             <div class="scenario-caption">东线 1941 · EASTERN FRONT 1941</div>
             <div class="scenario-list">
                 ${Object.values(SCENARIOS).map(item => `
+
                     <button class="scenario-card" type="button" data-scenario="${item.key}">
                         <span class="scenario-name">${item.name}</span>
                         <span class="scenario-subtitle">${item.subtitle}</span>
@@ -329,6 +330,7 @@ function getPlayerSide() {
         gameState.playerSide,
         gameState.selectedFaction,
         gameState.selectedSide,
+
         gameState.side,
         gameState.faction
     ];
@@ -550,6 +552,7 @@ const maxStrength =
                 rawUnit.fatigue ?? 0
             ),
         ammunition:
+
             Number(
                 rawUnit.ammunition ??
                 rawUnit.ammo ??
@@ -572,7 +575,7 @@ async function loadUnitsFromJSON(unitsPath = "./data/units.json") {
     );
     const response =
         await fetch(
-            unitsPath,
+            "./data/units.json",
             {
                 cache: "no-store"
             }
@@ -771,6 +774,7 @@ function initializeUnits() {
             null
         ) {
             unit.morale =
+
                 80;
         }
         if (
@@ -992,6 +996,7 @@ function clearSelection() {
     }
     clearReachable();
     if (unitInfo) {
+
         unitInfo.innerHTML =
             '<p class="hint">点击地图上的单位查看详情</p>';
     }
@@ -1051,6 +1056,22 @@ function showUnitInfo(unit) {
         playerCanControlUnit(
             unit
         );
+    // 指挥官信息：仅显示团级及以上单位；查不到则整行不显示。
+    const commanderName = String(
+        unit.commander ??
+        unit.commanderName ??
+        unit.commandingOfficer ??
+        ""
+    ).trim();
+    const echelonKey = String(unit.echelon ?? "").toLowerCase();
+    const commanderEligibleEchelons = new Set([
+        "regiment", "brigade", "division", "corps", "army",
+        "panzer_group", "army_group", "front"
+    ]);
+    const commanderRow =
+        commanderName && commanderEligibleEchelons.has(echelonKey)
+            ? `<div class="unit-row"><span>指挥官</span><strong>${commanderName}</strong></div>`
+            : "";
     unitInfo.innerHTML = `
         <div class="unit-title">
             ${name}
@@ -1071,6 +1092,7 @@ function showUnitInfo(unit) {
             <span>编制</span>
             <strong>${unit.echelon ?? "—"}</strong>
         </div>
+        ${commanderRow}
         <div class="unit-row">
             <span>行动点</span>
             <strong>${ap} / ${maxAP}</strong>
@@ -1085,6 +1107,7 @@ function showUnitInfo(unit) {
         </div>
         <div class="unit-row">
             <span>防御</span>
+
             <strong>${defenseValue}</strong>
         </div>
         <div class="unit-row">
@@ -1102,7 +1125,6 @@ function showUnitInfo(unit) {
             </strong>
         </div>
         <div class="unit-row">
-
             <span>士气</span>
             <strong>${unit.morale ?? "—"}</strong>
         </div>
@@ -1196,6 +1218,7 @@ function selectUnit(unit) {
     ) {
         calculateReachable(
             unit
+
         );
     }
     else {
@@ -1306,6 +1329,7 @@ function findUnitAtMouse(event) {
         const x =
             event.clientX -
             rect.left;
+
         const y =
             event.clientY -
             rect.top;
@@ -1323,7 +1347,6 @@ function findUnitAtMouse(event) {
         ) {
             return found;
         }
-
     }
     return null;
 }
@@ -1417,6 +1440,7 @@ function tryMoveSelectedUnit(
     updateSaveControls();
     return true;
 }
+
 // ============================================================
 // 战斗消息
 // ============================================================
@@ -1527,6 +1551,7 @@ function showVictoryModal(result) {
             #victory-modal .victory-decoration { margin-bottom: 18px; font-size: 14px; letter-spacing: .18em; color: #5b584b; }
             #victory-modal .victory-title { font-size: clamp(34px,5vw,52px); font-weight: 700; letter-spacing: .12em; line-height: 1.15; }
             #victory-modal .victory-subtitle { margin-top: 8px; font-family: Georgia, 'Times New Roman', serif; font-size: 16px; letter-spacing: .16em; color: #555246; }
+
             #victory-modal .victory-line { width: 72%; height: 1px; margin: 22px auto; background: #77715d; }
             #victory-modal .victory-reason { min-height: 28px; margin-bottom: 22px; font-size: 18px; line-height: 1.65; }
             #victory-modal .victory-details { width: min(390px,100%); margin: 0 auto 24px; border-top: 1px solid rgba(70,68,57,.35); border-bottom: 1px solid rgba(70,68,57,.35); padding: 10px 0; }
@@ -1544,7 +1569,6 @@ function showVictoryModal(result) {
     const oldModal =
         document.getElementById(
             "victory-modal"
-
         );
     if (oldModal) {
         oldModal.remove();
@@ -1638,6 +1662,7 @@ function showVictoryModal(result) {
         );
     modal.id =
         "victory-modal";
+
     modal.innerHTML = `
         <div class="victory-overlay">
             <div class="victory-window">
@@ -1748,6 +1773,7 @@ gameState.units =
             </div>
             <div class="unit-row">
                 <strong>
+
                     ${winnerText}
                 </strong>
             </div>
@@ -1765,7 +1791,6 @@ gameState.units =
     if (endPhaseButton) {
         endPhaseButton.disabled =
             true;
-
     }
     console.log(
         "========================================"
@@ -1859,6 +1884,7 @@ function performAttack(
         if (refreshedSelected && isUnitAlive(refreshedSelected)) {
             selectedUnit = refreshedSelected;
             showUnitInfo(refreshedSelected);
+
         } else if (!isUnitAlive(selectedUnit)) {
             clearSelection();
         }
@@ -1969,6 +1995,7 @@ async function runAIPhase() {
             }
             if (
                 !isUnitAlive(
+
                     unit
                 )
             ) {
@@ -1986,7 +2013,6 @@ async function runAIPhase() {
             ) {
                 const combat =
                     result.result;
-
                 writeBattleMessage(
                     `${sideLabel}：${unitName(combat.attacker)} 攻击 ${unitName(combat.defender)}，` +
                     `造成 ${combat.damage} 点损失 ` +
@@ -2080,6 +2106,7 @@ async function runAIPhase() {
             endPhaseButton.disabled =
                 false;
         }
+
     }
 }
 // ============================================================
@@ -2190,6 +2217,7 @@ window.addEventListener(
 // 点击地图
 // ============================================================
 canvas.addEventListener(
+
     "click",
     event => {
         if (
@@ -2207,7 +2235,6 @@ canvas.addEventListener(
             findUnitAtMouse(
                 event
             );
-
         // ====================================================
         // 点击了单位
         // ====================================================
@@ -2301,6 +2328,7 @@ canvas.addEventListener(
             camera.minZoom ??
             0.35;
         const maxZoom =
+
             camera.maxZoom ??
             3;
         const newZoom =
@@ -2411,6 +2439,7 @@ function endCurrentPhase() {
     }
     saveSystem.autoSave({ units, turnSystem, gameState, gameOver, scenario });
     undoSystem.clear();
+
     clearSelection();
     turnSystem.endPhase?.();
     const nextSide =
@@ -2428,7 +2457,6 @@ function endCurrentPhase() {
     if (
         !gameOver &&
         nextSide &&
-
         nextSide !==
             getPlayerSide()
     ) {
@@ -2522,6 +2550,7 @@ function updateSaveControls() {
     const slot = Number(document.getElementById("save-slot-select")?.value ?? 1);
     const loadButton = document.getElementById("load-game-button");
     const undoButton = document.getElementById("undo-game-button");
+
     if (loadButton) loadButton.disabled = aiRunning || !saveSystem.has(slot);
     if (undoButton) undoButton.disabled = aiRunning || gameOver || !undoSystem.canUndo();
 }
@@ -2632,6 +2661,7 @@ async function loadScenario(scenarioKey = "dubno") {
         console.log(`[战役系统] 单位：${config.unitsPath}`);
         console.log("========================================");
         // 1. 加载所选战役的 scenario JSON。
+
         const scenarioResponse = await fetch(config.scenarioPath, { cache: "no-store" });
         if (!scenarioResponse.ok) {
             throw new Error(`${config.name} 场景加载失败：HTTP ${scenarioResponse.status}；请确认 ${config.scenarioPath} 已存在`);
@@ -2649,7 +2679,6 @@ async function loadScenario(scenarioKey = "dubno") {
         }
         // 4. 初始化、清理和验证。
         initializeUnits();
-
         units = units.filter(unit => isUnitAlive(unit));
         if (!validateUnits(units)) {
             throw new Error(`${config.unitsPath} 单位数据检查失败，请查看浏览器控制台`);
