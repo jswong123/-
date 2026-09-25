@@ -1705,7 +1705,7 @@ export class Renderer {
 
    render(
     units = []
-) {
+) 
         this.clear();
 
         // 地形
