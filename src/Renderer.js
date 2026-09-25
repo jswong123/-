@@ -1703,12 +1703,9 @@ export class Renderer {
 
     // ========================================================
 
-    render(
-
-        units = []
-
-    ) {
-
+   render(
+    units = []
+) {
         this.clear();
 
         // 地形
