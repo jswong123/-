@@ -1691,7 +1691,7 @@ export class Renderer {
 
 
         // ========================================================
-        // NATO / 军事单位符号
+        //  军事单位符号
         // ========================================================
 
         this.drawMilitarySymbol(
@@ -1707,34 +1707,7 @@ export class Renderer {
         // 算子顶部兵力数字
         // ========================================================
 
-        if (zoom >= 0.72) {
-
-            const maxStrength = Number(
-                unit?.maxStrength ??
-                unit?.maxManpower ??
-                current
-            );
-
-            ctx.save();
-
-            ctx.fillStyle = "#252720";
-
-            ctx.font =
-                `${Math.max(7, 8.5 * zoom)}px FangSong, STKaiti, serif`;
-
-            ctx.textAlign = "center";
-            ctx.textBaseline = "bottom";
-
-            ctx.fillText(
-                `${Math.round(current)}/${Math.round(maxStrength)}`,
-                p.x,
-                p.y - height / 2 - 2
-            );
-
-            ctx.restore();
-        }
-
-
+        
         // ========================================================
         // 缩放太小时不显示单位名称
         // ========================================================
