@@ -158,7 +158,6 @@ export class Renderer {
     // ========================================================
     // 地形颜色
     // ========================================================
-
     terrainColor(
         terrain
     ) {
@@ -319,7 +318,6 @@ export class Renderer {
             let started =
                 false;
             for (
-
                 const rawPoint
                 of points
             ) {
@@ -480,7 +478,6 @@ export class Renderer {
             ctx.textBaseline =
                 "middle";
             ctx.fillText(
-
                 settlement.name ??
                 "",
                 p.x +
@@ -641,7 +638,6 @@ export class Renderer {
             );
             ctx.lineTo(
                 x - width * 0.32,
-
                 y + height * 0.27
             );
             ctx.stroke();
@@ -802,7 +798,6 @@ export class Renderer {
                     p.y -
                     height / 2 -
                     5,
-
                     width +
                     10,
                     height +
@@ -963,7 +958,6 @@ export class Renderer {
     }
 }
 // ============================================================
-
 // 防御工事：B 键构筑（测试接口）
 // ============================================================
 window.addEventListener("keydown", event => {
