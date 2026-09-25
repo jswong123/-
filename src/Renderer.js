@@ -1588,156 +1588,344 @@ export class Renderer {
 
     // ========================================================
 
-    drawUnits(units = []) {
+   drawUnits(units = []) {
 
-        const ctx = this.ctx;
+    const ctx = this.ctx;
+    const zoom = Number(this.camera.zoom ?? 1);
 
-        const zoom = Number(this.camera.zoom ?? 1);
+    for (const unit of units) {
 
-        for (const unit of units) {
+        // 当前兵力
+        const current = Number(
+            unit?.manpower ??
+            unit?.strength ??
+            0
+        );
 
-            const current = Number(unit?.manpower ?? unit?.manpower ?? 0);
+        // 已被消灭或兵力无效的单位不绘制
+        if (
+            unit?.destroyed === true ||
+            !Number.isFinite(current) ||
+            current <= 0
+        ) {
+            continue;
+        }
 
-            if (unit?.destroyed === true || !Number.isFinite(current) || current <= 0) continue;
+        // 没有地图坐标的单位不绘制
+        if (unit.q === undefined || unit.r === undefined) {
+            continue;
+        }
 
-            if (unit.q === undefined || unit.r === undefined) continue;
 
-            const p = this.worldToScreen(unit.q, unit.r);
+        // ========================================================
+        // 单位位置与尺寸
+        // ========================================================
 
-            const baseW = zoom < 0.72 ? 26 : zoom < 1.18 ? 32 : 36;
+        const p = this.worldToScreen(unit.q, unit.r);
 
-            const baseH = zoom < 0.72 ? 18 : zoom < 1.18 ? 22 : 25;
+        const baseW =
+            zoom < 0.72 ? 26 :
+            zoom < 1.18 ? 32 :
+            36;
 
-            const width = baseW * zoom;
+        const baseH =
+            zoom < 0.72 ? 18 :
+            zoom < 1.18 ? 22 :
+            25;
 
-            const height = baseH * zoom;
+        const width = baseW * zoom;
+        const height = baseH * zoom;
 
-            const selected = this.selection && this.selection.selectedUnit === unit;
 
-            if (selected) {
+        // ========================================================
+        // 被选中单位的黄色边框
+        // ========================================================
 
-                ctx.save();
+        const selected =
+            this.selection &&
+            this.selection.selectedUnit === unit;
 
-                ctx.strokeStyle = "#e8c85b";
-
-                ctx.lineWidth = Math.max(2, 3 * zoom);
-
-                ctx.strokeRect(p.x - width / 2 - 4, p.y - height / 2 - 4, width + 8, height + 8);
-
-                ctx.restore();
-
-            }
+        if (selected) {
 
             ctx.save();
 
-            ctx.fillStyle = this.factionColor(unit.faction);
+            ctx.strokeStyle = "#e8c85b";
+            ctx.lineWidth = Math.max(2, 3 * zoom);
 
-            ctx.strokeStyle = "#171916";
-
-            ctx.lineWidth = Math.max(1.3, 1.8 * zoom);
-
-            ctx.fillRect(p.x - width / 2, p.y - height / 2, width, height);
-
-            ctx.strokeRect(p.x - width / 2, p.y - height / 2, width, height);
+            ctx.strokeRect(
+                p.x - width / 2 - 4,
+                p.y - height / 2 - 4,
+                width + 8,
+                height + 8
+            );
 
             ctx.restore();
+        }
 
-            this.drawMilitarySymbol(unit, p.x, p.y, width, height);
 
-            if (zoom < 0.72) continue;
+        // ========================================================
+        // 单位算子底色与边框
+        // ========================================================
 
-            const shortName = this.compactUnitName(unit.shortName ?? unit.name ?? unit.id ?? "");
+        ctx.save();
 
-            if (shortName) {
+        ctx.fillStyle = this.factionColor(unit.faction);
+        ctx.strokeStyle = "#171916";
+        ctx.lineWidth = Math.max(1.3, 1.8 * zoom);
 
-                ctx.save();
-
-                ctx.fillStyle = "#34352f";
-
-                ctx.font = `${Math.max(7, 8.5 * zoom)}px FangSong, STKaiti, serif`;
-
-                ctx.textAlign = "center";
-
-                ctx.textBaseline = "top";
-
-                ctx.fillText(shortName, p.x, p.y + height / 2 + 3);
-
-                ctx.restore();
-
-            }
-
-            const commander = String(unit.commander ?? unit.commanderName ?? unit.leader ?? "").trim();
-
-            const unitType = String(unit.type ?? unit.unitType ?? unit.branch ?? "").toLowerCase().replace(/[ _-]/g, "");
-
-            const unitId = String(unit.id ?? "").toUpperCase();
-
-            const unitName = String(unit.name ?? "");
-
-            const isGuardUnit = unitId.includes("_GUARD") || unitType.includes("guard") || /警卫/.test(unitName);
-
-            const isCommandUnit = !isGuardUnit && (["headquarters", "hq", "command", "commandpost"].includes(unitType) || unitId.endsWith("_HQ") || /司令部|指挥部|军部|师部|团部/.test(unitName));
-
-            if (isCommandUnit && commander && zoom >= 1.0) {
-
-                ctx.save();
-
-                ctx.fillStyle = "#34352f";
-
-                ctx.font = `${Math.max(7, 7.5 * zoom)}px FangSong, STKaiti, serif`;
-
-                ctx.textAlign = "center";
-
-                ctx.textBaseline = "top";
-
-                ctx.fillText(`指挥官：${commander}`, p.x, p.y + height / 2 + Math.max(12, 13 * zoom));
-
-                ctx.restore();
-
-            }
-
-            
-    // ========================================================
-
-    // 总渲染
-
-    // ========================================================
-
-   render(
-    units = []
-) 
-        this.clear();
-
-        // 地形
-
-        this.drawTerrain();
-
-        // 防御工事
-
-        this.drawFortifications();
-
-        // 地理要素
-
-        this.drawRoads();
-
-        this.drawRailways();
-
-        this.drawRivers();
-
-        this.drawSettlements();
-
-        // 移动范围必须位于单位下面
-
-        this.drawMovementRange();
-
-        // 单位
-
-        this.drawUnits(
-
-            units
-
+        ctx.fillRect(
+            p.x - width / 2,
+            p.y - height / 2,
+            width,
+            height
         );
 
-    }
+        ctx.strokeRect(
+            p.x - width / 2,
+            p.y - height / 2,
+            width,
+            height
+        );
 
-}
+        ctx.restore();
+
+
+        // ========================================================
+        // NATO / 军事单位符号
+        // ========================================================
+
+        this.drawMilitarySymbol(
+            unit,
+            p.x,
+            p.y,
+            width,
+            height
+        );
+
+
+        // ========================================================
+        // 算子顶部兵力数字
+        // ========================================================
+
+        if (zoom >= 0.72) {
+
+            const maxStrength = Number(
+                unit?.maxStrength ??
+                unit?.maxManpower ??
+                current
+            );
+
+            ctx.save();
+
+            ctx.fillStyle = "#252720";
+
+            ctx.font =
+                `${Math.max(7, 8.5 * zoom)}px FangSong, STKaiti, serif`;
+
+            ctx.textAlign = "center";
+            ctx.textBaseline = "bottom";
+
+            ctx.fillText(
+                `${Math.round(current)}/${Math.round(maxStrength)}`,
+                p.x,
+                p.y - height / 2 - 2
+            );
+
+            ctx.restore();
+        }
+
+
+        // ========================================================
+        // 缩放太小时不显示单位名称
+        // ========================================================
+
+        if (zoom < 0.72) {
+            continue;
+        }
+
+
+        // ========================================================
+        // 单位名称
+        // ========================================================
+
+        const shortName = this.compactUnitName(
+            unit.shortName ??
+            unit.name ??
+            unit.id ??
+            ""
+        );
+
+        if (shortName) {
+
+            ctx.save();
+
+            ctx.fillStyle = "#34352f";
+
+            ctx.font =
+                `${Math.max(7, 8.5 * zoom)}px FangSong, STKaiti, serif`;
+
+            ctx.textAlign = "center";
+            ctx.textBaseline = "top";
+
+            ctx.fillText(
+                shortName,
+                p.x,
+                p.y + height / 2 + 3
+            );
+
+            ctx.restore();
+        }
+
+
+        // ========================================================
+        // 指挥官信息
+        // ========================================================
+
+        const commander = String(
+            unit.commander ??
+            unit.commanderName ??
+            unit.leader ??
+            ""
+        ).trim();
+
+        const unitType = String(
+            unit.type ??
+            unit.unitType ??
+            unit.branch ??
+            ""
+        )
+            .toLowerCase()
+            .replace(/[ _-]/g, "");
+
+        const unitId = String(
+            unit.id ?? ""
+        ).toUpperCase();
+
+        const unitName = String(
+            unit.name ?? ""
+        );
+
+
+        // ========================================================
+        // 警卫单位判定
+        // ========================================================
+
+        const isGuardUnit =
+            unitId.includes("_GUARD") ||
+            unitType.includes("guard") ||
+            /警卫/.test(unitName);
+
+
+        // ========================================================
+        // 指挥部判定
+        // 警卫单位不作为指挥部处理
+        // ========================================================
+
+        const isCommandUnit =
+            !isGuardUnit &&
+            (
+                [
+                    "headquarters",
+                    "hq",
+                    "command",
+                    "commandpost"
+                ].includes(unitType) ||
+
+                unitId.endsWith("_HQ") ||
+
+                /司令部|指挥部|军部|师部|团部/.test(unitName)
+            );
+
+
+        // ========================================================
+        // 指挥官姓名
+        // ========================================================
+
+        if (
+            isCommandUnit &&
+            commander &&
+            zoom >= 1.0
+        ) {
+
+            ctx.save();
+
+            ctx.fillStyle = "#34352f";
+
+            ctx.font =
+                `${Math.max(7, 7.5 * zoom)}px FangSong, STKaiti, serif`;
+
+            ctx.textAlign = "center";
+            ctx.textBaseline = "top";
+
+            ctx.fillText(
+                `指挥官：${commander}`,
+                p.x,
+                p.y + height / 2 + Math.max(12, 13 * zoom)
+            );
+
+            ctx.restore();
+        }
+
+    } // ← 关闭 for (const unit of units)
+
+} // ← 关闭 drawUnits()
+
+
+// ========================================================
+// 总渲染
+// ========================================================
+
+render(
+    units = []
+) {
+
+    this.clear();
+
+
+    // ========================================================
+    // 地形
+    // ========================================================
+
+    this.drawTerrain();
+
+
+    // ========================================================
+    // 防御工事
+    // ========================================================
+
+    this.drawFortifications();
+
+
+    // ========================================================
+    // 地理要素
+    // ========================================================
+
+    this.drawRoads();
+
+    this.drawRailways();
+
+    this.drawRivers();
+
+    this.drawSettlements();
+
+
+    // ========================================================
+    // 移动范围
+    // 必须位于单位下面
+    // ========================================================
+
+    this.drawMovementRange();
+
+
+    // ========================================================
+    // 单位
+    // ========================================================
+
+    this.drawUnits(
+        units
+    );
+
+} // ← 关闭 render()
+
+
+} // ← 关闭 Renderer 类
