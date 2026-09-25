@@ -32353,212 +32353,249 @@
       "parentArmy": "第2集团军",
       "deploymentRole": "support"
     },
-    {
-      "id": "SOV_SMOL_DEF_1",
-      "name": "城防1营",
-      "fullName": "城防1营",
-      "faction": "soviet",
-      "echelon": "battalion",
-      "suppression": 0,
-      "fatigue": 0,
-      "ammo": 100,
-      "isHQ": false,
-      "deploymentRole": "smolensk_city_defense",
-      "type": "infantry",
-      "q": 68,
-      "r": 35,
-      "strength": 620,
-      "maxStrength": 620,
-      "attack": 7,
-      "defense": 7,
-      "movement": 4,
-      "range": 1,
-      "morale": 70,
-      "cityDefensePosition": "outer"
+     {
+        id: "SOV_SMOL_DEF_1",
+        name: "城防1营",
+        faction: "soviet",
+        type: "infantry",
+        echelon: "battalion",
+
+        x: 59,
+        y: 31,
+
+        strength: 620,
+        maxStrength: 620,
+
+        attack: 7,
+        defense: 7,
+        range: 1,
+
+        actionPoints: 4,
+        maxActionPoints: 4,
+
+        morale: 70,
+        suppression: 0,
+        fatigue: 0,
+        readiness: 100
     },
+
     {
-      "id": "SOV_SMOL_DEF_2",
-      "name": "城防2营",
-      "fullName": "城防2营",
-      "faction": "soviet",
-      "echelon": "battalion",
-      "suppression": 0,
-      "fatigue": 0,
-      "ammo": 100,
-      "isHQ": false,
-      "deploymentRole": "smolensk_city_defense",
-      "type": "infantry",
-      "q": 70,
-      "r": 31,
-      "strength": 620,
-      "maxStrength": 620,
-      "attack": 7,
-      "defense": 7,
-      "movement": 4,
-      "range": 1,
-      "morale": 70,
-      "cityDefensePosition": "outer"
+        id: "SOV_SMOL_DEF_2",
+        name: "城防2营",
+        faction: "soviet",
+        type: "infantry",
+        echelon: "battalion",
+
+        x: 63,
+        y: 30,
+
+        strength: 620,
+        maxStrength: 620,
+
+        attack: 7,
+        defense: 7,
+        range: 1,
+
+        actionPoints: 4,
+        maxActionPoints: 4,
+
+        morale: 70,
+        suppression: 0,
+        fatigue: 0,
+        readiness: 100
     },
+
     {
-      "id": "SOV_SMOL_DEF_3",
-      "name": "城防3营",
-      "fullName": "城防3营",
-      "faction": "soviet",
-      "echelon": "battalion",
-      "suppression": 0,
-      "fatigue": 0,
-      "ammo": 100,
-      "isHQ": false,
-      "deploymentRole": "smolensk_city_defense",
-      "type": "infantry",
-      "q": 70,
-      "r": 39,
-      "strength": 620,
-      "maxStrength": 620,
-      "attack": 7,
-      "defense": 7,
-      "movement": 4,
-      "range": 1,
-      "morale": 70,
-      "cityDefensePosition": "outer"
+        id: "SOV_SMOL_DEF_3",
+        name: "城防3营",
+        faction: "soviet",
+        type: "infantry",
+        echelon: "battalion",
+
+        x: 67,
+        y: 31,
+
+        strength: 620,
+        maxStrength: 620,
+
+        attack: 7,
+        defense: 7,
+        range: 1,
+
+        actionPoints: 4,
+        maxActionPoints: 4,
+
+        morale: 70,
+        suppression: 0,
+        fatigue: 0,
+        readiness: 100
     },
+
+
+    // ========================================================
+    // 第二线：城区北部
+    // 城防4营、城防5营
+    // ========================================================
+
     {
-      "id": "SOV_SMOL_DEF_4",
-      "name": "城防4营",
-      "fullName": "城防4营",
-      "faction": "soviet",
-      "echelon": "battalion",
-      "suppression": 0,
-      "fatigue": 0,
-      "ammo": 100,
-      "isHQ": false,
-      "deploymentRole": "smolensk_city_defense",
-      "type": "infantry",
-      "q": 69,
-      "r": 34,
-      "strength": 620,
-      "maxStrength": 620,
-      "attack": 7,
-      "defense": 7,
-      "movement": 4,
-      "range": 1,
-      "morale": 70,
-      "cityDefensePosition": "inner"
+        id: "SOV_SMOL_DEF_4",
+        name: "城防4营",
+        faction: "soviet",
+        type: "infantry",
+        echelon: "battalion",
+
+        x: 61,
+        y: 34,
+
+        strength: 620,
+        maxStrength: 620,
+
+        attack: 7,
+        defense: 7,
+        range: 1,
+
+        actionPoints: 4,
+        maxActionPoints: 4,
+
+        morale: 70,
+        suppression: 0,
+        fatigue: 0,
+        readiness: 100
     },
+
     {
-      "id": "SOV_SMOL_DEF_5",
-      "name": "城防5营",
-      "fullName": "城防5营",
-      "faction": "soviet",
-      "echelon": "battalion",
-      "suppression": 0,
-      "fatigue": 0,
-      "ammo": 100,
-      "isHQ": false,
-      "deploymentRole": "smolensk_city_defense",
-      "type": "infantry",
-      "q": 70,
-      "r": 34,
-      "strength": 620,
-      "maxStrength": 620,
-      "attack": 7,
-      "defense": 7,
-      "movement": 4,
-      "range": 1,
-      "morale": 70,
-      "cityDefensePosition": "inner"
+        id: "SOV_SMOL_DEF_5",
+        name: "城防5营",
+        faction: "soviet",
+        type: "infantry",
+        echelon: "battalion",
+
+        x: 65,
+        y: 34,
+
+        strength: 620,
+        maxStrength: 620,
+
+        attack: 7,
+        defense: 7,
+        range: 1,
+
+        actionPoints: 4,
+        maxActionPoints: 4,
+
+        morale: 70,
+        suppression: 0,
+        fatigue: 0,
+        readiness: 100
     },
+
+
+    // ========================================================
+    // 第三线：城区南部
+    // 城防6营、坦克营、炮兵营、城防7营
+    // ========================================================
+
     {
-      "id": "SOV_SMOL_DEF_6",
-      "name": "城防6营",
-      "fullName": "城防6营",
-      "faction": "soviet",
-      "echelon": "battalion",
-      "suppression": 0,
-      "fatigue": 0,
-      "ammo": 100,
-      "isHQ": false,
-      "deploymentRole": "smolensk_city_defense",
-      "type": "infantry",
-      "q": 71,
-      "r": 34,
-      "strength": 620,
-      "maxStrength": 620,
-      "attack": 7,
-      "defense": 7,
-      "movement": 4,
-      "range": 1,
-      "morale": 70,
-      "cityDefensePosition": "inner"
+        id: "SOV_SMOL_DEF_6",
+        name: "城防6营",
+        faction: "soviet",
+        type: "infantry",
+        echelon: "battalion",
+
+        x: 61,
+        y: 37,
+
+        strength: 620,
+        maxStrength: 620,
+
+        attack: 7,
+        defense: 7,
+        range: 1,
+
+        actionPoints: 4,
+        maxActionPoints: 4,
+
+        morale: 70,
+        suppression: 0,
+        fatigue: 0,
+        readiness: 100
     },
+
     {
-      "id": "SOV_SMOL_DEF_7",
-      "name": "城防7营",
-      "fullName": "城防7营",
-      "faction": "soviet",
-      "echelon": "battalion",
-      "suppression": 0,
-      "fatigue": 0,
-      "ammo": 100,
-      "isHQ": false,
-      "deploymentRole": "smolensk_city_defense",
-      "type": "infantry",
-      "q": 69,
-      "r": 35,
-      "strength": 620,
-      "maxStrength": 620,
-      "attack": 7,
-      "defense": 7,
-      "movement": 4,
-      "range": 1,
-      "morale": 70,
-      "cityDefensePosition": "inner"
+        id: "SOV_SMOL_DEF_TANK",
+        name: "城防坦克营",
+        faction: "soviet",
+        type: "tank",
+        echelon: "battalion",
+
+        x: 63,
+        y: 37,
+
+        strength: 530,
+        maxStrength: 530,
+
+        attack: 8,
+        defense: 7,
+        range: 1,
+
+        actionPoints: 5,
+        maxActionPoints: 5,
+
+        morale: 72,
+        suppression: 0,
+        fatigue: 0,
+        readiness: 100
     },
+
     {
-      "id": "SOV_SMOL_DEF_TANK",
-      "name": "城防坦克营",
-      "fullName": "城防坦克营",
-      "faction": "soviet",
-      "echelon": "battalion",
-      "suppression": 0,
-      "fatigue": 0,
-      "ammo": 100,
-      "isHQ": false,
-      "deploymentRole": "smolensk_city_defense",
-      "type": "armor",
-      "q": 70,
-      "r": 35,
-      "strength": 450,
-      "maxStrength": 450,
-      "attack": 12,
-      "defense": 9,
-      "movement": 7,
-      "range": 1,
-      "morale": 70,
-      "cityDefensePosition": "inner"
+        id: "SOV_SMOL_DEF_ART",
+        name: "城防炮兵营",
+        faction: "soviet",
+        type: "artillery",
+        echelon: "battalion",
+
+        x: 65,
+        y: 37,
+
+        strength: 500,
+        maxStrength: 500,
+
+        attack: 8,
+        defense: 4,
+        range: 3,
+
+        actionPoints: 3,
+        maxActionPoints: 3,
+
+        morale: 70,
+        suppression: 0,
+        fatigue: 0,
+        readiness: 100
     },
+
     {
-      "id": "SOV_SMOL_DEF_ART",
-      "name": "城防炮兵营",
-      "fullName": "城防炮兵营",
-      "faction": "soviet",
-      "echelon": "battalion",
-      "suppression": 0,
-      "fatigue": 0,
-      "ammo": 100,
-      "isHQ": false,
-      "deploymentRole": "smolensk_city_defense",
-      "type": "artillery",
-      "q": 71,
-      "r": 35,
-      "strength": 520,
-      "maxStrength": 520,
-      "attack": 10,
-      "defense": 5,
-      "movement": 4,
-      "range": 3,
-      "morale": 70,
-      "cityDefensePosition": "inner"
+        id: "SOV_SMOL_DEF_7",
+        name: "城防7营",
+        faction: "soviet",
+        type: "infantry",
+        echelon: "battalion",
+
+        x: 67,
+        y: 37,
+
+        strength: 620,
+        maxStrength: 620,
+
+        attack: 7,
+        defense: 7,
+        range: 1,
+
+        actionPoints: 4,
+        maxActionPoints: 4,
+
+        morale: 70,
+        suppression: 0,
+        fatigue: 0,
+        readiness: 100
     }
-  ]
-}
+];
